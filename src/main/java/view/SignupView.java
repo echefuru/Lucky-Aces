@@ -27,13 +27,12 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
     private final String viewName = "sign up";
 
     private final SignupViewModel signupViewModel;
-    private final JTextField usernameInputField = new JTextField(15);
+    private final JTextField playerIDInputField = new JTextField(15);
     private final JPasswordField passwordInputField = new JPasswordField(15);
     private final JPasswordField repeatPasswordInputField = new JPasswordField(15);
     private SignupController signupController;
 
     private final JButton signUp;
-    private final JButton cancel;
     private final JButton toLogin;
 
     public SignupView(SignupViewModel signupViewModel) {
@@ -43,8 +42,8 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         final JLabel title = new JLabel(SignupViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        final LabelTextPanel usernameInfo = new LabelTextPanel(
-                new JLabel(SignupViewModel.USERNAME_LABEL), usernameInputField);
+        final LabelTextPanel playerIDInfo = new LabelTextPanel(
+                new JLabel(SignupViewModel.PLAYERID_LABEL), playerIDInputField);
         final LabelTextPanel passwordInfo = new LabelTextPanel(
                 new JLabel(SignupViewModel.PASSWORD_LABEL), passwordInputField);
         final LabelTextPanel repeatPasswordInfo = new LabelTextPanel(
@@ -55,8 +54,6 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         buttons.add(toLogin);
         signUp = new JButton(SignupViewModel.SIGNUP_BUTTON_LABEL);
         buttons.add(signUp);
-        cancel = new JButton(SignupViewModel.CANCEL_BUTTON_LABEL);
-        buttons.add(cancel);
 
         signUp.addActionListener(
                 // This creates an anonymous subclass of ActionListener and instantiates it.
@@ -66,7 +63,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                             final SignupState currentState = signupViewModel.getState();
 
                             signupController.execute(
-                                    currentState.getUsername(),
+                                    currentState.getPlayerID(),
                                     currentState.getPassword(),
                                     currentState.getRepeatPassword()
                             );
@@ -83,27 +80,25 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                 }
         );
 
-        cancel.addActionListener(this);
-
-        addUsernameListener();
+        addPlayerIDListener();
         addPasswordListener();
         addRepeatPasswordListener();
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         this.add(title);
-        this.add(usernameInfo);
+        this.add(playerIDInfo);
         this.add(passwordInfo);
         this.add(repeatPasswordInfo);
         this.add(buttons);
     }
 
-    private void addUsernameListener() {
-        usernameInputField.getDocument().addDocumentListener(new DocumentListener() {
+    private void addPlayerIDListener() {
+        playerIDInputField.getDocument().addDocumentListener(new DocumentListener() {
 
             private void documentListenerHelper() {
                 final SignupState currentState = signupViewModel.getState();
-                currentState.setUsername(usernameInputField.getText());
+                currentState.setPlayerID(playerIDInputField.getText());
                 signupViewModel.setState(currentState);
             }
 
@@ -184,8 +179,8 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         final SignupState state = (SignupState) evt.getNewValue();
-        if (state.getUsernameError() != null) {
-            JOptionPane.showMessageDialog(this, state.getUsernameError());
+        if (state.getPlayerIDError() != null) {
+            JOptionPane.showMessageDialog(this, state.getPlayerIDError());
         }
     }
 

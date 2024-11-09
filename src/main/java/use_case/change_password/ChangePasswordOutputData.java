@@ -5,17 +5,17 @@ package use_case.change_password;
  */
 public class ChangePasswordOutputData {
 
-    private final String username;
+    private final String playerID;
 
     private final boolean useCaseFailed;
 
-    public ChangePasswordOutputData(String username, boolean useCaseFailed) {
-        this.username = username;
+    public ChangePasswordOutputData(String playerID, boolean useCaseFailed) {
+        this.playerID = playerID;
         this.useCaseFailed = useCaseFailed;
     }
 
-    public String getUsername() {
-        return username;
+    public String getPlayerID() {
+        return playerID;
     }
 
     public boolean isUseCaseFailed() {

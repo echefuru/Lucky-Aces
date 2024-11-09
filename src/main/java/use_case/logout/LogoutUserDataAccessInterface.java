@@ -6,14 +6,14 @@ package use_case.logout;
 public interface LogoutUserDataAccessInterface {
 
     /**
-     * Returns the username of the curren user of the application.
-     * @return the username of the current user
+     * Returns the playerID of the curren user of the application.
+     * @return the playerID of the current player
      */
-    String getCurrentUsername();
+    String getCurrentPlayerID();
 
     /**
-     * Sets the username indicating who is the current user of the application.
-     * @param username the new current username
+     * Sets the playerID indicating who is the current player of the application.
+     * @param playerID the new current playerID
      */
-    void setCurrentUsername(String username);
+    void setCurrentPlayerID(String playerID);
 }

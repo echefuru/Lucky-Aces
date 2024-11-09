@@ -1,7 +1,8 @@
 package use_case.change_password;
 
-import entity.User;
-import entity.UserFactory;
+import entity.player.Player;
+import entity.player.PlayerFactory;
+import interface_adapter.gamelibrary.GameLibraryState;
 
 /**
  * The Change Password Interactor.
@@ -9,24 +10,34 @@ import entity.UserFactory;
 public class ChangePasswordInteractor implements ChangePasswordInputBoundary {
     private final ChangePasswordUserDataAccessInterface userDataAccessObject;
     private final ChangePasswordOutputBoundary userPresenter;
-    private final UserFactory userFactory;
+    private final PlayerFactory playerFactory;
 
     public ChangePasswordInteractor(ChangePasswordUserDataAccessInterface changePasswordDataAccessInterface,
                                     ChangePasswordOutputBoundary changePasswordOutputBoundary,
-                                    UserFactory userFactory) {
+                                    PlayerFactory playerFactory) {
         this.userDataAccessObject = changePasswordDataAccessInterface;
         this.userPresenter = changePasswordOutputBoundary;
-        this.userFactory = userFactory;
+        this.playerFactory = playerFactory;
     }
 
     @Override
     public void execute(ChangePasswordInputData changePasswordInputData) {
-        final User user = userFactory.create(changePasswordInputData.getUsername(),
+        final Player player = playerFactory.create(changePasswordInputData.getPlayerID(),
                                              changePasswordInputData.getPassword());
-        userDataAccessObject.changePassword(user);
+        userDataAccessObject.changePassword(player);
 
-        final ChangePasswordOutputData changePasswordOutputData = new ChangePasswordOutputData(user.getName(),
+        final ChangePasswordOutputData changePasswordOutputData = new ChangePasswordOutputData(player.getPlayerID(),
                                                                                   false);
         userPresenter.prepareSuccessView(changePasswordOutputData);
+    }
+
+    @Override
+    public void switchToLoginView() {
+        userPresenter.switchToLoginView();
+    }
+
+    @Override
+    public void switchToGameLibraryView(GameLibraryState gameLibraryState) {
+        userPresenter.switchToGameLibraryView(gameLibraryState);
     }
 }

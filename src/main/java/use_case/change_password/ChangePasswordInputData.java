@@ -6,19 +6,19 @@ package use_case.change_password;
 public class ChangePasswordInputData {
 
     private final String password;
-    private final String username;
+    private final String playerID;
 
-    public ChangePasswordInputData(String password, String username) {
+    public ChangePasswordInputData(String password, String playerID) {
         this.password = password;
-        this.username = username;
+        this.playerID = playerID;
     }
 
     String getPassword() {
         return password;
     }
 
-    String getUsername() {
-        return username;
+    String getPlayerID() {
+        return playerID;
     }
 
 }

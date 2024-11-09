@@ -16,11 +16,13 @@ public class Main {
         final JFrame application = appBuilder
                                             .addLoginView()
                                             .addSignupView()
-                                            .addLoggedInView()
+                                            .addGameLibraryView()
+                                            .addChangePasswordView()
                                             .addSignupUseCase()
                                             .addLoginUseCase()
                                             .addChangePasswordUseCase()
                                             .addLogoutUseCase()
+                                            .addGameLibraryUseCase()
                                             .build();
 
         application.pack();

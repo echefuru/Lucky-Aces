@@ -7,12 +7,15 @@ import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
 import data_access.InMemoryUserDataAccessObject;
-import entity.CommonUserFactory;
-import entity.UserFactory;
+import entity.player.CommonPlayerFactory;
+import entity.player.PlayerFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.change_password.ChangePasswordPresenter;
-import interface_adapter.change_password.LoggedInViewModel;
+import interface_adapter.change_password.ChangePasswordViewModel;
+import interface_adapter.gamelibrary.GameLibraryController;
+import interface_adapter.gamelibrary.GameLibraryPresenter;
+import interface_adapter.gamelibrary.GameLibraryViewModel;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
@@ -24,6 +27,9 @@ import interface_adapter.signup.SignupViewModel;
 import use_case.change_password.ChangePasswordInputBoundary;
 import use_case.change_password.ChangePasswordInteractor;
 import use_case.change_password.ChangePasswordOutputBoundary;
+import use_case.gamelibrary.GameLibraryInputBoundary;
+import use_case.gamelibrary.GameLibraryInteractor;
+import use_case.gamelibrary.GameLibraryOutputBoundary;
 import use_case.login.LoginInputBoundary;
 import use_case.login.LoginInteractor;
 import use_case.login.LoginOutputBoundary;
@@ -33,10 +39,7 @@ import use_case.logout.LogoutOutputBoundary;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
-import view.LoggedInView;
-import view.LoginView;
-import view.SignupView;
-import view.ViewManager;
+import view.*;
 
 /**
  * The AppBuilder class is responsible for putting together the pieces of
@@ -53,7 +56,7 @@ public class AppBuilder {
     private final JPanel cardPanel = new JPanel();
     private final CardLayout cardLayout = new CardLayout();
     // thought question: is the hard dependency below a problem?
-    private final UserFactory userFactory = new CommonUserFactory();
+    private final PlayerFactory playerFactory = new CommonPlayerFactory();
     private final ViewManagerModel viewManagerModel = new ViewManagerModel();
     private final ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
 
@@ -63,12 +66,40 @@ public class AppBuilder {
     private SignupView signupView;
     private SignupViewModel signupViewModel;
     private LoginViewModel loginViewModel;
-    private LoggedInViewModel loggedInViewModel;
-    private LoggedInView loggedInView;
+    private GameLibraryViewModel gameLibraryViewModel;
+    private GameLibraryView gameLibraryView;
     private LoginView loginView;
+
+    private ChangePasswordView changepasswordView;
+    private ChangePasswordViewModel changepasswordViewModel;
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
+    }
+
+    /**
+     * Adds the Change Password View to the application.
+     * @return this builder
+     */
+    public AppBuilder addChangePasswordView() {
+        changepasswordViewModel = new ChangePasswordViewModel();
+        changepasswordView = new ChangePasswordView(changepasswordViewModel);
+        cardPanel.add(changepasswordView, changepasswordView.getViewName());
+        return this;
+    }
+
+    /**
+     * Adds the Game Library Case to the application.
+     * @return this builder
+     */
+    public AppBuilder addGameLibraryUseCase() {
+        final GameLibraryOutputBoundary gameLibraryOutputBoundary = new GameLibraryPresenter(viewManagerModel,
+                changepasswordViewModel);
+        final GameLibraryInputBoundary loggedInInteracter = new GameLibraryInteractor(gameLibraryOutputBoundary);
+
+        final GameLibraryController gameLibraryController = new GameLibraryController(loggedInInteracter);
+        gameLibraryView.setGameLibraryController(gameLibraryController);
+        return this;
     }
 
     /**
@@ -94,13 +125,13 @@ public class AppBuilder {
     }
 
     /**
-     * Adds the LoggedIn View to the application.
+     * Adds the Game Library View to the application.
      * @return this builder
      */
-    public AppBuilder addLoggedInView() {
-        loggedInViewModel = new LoggedInViewModel();
-        loggedInView = new LoggedInView(loggedInViewModel);
-        cardPanel.add(loggedInView, loggedInView.getViewName());
+    public AppBuilder addGameLibraryView() {
+        gameLibraryViewModel = new GameLibraryViewModel();
+        gameLibraryView = new GameLibraryView(gameLibraryViewModel);
+        cardPanel.add(gameLibraryView, gameLibraryView.getViewName());
         return this;
     }
 
@@ -112,7 +143,7 @@ public class AppBuilder {
         final SignupOutputBoundary signupOutputBoundary = new SignupPresenter(viewManagerModel,
                 signupViewModel, loginViewModel);
         final SignupInputBoundary userSignupInteractor = new SignupInteractor(
-                userDataAccessObject, signupOutputBoundary, userFactory);
+                userDataAccessObject, signupOutputBoundary, playerFactory);
 
         final SignupController controller = new SignupController(userSignupInteractor);
         signupView.setSignupController(controller);
@@ -125,7 +156,7 @@ public class AppBuilder {
      */
     public AppBuilder addLoginUseCase() {
         final LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel,
-                loggedInViewModel, loginViewModel);
+                gameLibraryViewModel, loginViewModel, signupViewModel);
         final LoginInputBoundary loginInteractor = new LoginInteractor(
                 userDataAccessObject, loginOutputBoundary);
 
@@ -140,14 +171,16 @@ public class AppBuilder {
      */
     public AppBuilder addChangePasswordUseCase() {
         final ChangePasswordOutputBoundary changePasswordOutputBoundary =
-                new ChangePasswordPresenter(loggedInViewModel);
+                new ChangePasswordPresenter(viewManagerModel, changepasswordViewModel, loginViewModel,
+                        gameLibraryViewModel);
 
         final ChangePasswordInputBoundary changePasswordInteractor =
-                new ChangePasswordInteractor(userDataAccessObject, changePasswordOutputBoundary, userFactory);
+                new ChangePasswordInteractor(userDataAccessObject, changePasswordOutputBoundary, playerFactory);
 
         final ChangePasswordController changePasswordController =
                 new ChangePasswordController(changePasswordInteractor);
-        loggedInView.setChangePasswordController(changePasswordController);
+
+        changepasswordView.setChangePasswordController(changePasswordController);
         return this;
     }
 
@@ -157,13 +190,13 @@ public class AppBuilder {
      */
     public AppBuilder addLogoutUseCase() {
         final LogoutOutputBoundary logoutOutputBoundary = new LogoutPresenter(viewManagerModel,
-                loggedInViewModel, loginViewModel);
+                gameLibraryViewModel, loginViewModel);
 
         final LogoutInputBoundary logoutInteractor =
                 new LogoutInteractor(userDataAccessObject, logoutOutputBoundary);
 
         final LogoutController logoutController = new LogoutController(logoutInteractor);
-        loggedInView.setLogoutController(logoutController);
+        gameLibraryView.setLogoutController(logoutController);
         return this;
     }
 

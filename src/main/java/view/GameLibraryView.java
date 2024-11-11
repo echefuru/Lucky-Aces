@@ -32,18 +32,30 @@ public class GameLibraryView extends JPanel implements PropertyChangeListener {
 
     private final JButton changePassword;
 
+    private final JButton[] games;
+
     // @SuppressWarnings("checkstyle:UnusedLocalVariable")
     public GameLibraryView(GameLibraryViewModel gameLibraryViewModel) {
         this.gameLibraryViewModel = gameLibraryViewModel;
         this.gameLibraryViewModel.addPropertyChangeListener(this);
 
+        final String[] availableGames = gameLibraryViewModel.getState().getAvailableGames();
+
         final JLabel title = new JLabel("Game Library Screen");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        final JPanel game1 = new JPanel();
-        game1.add(new JButton("Black Jack"));
+        final JPanel gameSelection = new JPanel();
+        gameSelection.setLayout(new BoxLayout(gameSelection, BoxLayout.Y_AXIS));
+        gameSelection.setAlignmentX(Component.CENTER_ALIGNMENT);
+        this.games = new JButton[availableGames.length];
+        for (int i = 0; i < availableGames.length; i++) {
+            games[i] = new JButton(availableGames[i]);
+            games[i].setAlignmentX(Component.CENTER_ALIGNMENT);
+            gameSelection.add(games[i]);
+        }
 
-        final JLabel playerIDInfo = new JLabel("Currently logged in: ");
+        final JLabel playerIDInfo = new JLabel("Currently logged in as: ");
+        playerIDInfo.setAlignmentX(Component.CENTER_ALIGNMENT);
         playerID = new JLabel();
 
         final JPanel buttons = new JPanel();
@@ -83,11 +95,21 @@ public class GameLibraryView extends JPanel implements PropertyChangeListener {
                 }
         );
 
+        for (JButton game : games) {
+            game.addActionListener(
+                    evt -> {
+                        if (evt.getSource().equals(game)) {
+                            gameLibraryController.execute(game.getText());
+                        }
+                    }
+            );
+        }
+
         this.add(title);
         this.add(playerIDInfo);
         this.add(playerID);
 
-        this.add(game1);
+        this.add(gameSelection);
         this.add(passwordErrorField);
         this.add(buttons);
     }

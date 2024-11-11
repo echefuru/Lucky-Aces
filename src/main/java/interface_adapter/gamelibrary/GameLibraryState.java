@@ -1,7 +1,9 @@
 package interface_adapter.gamelibrary;
 
+
+
 /**
- * The State information representing the logged-in user.
+ * The State information representing the logged-in user at the game library screen.
  */
 public class GameLibraryState {
     private String playerID = "";
@@ -9,10 +11,14 @@ public class GameLibraryState {
     private String password = "";
     private String passwordError;
 
+    // TODO: Find a better way to implement the list of games
+    private String[] availableGames = {"Blackjack", "Placeholder"};
+
     public GameLibraryState(GameLibraryState copy) {
-        playerID = copy.playerID;
-        password = copy.password;
-        passwordError = copy.passwordError;
+        this.playerID = copy.playerID;
+        this.password = copy.password;
+        this.passwordError = copy.passwordError;
+        this.availableGames = copy.availableGames;
     }
 
     // Because of the previous copy constructor, the default constructor must be explicit.
@@ -38,5 +44,9 @@ public class GameLibraryState {
 
     public String getPassword() {
         return password;
+    }
+
+    public String[] getAvailableGames() {
+        return this.availableGames;
     }
 }

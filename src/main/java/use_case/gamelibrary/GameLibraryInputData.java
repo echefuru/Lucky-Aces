@@ -5,7 +5,13 @@ package use_case.gamelibrary;
  */
 public class GameLibraryInputData {
 
-    public GameLibraryInputData() {
+    private final String selectedGame;
 
+    public GameLibraryInputData(String selectedGame) {
+        this.selectedGame = selectedGame;
+    }
+
+    String getSelectedGame() {
+        return this.selectedGame;
     }
 }

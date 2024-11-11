@@ -5,16 +5,24 @@ package entity.game_info;
  */
 public class BlackjackGameInfo implements GameInfo {
 
+    private final String name;
+    private final String description;
+
+    public BlackjackGameInfo() {
+        this.name = "Blackjack";
+        // TODO: Write a better description
+        this.description = "Also named \"21\". The goal of the game is to have cards that add up to"
+                           + "points lower than or equal to 21, but higher than the dealer.";
+    }
+
     @Override
     public String getName() {
-        return "Blackjack";
+        return name;
     }
 
     @Override
     public String getDescription() {
-        // TODO: Write a better description
-        return "Also named \"21\". The goal of the game is to have cards that add up to"
-                + "points lower than 21, but higher than the dealer.";
+        return description;
     }
 
     @Override

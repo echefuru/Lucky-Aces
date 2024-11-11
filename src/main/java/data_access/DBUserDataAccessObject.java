@@ -5,8 +5,8 @@ import java.io.IOException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import entity.User;
-import entity.UserFactory;
+import entity.player.Player;
+import entity.player.PlayerFactory;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -31,15 +31,15 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface,
     private static final String USERNAME = "username";
     private static final String PASSWORD = "password";
     private static final String MESSAGE = "message";
-    private final UserFactory userFactory;
+    private final PlayerFactory playerFactory;
 
-    public DBUserDataAccessObject(UserFactory userFactory) {
-        this.userFactory = userFactory;
+    public DBUserDataAccessObject(PlayerFactory playerFactory) {
+        this.playerFactory = playerFactory;
         // No need to do anything to reinitialize a user list! The data is the cloud that may be miles away.
     }
 
     @Override
-    public User get(String username) {
+    public Player get(String username) {
         // Make an API call to get the user object.
         final OkHttpClient client = new OkHttpClient().newBuilder().build();
         final Request request = new Request.Builder()
@@ -56,7 +56,7 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface,
                 final String name = userJSONObject.getString(USERNAME);
                 final String password = userJSONObject.getString(PASSWORD);
 
-                return userFactory.create(name, password);
+                return playerFactory.create(name, password);
             }
             else {
                 throw new RuntimeException(responseBody.getString(MESSAGE));
@@ -68,7 +68,7 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface,
     }
 
     @Override
-    public void setCurrentUsername(String name) {
+    public void setCurrentPlayerID(String name) {
         // this isn't implemented for the lab
     }
 
@@ -93,15 +93,15 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface,
     }
 
     @Override
-    public void save(User user) {
+    public void save(Player player) {
         final OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
 
         // POST METHOD
         final MediaType mediaType = MediaType.parse(CONTENT_TYPE_JSON);
         final JSONObject requestBody = new JSONObject();
-        requestBody.put(USERNAME, user.getName());
-        requestBody.put(PASSWORD, user.getPassword());
+        requestBody.put(USERNAME, player.getPlayerID());
+        requestBody.put(PASSWORD, player.getPassword());
         final RequestBody body = RequestBody.create(requestBody.toString(), mediaType);
         final Request request = new Request.Builder()
                 .url("http://vm003.teach.cs.toronto.edu:20112/user")
@@ -126,15 +126,15 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface,
     }
 
     @Override
-    public void changePassword(User user) {
+    public void changePassword(Player player) {
         final OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
 
         // POST METHOD
         final MediaType mediaType = MediaType.parse(CONTENT_TYPE_JSON);
         final JSONObject requestBody = new JSONObject();
-        requestBody.put(USERNAME, user.getName());
-        requestBody.put(PASSWORD, user.getPassword());
+        requestBody.put(USERNAME, player.getPlayerID());
+        requestBody.put(PASSWORD, player.getPassword());
         final RequestBody body = RequestBody.create(requestBody.toString(), mediaType);
         final Request request = new Request.Builder()
                 .url("http://vm003.teach.cs.toronto.edu:20112/user")
@@ -159,7 +159,7 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface,
     }
 
     @Override
-    public String getCurrentUsername() {
+    public String getCurrentPlayerID() {
         return null;
     }
 }

@@ -3,7 +3,7 @@ package data_access;
 import java.util.HashMap;
 import java.util.Map;
 
-import entity.User;
+import entity.player.Player;
 import use_case.change_password.ChangePasswordUserDataAccessInterface;
 import use_case.login.LoginUserDataAccessInterface;
 import use_case.logout.LogoutUserDataAccessInterface;
@@ -18,7 +18,7 @@ public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterfa
         ChangePasswordUserDataAccessInterface,
         LogoutUserDataAccessInterface {
 
-    private final Map<String, User> users = new HashMap<>();
+    private final Map<String, Player> users = new HashMap<>();
 
     private String currentUsername;
 
@@ -28,28 +28,28 @@ public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterfa
     }
 
     @Override
-    public void save(User user) {
-        users.put(user.getName(), user);
+    public void save(Player player) {
+        users.put(player.getPlayerID(), player);
     }
 
     @Override
-    public User get(String username) {
+    public Player get(String username) {
         return users.get(username);
     }
 
     @Override
-    public void changePassword(User user) {
+    public void changePassword(Player player) {
         // Replace the old entry with the new password
-        users.put(user.getName(), user);
+        users.put(player.getPlayerID(), player);
     }
 
     @Override
-    public void setCurrentUsername(String name) {
+    public void setCurrentPlayerID(String name) {
         this.currentUsername = name;
     }
 
     @Override
-    public String getCurrentUsername() {
+    public String getCurrentPlayerID() {
         return this.currentUsername;
     }
 }

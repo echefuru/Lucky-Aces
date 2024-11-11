@@ -12,8 +12,8 @@ public interface Player {
     String getPlayerID();
 
     /**
-     * Returns the playerID of the user.
-     * @return the playerID of the user.
+     * Returns the password of the user.
+     * @return the password of the user.
      */
     String getPassword();
 

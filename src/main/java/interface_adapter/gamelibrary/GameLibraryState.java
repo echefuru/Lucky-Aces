@@ -1,7 +1,5 @@
 package interface_adapter.gamelibrary;
 
-
-
 /**
  * The State information representing the logged-in user at the game library screen.
  */
@@ -40,6 +38,10 @@ public class GameLibraryState {
 
     public void setPasswordError(String passwordError) {
         this.passwordError = passwordError;
+    }
+
+    public void setAvailableGames(String[] availableGames) {
+        this.availableGames = availableGames;
     }
 
     public String getPassword() {

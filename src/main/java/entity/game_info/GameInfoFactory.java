@@ -12,7 +12,7 @@ public class GameInfoFactory {
      */
     public GameInfo getGameInfo(String name) {
         GameInfo gameInfo = null;
-        if ("blackjack".equals(name)) {
+        if ("Blackjack".equals(name)) {
             gameInfo = new BlackjackGameInfo();
         }
 

@@ -15,13 +15,13 @@ computer players.
 **[team story]**
 
 
-- Barrett enters the game library which displays all available card games. He can search for games by their names,
-or select a filter so only games that fulfill a certain criteria are displayed.
+- Barrett selects the card game to play, and he can read the rules of the selected card game,
+or configure aspects of the game such as number of computer players or other game-specific options.
 **[Amber’s story]**
 
 
-- Barrett selects the card game to play, and he can read the rules of the selected card game,
-or configure aspects of the game such as number of computer players or other game-specific options. 
+- Barrett enters the game library which displays all available card games. He can search for games by their names,
+or select a filter so only games that fulfill a certain criteria are displayed. 
 **[Jiakun’s story]**
 
 

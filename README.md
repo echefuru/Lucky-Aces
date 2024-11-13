@@ -2,8 +2,8 @@
 
 ## Group Members
 
-- **Artour Gassanov: [AmberMLiu](https://github.com/AmberMLiu)**
-- **Amber Mantong Liu: [artourguoft](https://github.com/artourguoft)**
+- **Amber Mantong Liu: [AmberMLiu](https://github.com/AmberMLiu)**
+- **Artour Gassanov: [artourguoft](https://github.com/artourguoft)**
 - **Jiakun Chen: [echefuru](https://github.com/echefuru)**
 - **Xiaoyi Wang: [EstelleWang-UofT](https://github.com/EstelleWang-UofT)**
 * * *

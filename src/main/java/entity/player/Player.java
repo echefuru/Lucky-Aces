@@ -1,15 +1,15 @@
-package entity;
+package entity.player;
 
 /**
  * The representation of a user in our program.
  */
-public interface User {
+public interface Player {
 
     /**
-     * Returns the username of the user.
-     * @return the username of the user.
+     * Returns the playerID of the user.
+     * @return the playerID of the user.
      */
-    String getName();
+    String getPlayerID();
 
     /**
      * Returns the password of the user.

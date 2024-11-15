@@ -1,15 +1,15 @@
-package entity;
+package entity.player;
 
 /**
  * Factory for creating users.
  */
-public interface UserFactory {
+public interface PlayerFactory {
     /**
      * Creates a new User.
-     * @param name the name of the new user
+     * @param playerID the name of the new user
      * @param password the password of the new user
      * @return the new user
      */
-    User create(String name, String password);
+    Player create(String playerID, String password);
 
 }

@@ -17,13 +17,13 @@ public class LogoutController {
 
     /**
      * Executes the Logout Use Case.
-     * @param username the username of the user logging in
+     * @param playerID the playerID of the user logging in
      */
-    public void execute(String username) {
+    public void execute(String playerID) {
         // run the use case interactor for the logout use case
-        // 1. instantiate the `LogoutInputData`, which should contain the username.
+        // 1. instantiate the `LogoutInputData`, which should contain the playerID.
         // 2. tell the Interactor to execute.
-        final LogoutInputData logoutInputData = new LogoutInputData(username);
+        final LogoutInputData logoutInputData = new LogoutInputData(playerID);
         logoutUseCaseInteractor.execute(logoutInputData);
     }
 }

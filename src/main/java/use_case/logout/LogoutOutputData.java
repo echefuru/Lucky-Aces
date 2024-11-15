@@ -5,17 +5,17 @@ package use_case.logout;
  */
 public class LogoutOutputData {
 
-    private String username;
+    private String playerID;
     private boolean useCaseFailed;
 
-    public LogoutOutputData(String username, boolean useCaseFailed) {
+    public LogoutOutputData(String playerID, boolean useCaseFailed) {
         // save the parameters in the instance variables.
-        this.username = username;
+        this.playerID = playerID;
         this.useCaseFailed = useCaseFailed;
     }
 
-    public String getUsername() {
-        return username;
+    public String getPlayerID() {
+        return playerID;
     }
 
     public boolean isUseCaseFailed() {

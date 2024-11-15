@@ -1,31 +1,31 @@
-package interface_adapter.change_password;
+package interface_adapter.gamelibrary;
 
 /**
  * The State information representing the logged-in user.
  */
-public class LoggedInState {
-    private String username = "";
+public class GameLibraryState {
+    private String playerID = "";
 
     private String password = "";
     private String passwordError;
 
-    public LoggedInState(LoggedInState copy) {
-        username = copy.username;
+    public GameLibraryState(GameLibraryState copy) {
+        playerID = copy.playerID;
         password = copy.password;
         passwordError = copy.passwordError;
     }
 
     // Because of the previous copy constructor, the default constructor must be explicit.
-    public LoggedInState() {
+    public GameLibraryState() {
 
     }
 
-    public String getUsername() {
-        return username;
+    public String getPlayerID() {
+        return playerID;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setPlayerID(String playerID) {
+        this.playerID = playerID;
     }
 
     public void setPassword(String password) {

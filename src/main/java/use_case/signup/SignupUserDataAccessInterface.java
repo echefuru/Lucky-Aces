@@ -1,6 +1,6 @@
 package use_case.signup;
 
-import entity.User;
+import entity.player.Player;
 
 /**
  * DAO for the Signup Use Case.
@@ -8,15 +8,15 @@ import entity.User;
 public interface SignupUserDataAccessInterface {
 
     /**
-     * Checks if the given username exists.
-     * @param username the username to look for
-     * @return true if a user with the given username exists; false otherwise
+     * Checks if the given playerID exists.
+     * @param playerID the playerID to look for
+     * @return true if a player with the given playerID exists; false otherwise
      */
-    boolean existsByName(String username);
+    boolean existsByName(String playerID);
 
     /**
      * Saves the user.
-     * @param user the user to save
+     * @param player the user to save
      */
-    void save(User user);
+    void save(Player player);
 }

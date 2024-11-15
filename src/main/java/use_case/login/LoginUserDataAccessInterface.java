@@ -1,6 +1,6 @@
 package use_case.login;
 
-import entity.User;
+import entity.player.Player;
 
 /**
  * DAO for the Login Use Case.
@@ -8,34 +8,34 @@ import entity.User;
 public interface LoginUserDataAccessInterface {
 
     /**
-     * Checks if the given username exists.
-     * @param username the username to look for
-     * @return true if a user with the given username exists; false otherwise
+     * Checks if the given playerID exists.
+     * @param playerID the playerID to look for
+     * @return true if a user with the given playerID exists; false otherwise
      */
-    boolean existsByName(String username);
+    boolean existsByName(String playerID);
 
     /**
      * Saves the user.
-     * @param user the user to save
+     * @param player the user to save
      */
-    void save(User user);
+    void save(Player player);
 
     /**
-     * Returns the user with the given username.
-     * @param username the username to look up
-     * @return the user with the given username
+     * Returns the user with the given playerID.
+     * @param playerID the playerID to look up
+     * @return the player with the given playerID
      */
-    User get(String username);
+    Player get(String playerID);
 
     /**
-     * Returns the username of the curren user of the application.
-     * @return the username of the current user; null indicates that no one is logged into the application.
+     * Returns the playerID of the curren user of the application.
+     * @return the playerID of the current user; null indicates that no one is logged into the application.
      */
-    String getCurrentUsername();
+    String getCurrentPlayerID();
 
     /**
-     * Sets the username indicating who is the current user of the application.
-     * @param username the new current username; null to indicate that no one is currently logged into the application.
+     * Sets the playerID indicating who is the current user of the application.
+     * @param playerID the new current playerID; null to indicate that no one is currently logged into the application.
      */
-    void setCurrentUsername(String username);
+    void setCurrentPlayerID(String playerID);
 }

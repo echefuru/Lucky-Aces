@@ -10,8 +10,8 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import entity.User;
-import entity.UserFactory;
+import entity.player.Player;
+import entity.player.PlayerFactory;
 import use_case.change_password.ChangePasswordUserDataAccessInterface;
 import use_case.login.LoginUserDataAccessInterface;
 import use_case.signup.SignupUserDataAccessInterface;
@@ -27,10 +27,10 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface,
 
     private final File csvFile;
     private final Map<String, Integer> headers = new LinkedHashMap<>();
-    private final Map<String, User> accounts = new HashMap<>();
+    private final Map<String, Player> accounts = new HashMap<>();
     private String currentUsername;
 
-    public FileUserDataAccessObject(String csvPath, UserFactory userFactory) throws IOException {
+    public FileUserDataAccessObject(String csvPath, PlayerFactory playerFactory) throws IOException {
 
         csvFile = new File(csvPath);
         headers.put("username", 0);
@@ -53,8 +53,8 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface,
                     final String[] col = row.split(",");
                     final String username = String.valueOf(col[headers.get("username")]);
                     final String password = String.valueOf(col[headers.get("password")]);
-                    final User user = userFactory.create(username, password);
-                    accounts.put(username, user);
+                    final Player player = playerFactory.create(username, password);
+                    accounts.put(username, player);
                 }
             }
         }
@@ -67,9 +67,9 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface,
             writer.write(String.join(",", headers.keySet()));
             writer.newLine();
 
-            for (User user : accounts.values()) {
+            for (Player player : accounts.values()) {
                 final String line = String.format("%s,%s",
-                        user.getName(), user.getPassword());
+                        player.getPlayerID(), player.getPassword());
                 writer.write(line);
                 writer.newLine();
             }
@@ -83,23 +83,23 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface,
     }
 
     @Override
-    public void save(User user) {
-        accounts.put(user.getName(), user);
+    public void save(Player player) {
+        accounts.put(player.getPlayerID(), player);
         this.save();
     }
 
     @Override
-    public User get(String username) {
+    public Player get(String username) {
         return accounts.get(username);
     }
 
     @Override
-    public void setCurrentUsername(String name) {
+    public void setCurrentPlayerID(String name) {
         this.currentUsername = name;
     }
 
     @Override
-    public String getCurrentUsername() {
+    public String getCurrentPlayerID() {
         return this.currentUsername;
     }
 
@@ -109,9 +109,9 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface,
     }
 
     @Override
-    public void changePassword(User user) {
+    public void changePassword(Player player) {
         // Replace the User object in the map
-        accounts.put(user.getName(), user);
+        accounts.put(player.getPlayerID(), player);
         save();
     }
 }

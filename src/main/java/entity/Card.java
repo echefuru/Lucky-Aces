@@ -1,9 +1,9 @@
 package entity;
 
 /**
- * ADD DESCRIPTION HERE.
+ * A Card, with a Rank and Suit.
  */
-public class Card {
+public class Card implements Comparable<Card> {
 
     private final Rank rank;
     private final Suit suit;
@@ -19,5 +19,10 @@ public class Card {
 
     public Rank getRank() {
         return rank;
+    }
+
+    @Override
+    public int compareTo(Card card) {
+        return this.rank.getRankValue() - card.rank.getRankValue();
     }
 }

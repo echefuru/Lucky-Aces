@@ -1,5 +1,8 @@
 package entity;
 
+/**
+ * A Deck of Cards.
+ */
 public class Deck {
 
     private final String deckId;

@@ -5,6 +5,7 @@ import interface_adapter.change_password.ChangePasswordState;
 import interface_adapter.change_password.ChangePasswordViewModel;
 import use_case.change_password.ChangePasswordOutputData;
 import use_case.gamelibrary.GameLibraryOutputBoundary;
+import use_case.gamelibrary.GameLibraryOutputData;
 
 /**
  * The Presenter for the Game library Use Case.
@@ -20,7 +21,7 @@ public class GameLibraryPresenter implements GameLibraryOutputBoundary {
     }
 
     @Override
-    public void prepareSuccessView(ChangePasswordOutputData outputData) {
+    public void prepareSuccessView(GameLibraryOutputData outputData) {
 
     }
 

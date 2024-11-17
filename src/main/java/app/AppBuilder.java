@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
+import data_access.GameListDataAccessObject;
 import data_access.InMemoryUserDataAccessObject;
 import entity.player.CommonPlayerFactory;
 import entity.player.PlayerFactory;
@@ -62,6 +63,7 @@ public class AppBuilder {
 
     // thought question: is the hard dependency below a problem?
     private final InMemoryUserDataAccessObject userDataAccessObject = new InMemoryUserDataAccessObject();
+    private final GameListDataAccessObject gameListDataAccessObject = new GameListDataAccessObject();
 
     private SignupView signupView;
     private SignupViewModel signupViewModel;
@@ -95,9 +97,10 @@ public class AppBuilder {
     public AppBuilder addGameLibraryUseCase() {
         final GameLibraryOutputBoundary gameLibraryOutputBoundary = new GameLibraryPresenter(viewManagerModel,
                 changepasswordViewModel);
-        final GameLibraryInputBoundary loggedInInteracter = new GameLibraryInteractor(gameLibraryOutputBoundary);
+        final GameLibraryInputBoundary gameLibraryInteracter = new GameLibraryInteractor(gameLibraryOutputBoundary,
+                gameListDataAccessObject);
 
-        final GameLibraryController gameLibraryController = new GameLibraryController(loggedInInteracter);
+        final GameLibraryController gameLibraryController = new GameLibraryController(gameLibraryInteracter);
         gameLibraryView.setGameLibraryController(gameLibraryController);
         return this;
     }

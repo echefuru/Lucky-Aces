@@ -12,7 +12,7 @@ public interface GameLibraryOutputBoundary {
      * Prepares the success view for the game library Use Case.
      * @param outputData the output data
      */
-    void prepareSuccessView(ChangePasswordOutputData outputData);
+    void prepareSuccessView(GameLibraryOutputData outputData);
 
     /**
      * Prepares the failure view for the game library Use Case.

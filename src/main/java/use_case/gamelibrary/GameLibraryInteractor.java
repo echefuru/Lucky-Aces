@@ -1,5 +1,6 @@
 package use_case.gamelibrary;
 
+import data_access.GameListDataAccessObject;
 import interface_adapter.change_password.ChangePasswordState;
 
 /**
@@ -7,10 +8,13 @@ import interface_adapter.change_password.ChangePasswordState;
  */
 public class GameLibraryInteractor implements GameLibraryInputBoundary {
 
-    private final GameLibraryOutputBoundary gamePresenter;
+    private final GameLibraryOutputBoundary gameLibraryPresenter;
+    private final GameListDataAccessObject gameListDataAccessObject;
 
-    public GameLibraryInteractor(GameLibraryOutputBoundary gamePresenter) {
-        this.gamePresenter = gamePresenter;
+    public GameLibraryInteractor(GameLibraryOutputBoundary gameLibraryPresenter,
+                                 GameListDataAccessObject gameListDataAccessObject) {
+        this.gameLibraryPresenter = gameLibraryPresenter;
+        this.gameListDataAccessObject = gameListDataAccessObject;
     }
 
     @Override
@@ -18,10 +22,18 @@ public class GameLibraryInteractor implements GameLibraryInputBoundary {
         final String selectedGame = gameLibraryInputData.getSelectedGame();
         // TODO: Do something
         System.out.println("Selected game: " + selectedGame);
+        if (gameListDataAccessObject.gameExists(selectedGame)) {
+            final GameLibraryOutputData gameLibraryOutputData = new GameLibraryOutputData(selectedGame);
+            gameLibraryPresenter.prepareSuccessView(gameLibraryOutputData);
+        }
+        else {
+            gameLibraryPresenter.prepareFailView("Game not found.");
+        }
+
     }
 
     @Override
     public void switchToChangePasswordView(ChangePasswordState changePasswordState) {
-        gamePresenter.switchToChangePasswordView(changePasswordState);
+        gameLibraryPresenter.switchToChangePasswordView(changePasswordState);
     }
 }

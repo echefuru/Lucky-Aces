@@ -11,9 +11,11 @@ public class ComputerPlayer implements Player {
 
     private final String playerID;
     private List<Card> cards;
+    private String difficulty;
 
     public ComputerPlayer(String playerID) {
         this.playerID = playerID;
+        this.difficulty = "Easy";
     }
 
     @Override

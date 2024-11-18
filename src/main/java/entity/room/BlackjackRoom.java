@@ -32,8 +32,6 @@ public class BlackjackRoom implements Room {
         this.round = 1;
         this.curTurnPlayer = curPlayers.get(0).getPlayerID();
         this.status = "Initializing";
-
-        // TODO: create deck here...I hope this is how it's supposed to be:
         final ApiDataAccessInterface apiDataAccessInterface = new ApiDataAccess();
         this.deck = apiDataAccessInterface.createDeck();
     }

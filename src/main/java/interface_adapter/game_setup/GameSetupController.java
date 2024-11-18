@@ -23,6 +23,7 @@ public class GameSetupController implements GameSetupOutputBoundary {
 
     }
 
+    @Override
     public void switchToGameLibraryView() {
         gameSetupUseCaseInteractor.switchToGameLibraryView();
     }

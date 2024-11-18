@@ -1,7 +1,6 @@
 package use_case.gamelibrary;
 
 import interface_adapter.change_password.ChangePasswordState;
-import use_case.change_password.ChangePasswordOutputData;
 
 /**
  * The output boundary for the Logged In Use Case.

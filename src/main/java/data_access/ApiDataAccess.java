@@ -2,8 +2,8 @@ package data_access;
 
 import entity.Card;
 import entity.Deck;
-import entity.Suit;
 import entity.Rank;
+import entity.Suit;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;

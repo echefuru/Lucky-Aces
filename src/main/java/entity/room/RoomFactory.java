@@ -1,5 +1,6 @@
 package entity.room;
 
+import java.io.IOException;
 import java.util.List;
 
 import entity.player.Player;
@@ -15,6 +16,6 @@ public interface RoomFactory {
      * @param curPlayers the current Players in the room
      * @return the new room
      */
-    Room createRoom(String roomName, String gameName, List<Player> curPlayers);
+    Room createRoom(String roomName, String gameName, List<Player> curPlayers) throws IOException;
 
 }

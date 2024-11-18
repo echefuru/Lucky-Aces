@@ -5,7 +5,7 @@ package entity.room;
  */
 public interface Room {
     /**
-     * Returns the status of the room, the room is either "In Progress" or "Over".
+     * Returns the status of the room: "Initializing", "In Progress", or "Over".
      * @return the status of the room.
      */
     String getStatus();

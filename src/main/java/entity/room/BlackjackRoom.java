@@ -28,7 +28,7 @@ public class BlackjackRoom implements Room {
         this.curPlayers = curPlayers;
         this.round = 1;
         this.curTurnPlayer = curPlayers.get(0).getPlayerID();
-        this.status = "In Progress";
+        this.status = "Initializing";
     }
 
     @Override

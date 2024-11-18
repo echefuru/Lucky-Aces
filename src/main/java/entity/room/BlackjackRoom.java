@@ -2,7 +2,7 @@ package entity.room;
 
 import java.util.List;
 
-import entity.player.CommonPlayer;
+import entity.player.Player;
 
 /**
  * A Blackjack-implementation of the Room interface.
@@ -11,7 +11,7 @@ public class BlackjackRoom implements Room {
 
     private final String roomName;
     private final String gameName;
-    private List<CommonPlayer> curPlayers;
+    private List<Player> curPlayers;
     private int round;
     private String curTurnPlayer;
     private String status;
@@ -22,7 +22,7 @@ public class BlackjackRoom implements Room {
     // TODO: should create ComputerPlayer class.
     // TODO: finally, update the initiator and other affected classes.
 
-    public BlackjackRoom(String roomName, String gameName, List<CommonPlayer> curPlayers) {
+    public BlackjackRoom(String roomName, String gameName, List<Player> curPlayers) {
         this.roomName = roomName;
         this.gameName = gameName;
         this.curPlayers = curPlayers;

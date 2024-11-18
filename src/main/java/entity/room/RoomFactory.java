@@ -2,7 +2,7 @@ package entity.room;
 
 import java.util.List;
 
-import entity.player.CommonPlayer;
+import entity.player.Player;
 
 /**
  * Factory for creating game rooms.
@@ -15,6 +15,6 @@ public interface RoomFactory {
      * @param curPlayers the current Players in the room
      * @return the new room
      */
-    Room createRoom(String roomName, String gameName, List<CommonPlayer> curPlayers);
+    Room createRoom(String roomName, String gameName, List<Player> curPlayers);
 
 }

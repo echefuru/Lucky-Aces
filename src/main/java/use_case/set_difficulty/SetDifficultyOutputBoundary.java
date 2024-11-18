@@ -16,8 +16,4 @@ public interface SetDifficultyOutputBoundary {
      */
     void prepareFailView(String errorMessage);
 
-//    /**
-//     * Switches to the GameRoom View.
-//     */
-//    void switchToGameRoomView();
 }

@@ -11,8 +11,4 @@ public interface SetDifficultyInputBoundary {
      */
     void execute(SetDifficultyInputData setDifficultyInputData);
 
-    /**
-     * Executes the switch to game room view use case.
-     */
-    void switchToGameRoomView();
 }

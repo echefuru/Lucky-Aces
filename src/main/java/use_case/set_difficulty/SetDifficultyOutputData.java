@@ -5,26 +5,26 @@ package use_case.set_difficulty;
  */
 public class SetDifficultyOutputData {
 
-    private final int difficulty;
+    private final String newDifficulty;
     private final String playerID;
     private final String roomName;
 
-    public SetDifficultyOutputData(int difficulty, String playerID, String roomName) {
-        this.difficulty = difficulty;
+    public SetDifficultyOutputData(String newDifficulty, String playerID, String roomName) {
+        this.newDifficulty = newDifficulty;
         this.playerID = playerID;
         this.roomName = roomName;
     }
 
-    public int getDifficulty() {
-        return difficulty;
+    public String getNewDifficulty() {
+        return newDifficulty;
     }
 
     public String getPlayerID() {
         return playerID;
     }
 
-//    public String getRoomName() {
-//        return roomName;
+    public String getRoomName() {
+        return roomName;
     }
 
 }

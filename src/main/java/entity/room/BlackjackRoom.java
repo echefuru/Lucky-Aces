@@ -9,8 +9,8 @@ import entity.player.CommonPlayer;
  */
 public class BlackjackRoom implements Room {
 
-    private String roomName;
-    private String gameName;
+    private final String roomName;
+    private final String gameName;
     private List<CommonPlayer> curPlayers;
     private int round;
     private String curTurnPlayer;
@@ -37,7 +37,7 @@ public class BlackjackRoom implements Room {
     }
 
     public int getBankroll() {
-        // TODO: need to get Bankroll to make a bet each round.
+        // TODO: need to get Bankroll to make a bet each round. Fix this.
         return 1;
     }
 

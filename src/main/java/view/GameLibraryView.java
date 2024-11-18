@@ -29,11 +29,13 @@ public class GameLibraryView extends JPanel implements PropertyChangeListener {
 
     private final JLabel playerID;
 
-    private final JButton blackJack = new JButton("Black Jack");
-    private final JButton placeHolder = new JButton("Place Holder");
-
     private final JButton search = new JButton("Search");
     private final JTextField searchInputField = new JTextField(15);
+
+    private final JLabel errorField = new JLabel();
+
+    private JButton[] games;
+    private final JPanel gameSelection = new JPanel();
 
     private final JButton logOut = new JButton("Log Out");
     private final JButton changePassword = new JButton("Change Password");
@@ -43,21 +45,26 @@ public class GameLibraryView extends JPanel implements PropertyChangeListener {
         this.gameLibraryViewModel = gameLibraryViewModel;
         this.gameLibraryViewModel.addPropertyChangeListener(this);
 
+        final String[] availableGames = gameLibraryViewModel.getState().getAvailableGames();
+
         final JLabel title = new JLabel("Game Library Screen");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        final JLabel playerIDInfo = new JLabel("Currently logged in: ");
+        gameSelection.setLayout(new BoxLayout(gameSelection, BoxLayout.Y_AXIS));
+        gameSelection.setAlignmentX(Component.CENTER_ALIGNMENT);
+        setGameSelection(availableGames);
+
+        final JLabel playerIDInfo = new JLabel("Currently logged in as: ");
+        playerIDInfo.setAlignmentX(Component.CENTER_ALIGNMENT);
+
         playerID = new JLabel();
 
         final JPanel searchPanel = new JPanel();
         searchPanel.add(searchInputField);
         searchPanel.add(search);
 
-        final JPanel game1 = new JPanel();
-        game1.add(blackJack);
-        game1.add(placeHolder);
-        game1.setLayout(new BoxLayout(game1, BoxLayout.Y_AXIS));
-        game1.setAlignmentX(Component.CENTER_ALIGNMENT);
+        final JPanel errorPanel = new JPanel();
+        errorPanel.add(errorField);
 
         final JPanel buttons = new JPanel();
         buttons.add(logOut);
@@ -95,8 +102,7 @@ public class GameLibraryView extends JPanel implements PropertyChangeListener {
                 evt -> {
                     if (evt.getSource().equals(search)) {
                         final String info = searchInputField.getText();
-                        for (Component comp: game1.getComponents()) {
-                            final JButton button = (JButton) comp;
+                        for (JButton button: games) {
                             setVisible(info, button);
                         }
                     }
@@ -108,7 +114,8 @@ public class GameLibraryView extends JPanel implements PropertyChangeListener {
         this.add(playerID);
 
         this.add(searchPanel);
-        this.add(game1);
+        this.add(errorPanel);
+        this.add(gameSelection);
         this.add(passwordErrorField);
         this.add(buttons);
     }
@@ -118,6 +125,9 @@ public class GameLibraryView extends JPanel implements PropertyChangeListener {
         if (evt.getPropertyName().equals("state")) {
             final GameLibraryState state = (GameLibraryState) evt.getNewValue();
             playerID.setText(state.getPlayerID());
+            this.setGameSelection(state.getAvailableGames());
+
+            this.errorField.setText(state.getSelectGameError());
         }
     }
 
@@ -132,6 +142,27 @@ public class GameLibraryView extends JPanel implements PropertyChangeListener {
     public void setLogoutController(LogoutController logoutController) {
         // save the logout controller in the instance variable.
         this.logoutController = logoutController;
+    }
+
+    private void setGameSelection(String[] availableGames) {
+        this.gameSelection.removeAll();
+
+        this.games = new JButton[availableGames.length];
+        for (int i = 0; i < availableGames.length; i++) {
+            games[i] = new JButton(availableGames[i]);
+            games[i].setAlignmentX(Component.CENTER_ALIGNMENT);
+            gameSelection.add(games[i]);
+        }
+
+        for (JButton game : games) {
+            game.addActionListener(
+                    evt -> {
+                        if (evt.getSource().equals(game)) {
+                            gameLibraryController.execute(game.getText());
+                        }
+                    }
+            );
+        }
     }
 
     private void setVisible(String info, JButton button) {

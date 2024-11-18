@@ -7,12 +7,15 @@ import entity.player.Player;
  */
 public class LoginInteractor implements LoginInputBoundary {
     private final LoginUserDataAccessInterface userDataAccessObject;
+    private final LoginGameListDataAccessInterface gameListDataAccessObject;
     private final LoginOutputBoundary loginPresenter;
 
     public LoginInteractor(LoginUserDataAccessInterface userDataAccessInterface,
-                           LoginOutputBoundary loginOutputBoundary) {
+                           LoginOutputBoundary loginOutputBoundary,
+                           LoginGameListDataAccessInterface gameListDataAccessObject) {
         this.userDataAccessObject = userDataAccessInterface;
         this.loginPresenter = loginOutputBoundary;
+        this.gameListDataAccessObject = gameListDataAccessObject;
     }
 
     @Override
@@ -32,7 +35,9 @@ public class LoginInteractor implements LoginInputBoundary {
                 final Player player = userDataAccessObject.get(loginInputData.getPlayerID());
 
                 userDataAccessObject.setCurrentPlayerID(player.getPlayerID());
-                final LoginOutputData loginOutputData = new LoginOutputData(player.getPlayerID(), false);
+                final String[] availableGames = gameListDataAccessObject.getAvailableGames();
+                final LoginOutputData loginOutputData = new LoginOutputData(player.getPlayerID(), false,
+                        availableGames);
                 loginPresenter.prepareSuccessView(loginOutputData);
             }
         }

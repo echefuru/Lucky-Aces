@@ -6,13 +6,19 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
+import data_access.GameListDataAccessObject;
 import data_access.InMemoryUserDataAccessObject;
+import entity.game_info.GameInfo;
+import entity.game_info.GameInfoFactory;
 import entity.player.CommonPlayerFactory;
 import entity.player.PlayerFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.change_password.ChangePasswordPresenter;
 import interface_adapter.change_password.ChangePasswordViewModel;
+import interface_adapter.game_setup.GameSetupController;
+import interface_adapter.game_setup.GameSetupPresenter;
+import interface_adapter.game_setup.GameSetupViewModel;
 import interface_adapter.gamelibrary.GameLibraryController;
 import interface_adapter.gamelibrary.GameLibraryPresenter;
 import interface_adapter.gamelibrary.GameLibraryViewModel;
@@ -27,6 +33,9 @@ import interface_adapter.signup.SignupViewModel;
 import use_case.change_password.ChangePasswordInputBoundary;
 import use_case.change_password.ChangePasswordInteractor;
 import use_case.change_password.ChangePasswordOutputBoundary;
+import use_case.game_setup.GameSetupInputBoundary;
+import use_case.game_setup.GameSetupInteractor;
+import use_case.game_setup.GameSetupOutputBoundary;
 import use_case.gamelibrary.GameLibraryInputBoundary;
 import use_case.gamelibrary.GameLibraryInteractor;
 import use_case.gamelibrary.GameLibraryOutputBoundary;
@@ -39,7 +48,12 @@ import use_case.logout.LogoutOutputBoundary;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
-import view.*;
+import view.ChangePasswordView;
+import view.GameLibraryView;
+import view.GameSetupView;
+import view.LoginView;
+import view.SignupView;
+import view.ViewManager;
 
 /**
  * The AppBuilder class is responsible for putting together the pieces of
@@ -57,19 +71,22 @@ public class AppBuilder {
     private final CardLayout cardLayout = new CardLayout();
     // thought question: is the hard dependency below a problem?
     private final PlayerFactory playerFactory = new CommonPlayerFactory();
+    private final GameInfoFactory gameInfoFactory = new GameInfoFactory();
     private final ViewManagerModel viewManagerModel = new ViewManagerModel();
     private final ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
 
     // thought question: is the hard dependency below a problem?
     private final InMemoryUserDataAccessObject userDataAccessObject = new InMemoryUserDataAccessObject();
+    private final GameListDataAccessObject gameListDataAccessObject = new GameListDataAccessObject();
 
     private SignupView signupView;
     private SignupViewModel signupViewModel;
-    private LoginViewModel loginViewModel;
-    private GameLibraryViewModel gameLibraryViewModel;
-    private GameLibraryView gameLibraryView;
     private LoginView loginView;
-
+    private LoginViewModel loginViewModel;
+    private GameLibraryView gameLibraryView;
+    private GameLibraryViewModel gameLibraryViewModel;
+    private GameSetupView gameSetupView;
+    private GameSetupViewModel gameSetupViewModel;
     private ChangePasswordView changepasswordView;
     private ChangePasswordViewModel changepasswordViewModel;
 
@@ -85,20 +102,6 @@ public class AppBuilder {
         changepasswordViewModel = new ChangePasswordViewModel();
         changepasswordView = new ChangePasswordView(changepasswordViewModel);
         cardPanel.add(changepasswordView, changepasswordView.getViewName());
-        return this;
-    }
-
-    /**
-     * Adds the Game Library Case to the application.
-     * @return this builder
-     */
-    public AppBuilder addGameLibraryUseCase() {
-        final GameLibraryOutputBoundary gameLibraryOutputBoundary = new GameLibraryPresenter(viewManagerModel,
-                changepasswordViewModel);
-        final GameLibraryInputBoundary loggedInInteracter = new GameLibraryInteractor(gameLibraryOutputBoundary);
-
-        final GameLibraryController gameLibraryController = new GameLibraryController(loggedInInteracter);
-        gameLibraryView.setGameLibraryController(gameLibraryController);
         return this;
     }
 
@@ -136,6 +139,17 @@ public class AppBuilder {
     }
 
     /**
+     * Adds the Game Setup View to the application.
+     * @return this builder
+     */
+    public AppBuilder addGameSetupView() {
+        gameSetupViewModel = new GameSetupViewModel();
+        gameSetupView = new GameSetupView(gameSetupViewModel);
+        cardPanel.add(gameSetupView, gameSetupView.getViewName());
+        return this;
+    }
+
+    /**
      * Adds the Signup Use Case to the application.
      * @return this builder
      */
@@ -158,7 +172,7 @@ public class AppBuilder {
         final LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel,
                 gameLibraryViewModel, loginViewModel, signupViewModel);
         final LoginInputBoundary loginInteractor = new LoginInteractor(
-                userDataAccessObject, loginOutputBoundary);
+                userDataAccessObject, loginOutputBoundary, gameListDataAccessObject);
 
         final LoginController loginController = new LoginController(loginInteractor);
         loginView.setLoginController(loginController);
@@ -185,6 +199,38 @@ public class AppBuilder {
     }
 
     /**
+     * Adds the Game Library Case to the application.
+     * @return this builder
+     */
+    public AppBuilder addGameLibraryUseCase() {
+        final GameLibraryOutputBoundary gameLibraryOutputBoundary = new GameLibraryPresenter(viewManagerModel,
+                changepasswordViewModel,
+                gameSetupViewModel,
+                gameLibraryViewModel);
+        final GameLibraryInputBoundary gameLibraryInteractor = new GameLibraryInteractor(gameLibraryOutputBoundary,
+                gameListDataAccessObject, gameInfoFactory);
+
+        final GameLibraryController gameLibraryController = new GameLibraryController(gameLibraryInteractor);
+        gameLibraryView.setGameLibraryController(gameLibraryController);
+        return this;
+    }
+
+    /**
+     * Adds the Game Setup Use Case to the application.
+     * @return this builder
+     */
+    public AppBuilder addGameSetupUseCase() {
+        final GameSetupOutputBoundary gameSetupOutputBoundary = new GameSetupPresenter(viewManagerModel,
+                gameLibraryViewModel);
+        final GameSetupInputBoundary gameSetupInteractor = new GameSetupInteractor(gameSetupOutputBoundary);
+        final GameSetupController gameSetupController = new GameSetupController(gameSetupInteractor);
+
+        gameSetupView.setGameSetupController(gameSetupController);
+
+        return this;
+    }
+
+    /**
      * Adds the Logout Use Case to the application.
      * @return this builder
      */
@@ -205,7 +251,7 @@ public class AppBuilder {
      * @return the application
      */
     public JFrame build() {
-        final JFrame application = new JFrame("Login Example");
+        final JFrame application = new JFrame("Lucky Aces");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         application.add(cardPanel);

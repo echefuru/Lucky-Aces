@@ -10,7 +10,7 @@ public class GameInfoFactory {
      * @param name The name of the card game
      * @return An object containing the info of the game, null if the game corresponding to name doesn't exist
      */
-    public GameInfo getGameInfo(String name) {
+    public GameInfo create(String name) {
         GameInfo gameInfo = null;
         if ("Blackjack".equals(name)) {
             gameInfo = new BlackjackGameInfo();

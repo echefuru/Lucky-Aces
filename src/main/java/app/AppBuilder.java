@@ -8,6 +8,8 @@ import javax.swing.WindowConstants;
 
 import data_access.GameListDataAccessObject;
 import data_access.InMemoryUserDataAccessObject;
+import entity.game_info.GameInfo;
+import entity.game_info.GameInfoFactory;
 import entity.player.CommonPlayerFactory;
 import entity.player.PlayerFactory;
 import interface_adapter.ViewManagerModel;
@@ -69,6 +71,7 @@ public class AppBuilder {
     private final CardLayout cardLayout = new CardLayout();
     // thought question: is the hard dependency below a problem?
     private final PlayerFactory playerFactory = new CommonPlayerFactory();
+    private final GameInfoFactory gameInfoFactory = new GameInfoFactory();
     private final ViewManagerModel viewManagerModel = new ViewManagerModel();
     private final ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
 
@@ -169,7 +172,7 @@ public class AppBuilder {
         final LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel,
                 gameLibraryViewModel, loginViewModel, signupViewModel);
         final LoginInputBoundary loginInteractor = new LoginInteractor(
-                userDataAccessObject, loginOutputBoundary);
+                userDataAccessObject, loginOutputBoundary, gameListDataAccessObject);
 
         final LoginController loginController = new LoginController(loginInteractor);
         loginView.setLoginController(loginController);
@@ -202,9 +205,10 @@ public class AppBuilder {
     public AppBuilder addGameLibraryUseCase() {
         final GameLibraryOutputBoundary gameLibraryOutputBoundary = new GameLibraryPresenter(viewManagerModel,
                 changepasswordViewModel,
-                gameSetupViewModel);
+                gameSetupViewModel,
+                gameLibraryViewModel);
         final GameLibraryInputBoundary gameLibraryInteractor = new GameLibraryInteractor(gameLibraryOutputBoundary,
-                gameListDataAccessObject);
+                gameListDataAccessObject, gameInfoFactory);
 
         final GameLibraryController gameLibraryController = new GameLibraryController(gameLibraryInteractor);
         gameLibraryView.setGameLibraryController(gameLibraryController);

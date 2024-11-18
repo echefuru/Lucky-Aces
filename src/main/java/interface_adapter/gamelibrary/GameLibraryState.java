@@ -9,14 +9,16 @@ public class GameLibraryState {
     private String password = "";
     private String passwordError;
 
-    // TODO: Find a better way to implement the list of games
-    private String[] availableGames = {"Blackjack", "Placeholder"};
+    private String[] availableGames = {};
+
+    private String selectGameError;
 
     public GameLibraryState(GameLibraryState copy) {
         this.playerID = copy.playerID;
         this.password = copy.password;
         this.passwordError = copy.passwordError;
         this.availableGames = copy.availableGames;
+        this.selectGameError = copy.selectGameError;
     }
 
     // Because of the previous copy constructor, the default constructor must be explicit.
@@ -40,6 +42,10 @@ public class GameLibraryState {
         this.passwordError = passwordError;
     }
 
+    public void setSelectGameError(String selectGameError) {
+        this.selectGameError = selectGameError;
+    }
+
     public void setAvailableGames(String[] availableGames) {
         this.availableGames = availableGames;
     }
@@ -50,5 +56,9 @@ public class GameLibraryState {
 
     public String[] getAvailableGames() {
         return this.availableGames;
+    }
+
+    public String getSelectGameError() {
+        return selectGameError;
     }
 }

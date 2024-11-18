@@ -17,12 +17,14 @@ public class Main {
                                             .addLoginView()
                                             .addSignupView()
                                             .addGameLibraryView()
+                                            .addGameSetupView()
                                             .addChangePasswordView()
                                             .addSignupUseCase()
                                             .addLoginUseCase()
                                             .addChangePasswordUseCase()
                                             .addLogoutUseCase()
                                             .addGameLibraryUseCase()
+                                            .addGameSetupUseCase()
                                             .build();
 
         application.pack();

@@ -7,10 +7,12 @@ public class SetDifficultyInputData {
 
     private final int difficulty;
     private final String playerID;
+    private final String roomName;
 
-    public SetDifficultyInputData(int difficulty, String playerID) {
+    public SetDifficultyInputData(int difficulty, String playerID, String roomName) {
         this.difficulty = difficulty;
         this.playerID = playerID;
+        this.roomName = roomName;
     }
 
     int getDifficulty() {
@@ -19,5 +21,9 @@ public class SetDifficultyInputData {
 
     String getPlayerID() {
         return playerID;
+    }
+
+    String getRoomName() {
+        return roomName;
     }
 }

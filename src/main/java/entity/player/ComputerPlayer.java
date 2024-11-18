@@ -5,17 +5,15 @@ import java.util.List;
 import entity.Card;
 
 /**
- * A simple implementation of the Player interface.
+ * Computer player version of the player interface.
  */
-public class CommonPlayer implements Player {
+public class ComputerPlayer implements Player {
 
     private final String playerID;
-    private final String password;
     private List<Card> cards;
 
-    public CommonPlayer(String playerID, String password) {
+    public ComputerPlayer(String playerID) {
         this.playerID = playerID;
-        this.password = password;
     }
 
     @Override
@@ -25,11 +23,11 @@ public class CommonPlayer implements Player {
 
     @Override
     public String getPassword() {
-        return password;
+        return "";
     }
 
+    @Override
     public List<Card> getCards() {
         return cards;
     }
-
 }

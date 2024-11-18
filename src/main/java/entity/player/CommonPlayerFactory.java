@@ -1,7 +1,7 @@
 package entity.player;
 
 /**
- * Factory for creating CommonUser objects.
+ * Factory for creating CommonPlayer objects.
  */
 public class CommonPlayerFactory implements PlayerFactory {
 

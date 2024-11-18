@@ -23,6 +23,7 @@ public class GameSetupView extends JPanel implements PropertyChangeListener {
     private GameSetupController gameSetupController;
 
     private final JLabel gameName;
+    private final JLabel gameDescription;
 
     private final JButton gameRules;
     private final JButton config;
@@ -37,6 +38,9 @@ public class GameSetupView extends JPanel implements PropertyChangeListener {
 
         gameName = new JLabel();
         gameName.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        gameDescription = new JLabel();
+        gameDescription.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         final JPanel options = new JPanel();
         options.setLayout(new BoxLayout(options, BoxLayout.Y_AXIS));
@@ -73,6 +77,7 @@ public class GameSetupView extends JPanel implements PropertyChangeListener {
         );
 
         this.add(gameName);
+        this.add(gameDescription);
         this.add(options);
         this.add(actions);
     }
@@ -81,7 +86,8 @@ public class GameSetupView extends JPanel implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("state")) {
             final GameSetupState state = (GameSetupState) evt.getNewValue();
-            gameName.setText(state.getSelectedGame());
+            gameName.setText(state.getGameName());
+            gameDescription.setText(state.getGameDescription());
         }
     }
 

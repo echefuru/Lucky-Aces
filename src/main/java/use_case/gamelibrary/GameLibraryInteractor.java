@@ -1,6 +1,5 @@
 package use_case.gamelibrary;
 
-import data_access.GameListDataAccessObject;
 import interface_adapter.change_password.ChangePasswordState;
 
 /**
@@ -9,10 +8,10 @@ import interface_adapter.change_password.ChangePasswordState;
 public class GameLibraryInteractor implements GameLibraryInputBoundary {
 
     private final GameLibraryOutputBoundary gameLibraryPresenter;
-    private final GameListDataAccessObject gameListDataAccessObject;
+    private final GameLibraryGameListDataAccessInterface gameListDataAccessObject;
 
     public GameLibraryInteractor(GameLibraryOutputBoundary gameLibraryPresenter,
-                                 GameListDataAccessObject gameListDataAccessObject) {
+                                 GameLibraryGameListDataAccessInterface gameListDataAccessObject) {
         this.gameLibraryPresenter = gameLibraryPresenter;
         this.gameListDataAccessObject = gameListDataAccessObject;
     }

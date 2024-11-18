@@ -35,7 +35,8 @@ public class GameLibraryView extends JPanel implements PropertyChangeListener {
     private final JButton logOut = new JButton("Log Out");
     private final JButton changePassword = new JButton("Change Password");
 
-    private final JButton[] games;
+    private JButton[] games;
+    private final JPanel gameSelection = new JPanel();
 
     // @SuppressWarnings("checkstyle:UnusedLocalVariable")
     public GameLibraryView(GameLibraryViewModel gameLibraryViewModel) {
@@ -47,15 +48,9 @@ public class GameLibraryView extends JPanel implements PropertyChangeListener {
         final JLabel title = new JLabel("Game Library Screen");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        final JPanel gameSelection = new JPanel();
         gameSelection.setLayout(new BoxLayout(gameSelection, BoxLayout.Y_AXIS));
         gameSelection.setAlignmentX(Component.CENTER_ALIGNMENT);
-        this.games = new JButton[availableGames.length];
-        for (int i = 0; i < availableGames.length; i++) {
-            games[i] = new JButton(availableGames[i]);
-            games[i].setAlignmentX(Component.CENTER_ALIGNMENT);
-            gameSelection.add(games[i]);
-        }
+        setGameSelection(availableGames);
 
         final JLabel playerIDInfo = new JLabel("Currently logged in as: ");
         playerIDInfo.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -134,6 +129,7 @@ public class GameLibraryView extends JPanel implements PropertyChangeListener {
         if (evt.getPropertyName().equals("state")) {
             final GameLibraryState state = (GameLibraryState) evt.getNewValue();
             playerID.setText(state.getPlayerID());
+            this.setGameSelection(state.getAvailableGames());
         }
     }
 
@@ -148,6 +144,17 @@ public class GameLibraryView extends JPanel implements PropertyChangeListener {
     public void setLogoutController(LogoutController logoutController) {
         // save the logout controller in the instance variable.
         this.logoutController = logoutController;
+    }
+
+    private void setGameSelection(String[] availableGames) {
+        this.gameSelection.removeAll();
+
+        this.games = new JButton[availableGames.length];
+        for (int i = 0; i < availableGames.length; i++) {
+            games[i] = new JButton(availableGames[i]);
+            games[i].setAlignmentX(Component.CENTER_ALIGNMENT);
+            gameSelection.add(games[i]);
+        }
     }
 
     private void setVisible(String info, JButton button) {

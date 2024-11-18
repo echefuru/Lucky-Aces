@@ -9,8 +9,7 @@ public class GameLibraryState {
     private String password = "";
     private String passwordError;
 
-    // TODO: Find a better way to implement the list of games
-    private String[] availableGames = {"Blackjack", "Placeholder"};
+    private String[] availableGames = {};
 
     public GameLibraryState(GameLibraryState copy) {
         this.playerID = copy.playerID;

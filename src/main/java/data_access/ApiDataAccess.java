@@ -21,10 +21,7 @@ import java.util.List;
 public class ApiDataAccess implements ApiDataAccessInterface {
     // Defining necessary constants.
     private static final String API_URL = "https://www.deckofcardsapi.com/api/";
-    private static final String SUCCESS_FLAG = "success";
-    private static final String ERROR_FLAG = "error";
-    private static final String DECK_ID_KEY = "deck_id";
-    private static final String HTTP_ERROR_STRING = "HTTP %s";
+    private static final String REMAINING_FLAG = "remaining";
 
     @Override
     public Deck createDeck() throws IOException {
@@ -39,7 +36,7 @@ public class ApiDataAccess implements ApiDataAccessInterface {
         final JSONObject responseBody = getResponseBody(client, request);
 
         // Logic of happy path; return the generated Deck with its id.
-        return new Deck(responseBody.getString(DECK_ID_KEY));
+        return new Deck(responseBody.getString("deck_id"), responseBody.getInt(REMAINING_FLAG));
     }
 
     @Override
@@ -54,8 +51,8 @@ public class ApiDataAccess implements ApiDataAccessInterface {
         // Get the response body; check private method for implementation.
         final JSONObject responseBody = getResponseBody(client, request);
 
-        // Logic of happy path; return the generated Deck with its id.
-        return new Deck(responseBody.getString(DECK_ID_KEY));
+        // Logic of happy path; return the generated Deck.
+        return new Deck(responseBody.getString("deck_id"), responseBody.getInt(REMAINING_FLAG));
     }
 
     @Override
@@ -95,7 +92,7 @@ public class ApiDataAccess implements ApiDataAccessInterface {
     }
 
     @Override
-    public Deck shuffle(Deck deck) throws IOException {
+    public void shuffle(Deck deck) throws IOException {
         final OkHttpClient client = new OkHttpClient().newBuilder().build();
         // Note: The API requires the deck_id in the path.
         final Request request = new Request.Builder()
@@ -104,21 +101,21 @@ public class ApiDataAccess implements ApiDataAccessInterface {
 
         final JSONObject responseBody = getResponseBody(client, request);
 
-        // Logic of happy path; return the newly shuffled Deck with its id.
-        return new Deck(responseBody.getString(DECK_ID_KEY));
+        // Logic of happy path; reset and shuffle the Deck.
+        deck.setRemaining(responseBody.getInt(REMAINING_FLAG));
     }
 
     private JSONObject getResponseBody(OkHttpClient client, Request request) throws IOException {
         // Make the call and check for HTTP errors.
         final Response response = client.newCall(request).execute();
         if (!response.isSuccessful()) {
-            throw new RuntimeException(String.format(HTTP_ERROR_STRING, response.code()));
+            throw new RuntimeException(String.format("HTTP %s", response.code()));
         }
 
         // Get the response body and check for API-defined errors.
         final JSONObject responseBody = new JSONObject(response.body().string());
-        if (!responseBody.getBoolean(SUCCESS_FLAG)) {
-            throw new RuntimeException(responseBody.getString(ERROR_FLAG));
+        if (!responseBody.getBoolean("success")) {
+            throw new RuntimeException(responseBody.getString("error"));
         }
 
         return responseBody;
@@ -127,7 +124,7 @@ public class ApiDataAccess implements ApiDataAccessInterface {
     public static void main(String[] args) throws IOException {
         ApiDataAccessInterface dao = new ApiDataAccess();
 
-        Deck deck = dao.createDeck(1);
+        Deck deck = dao.createDeck();
         Card card = dao.draw(deck);
         System.out.println("Drawing 1 card, 51 remaining.");
         System.out.println(card.getRank() + ", " + card.getSuit());

@@ -9,8 +9,8 @@ public class Card implements Comparable<Card> {
     private final Suit suit;
 
     public Card(Rank rank, Suit suit) {
-        this.suit = suit;
         this.rank = rank;
+        this.suit = suit;
     }
 
     public Suit getSuit() {
@@ -19,6 +19,26 @@ public class Card implements Comparable<Card> {
 
     public Rank getRank() {
         return rank;
+    }
+
+    /**
+     * Override Object.hasCode(). This implementation should satisfy that any Card with the same Rank value and same
+     * Suit should have the same hashCode.
+     * @return the Rank value and Suit ordinal as the hasCode.
+     */
+    @Override
+    public int hashCode() {
+        return rank.toString().hashCode() + suit.ordinal();
+    }
+
+    /**
+     * Override Object.equals().
+     * @param obj the Object to determine equality with.
+     * @return whether there is equality or not.
+     */
+    @Override
+    public boolean equals(Object obj) {
+        return this.getClass() == obj.getClass() && this.hashCode() == obj.hashCode();
     }
 
     @Override

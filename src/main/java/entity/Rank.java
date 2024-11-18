@@ -22,7 +22,7 @@ public enum Rank {
 
     private final int rankValue;
 
-    private Rank(int rankValue) {
+    Rank(int rankValue) {
         this.rankValue = rankValue;
     }
 

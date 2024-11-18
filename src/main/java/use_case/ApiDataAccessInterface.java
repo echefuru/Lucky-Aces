@@ -44,10 +44,9 @@ public interface ApiDataAccessInterface {
     List<Card> draw(Deck deck, int numCards) throws IOException;
 
     /**
-     * A method that adds back all discarded cards to the given Deck, shuffles, and returns the full Deck.
-     * @param deck is the Deck to be reset, shuffled and returned.
-     * @return the Deck newly shuffled.
+     * A method that adds back all discarded cards to the given Deck and shuffles it.
+     * @param deck is the Deck to be reset and shuffled.
      * @throws IOException if there is an error in attempting to call API.
      */
-    Deck shuffle(Deck deck) throws IOException;
+    void shuffle(Deck deck) throws IOException;
 }

@@ -1,8 +1,8 @@
 package data_access;
 
-import use_case.gamelibrary.GameLibraryGameListDataAccessInterface;
-
 import java.util.Set;
+
+import use_case.gamelibrary.GameLibraryGameListDataAccessInterface;
 
 /**
  * In-memory implementation of the DAO of the list of available games in the program.

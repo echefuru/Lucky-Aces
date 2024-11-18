@@ -20,8 +20,6 @@ public class GameLibraryInteractor implements GameLibraryInputBoundary {
     @Override
     public void execute(GameLibraryInputData gameLibraryInputData) {
         final String selectedGame = gameLibraryInputData.getSelectedGame();
-        // TODO: Do something
-        System.out.println("Selected game: " + selectedGame);
         if (gameListDataAccessObject.gameExists(selectedGame)) {
             final GameLibraryOutputData gameLibraryOutputData = new GameLibraryOutputData(selectedGame);
             gameLibraryPresenter.prepareSuccessView(gameLibraryOutputData);

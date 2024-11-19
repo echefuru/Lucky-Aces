@@ -122,9 +122,9 @@ public class GameLibraryView extends JPanel implements PropertyChangeListener {
         if (evt.getPropertyName().equals("state")) {
             final GameLibraryState state = (GameLibraryState) evt.getNewValue();
             playerID.setText(state.getPlayerID());
-            this.setGameSelection(state.getAvailableGames());
-
             this.errorField.setText(state.getSelectGameError());
+
+            this.setGameSelection(state.getAvailableGames());
         }
     }
 
@@ -143,6 +143,8 @@ public class GameLibraryView extends JPanel implements PropertyChangeListener {
 
     private void setGameSelection(String[] availableGames) {
         this.gameSelection.removeAll();
+        this.gameSelection.revalidate();
+        this.gameSelection.repaint();
 
         this.games = new JButton[availableGames.length];
         for (int i = 0; i < availableGames.length; i++) {

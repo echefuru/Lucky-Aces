@@ -1,4 +1,4 @@
-package entity.game_info;
+package data_type;
 
 /**
  * The representation of a type of card game. Stores all descriptions, rules, etc. of the game.
@@ -8,12 +8,14 @@ public class GameInfo {
     private final String description;
     private final int maxPlayers;
     private final int minPlayers;
+    private final boolean isAvailable;
 
-    public GameInfo(String name, String description, int maxPlayers, int minPlayers) {
+    public GameInfo(String name, String description, int maxPlayers, int minPlayers, boolean isAvailable) {
         this.name = name;
         this.description = description;
         this.maxPlayers = maxPlayers;
         this.minPlayers = minPlayers;
+        this.isAvailable = isAvailable;
     }
 
     /**
@@ -30,5 +32,13 @@ public class GameInfo {
      */
     public String getDescription() {
         return description;
+    }
+
+    /**
+     * Return whether the game is available.
+     * @return true if and only if the game is ready to be played.
+     */
+    public boolean isAvailable() {
+        return isAvailable;
     }
 }

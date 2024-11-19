@@ -8,9 +8,10 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import entity.game_info.GameInfo;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import data_type.GameInfo;
 import use_case.gamelibrary.GameLibraryGameInfoDataAccessInterface;
 import use_case.login.LoginGameInfoDataAccessInterface;
 
@@ -20,7 +21,7 @@ import use_case.login.LoginGameInfoDataAccessInterface;
 public class GameInfoDataAccessObject implements GameLibraryGameInfoDataAccessInterface,
         LoginGameInfoDataAccessInterface {
     private final Map<String, GameInfo> games;
-    private String[] availableGames;
+    private final String[] availableGames;
 
     public GameInfoDataAccessObject(String filePath) {
         try {
@@ -34,8 +35,9 @@ public class GameInfoDataAccessObject implements GameLibraryGameInfoDataAccessIn
                 final String description = game.getString("description");
                 final int maxPlayers = game.getInt("max_players");
                 final int minPlayers = game.getInt("min_players");
+                final boolean isAvailable = game.getBoolean("is_available");
 
-                final GameInfo gameInfo = new GameInfo(name, description, maxPlayers, minPlayers);
+                final GameInfo gameInfo = new GameInfo(name, description, maxPlayers, minPlayers, isAvailable);
 
                 games.put(name, gameInfo);
             }
@@ -48,8 +50,18 @@ public class GameInfoDataAccessObject implements GameLibraryGameInfoDataAccessIn
     }
 
     @Override
-    public GameInfo getGame(String game) {
-        return games.get(game);
+    public String getName(String game) {
+        return games.get(game).getName();
+    }
+
+    @Override
+    public String getDescription(String game) {
+        return games.get(game).getDescription();
+    }
+
+    @Override
+    public boolean isAvailable(String game) {
+        return games.get(game).isAvailable();
     }
 
     @Override

@@ -1,7 +1,5 @@
 package use_case.gamelibrary;
 
-import data_access.GameInfoDataAccessObject;
-import entity.game_info.GameInfo;
 import interface_adapter.change_password.ChangePasswordState;
 
 /**
@@ -10,10 +8,10 @@ import interface_adapter.change_password.ChangePasswordState;
 public class GameLibraryInteractor implements GameLibraryInputBoundary {
 
     private final GameLibraryOutputBoundary gameLibraryPresenter;
-    private final GameInfoDataAccessObject gameInfoDataAccessObject;
+    private final GameLibraryGameInfoDataAccessInterface gameInfoDataAccessObject;
 
     public GameLibraryInteractor(GameLibraryOutputBoundary gameLibraryPresenter,
-                                 GameInfoDataAccessObject gameInfoDataAccessObject) {
+                                 GameLibraryGameInfoDataAccessInterface gameInfoDataAccessObject) {
         this.gameLibraryPresenter = gameLibraryPresenter;
         this.gameInfoDataAccessObject = gameInfoDataAccessObject;
     }
@@ -21,12 +19,16 @@ public class GameLibraryInteractor implements GameLibraryInputBoundary {
     @Override
     public void execute(GameLibraryInputData gameLibraryInputData) {
         final String selectedGame = gameLibraryInputData.getSelectedGame();
-        final GameInfo game = gameInfoDataAccessObject.getGame(selectedGame);
 
-        final String gameName = game.getName();
-        final String gameDescription = game.getDescription();
-        final GameLibraryOutputData gameLibraryOutputData = new GameLibraryOutputData(gameName, gameDescription);
-        gameLibraryPresenter.prepareSuccessView(gameLibraryOutputData);
+        if (gameInfoDataAccessObject.isAvailable(selectedGame)) {
+            final String gameName = gameInfoDataAccessObject.getName(selectedGame);
+            final String gameDescription = gameInfoDataAccessObject.getDescription(selectedGame);
+            final GameLibraryOutputData gameLibraryOutputData = new GameLibraryOutputData(gameName, gameDescription);
+            gameLibraryPresenter.prepareSuccessView(gameLibraryOutputData);
+        }
+        else {
+            gameLibraryPresenter.prepareFailView("Game not available yet, please stay tuned!");
+        }
     }
 
     @Override

@@ -1,5 +1,6 @@
 package entity.player;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import entity.Card;
@@ -16,6 +17,7 @@ public class CommonPlayer implements Player {
     public CommonPlayer(String playerID, String password) {
         this.playerID = playerID;
         this.password = password;
+        this.cards = new ArrayList<Card>();
     }
 
     @Override

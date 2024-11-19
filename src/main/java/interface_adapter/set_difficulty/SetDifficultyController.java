@@ -20,7 +20,8 @@ public class SetDifficultyController {
      * @param roomName the roomName
      */
     public void execute(String newDifficulty, String playerID, String roomName) {
-        final SetDifficultyInputData setDifficultyInputData = new SetDifficultyInputData(newDifficulty, playerID, roomName);
+        final SetDifficultyInputData setDifficultyInputData = new SetDifficultyInputData(newDifficulty, playerID,
+                roomName);
         setDifficultyUseCaseInteractor.execute(setDifficultyInputData);
     }
 }

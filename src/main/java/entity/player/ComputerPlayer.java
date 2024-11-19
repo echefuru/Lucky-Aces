@@ -1,5 +1,6 @@
 package entity.player;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import entity.Card;
@@ -16,6 +17,7 @@ public class ComputerPlayer implements Player {
     public ComputerPlayer(String playerID) {
         this.playerID = playerID;
         this.difficulty = "Easy";
+        this.cards = new ArrayList<Card>();
     }
 
     @Override
@@ -31,5 +33,17 @@ public class ComputerPlayer implements Player {
     @Override
     public List<Card> getCards() {
         return cards;
+    }
+
+    public String getDifficulty() {
+        return difficulty;
+    }
+
+    private void setCards(List<Card> cards) {
+        this.cards = cards;
+    }
+
+    public void setDifficulty(String difficulty) {
+        this.difficulty = difficulty;
     }
 }

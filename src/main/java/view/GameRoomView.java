@@ -7,8 +7,8 @@ import java.beans.PropertyChangeListener;
 
 import javax.swing.*;
 
-import interface_adapter.set_difficulty.SetDifficultyState;
 import interface_adapter.set_difficulty.SetDifficultyController;
+import interface_adapter.set_difficulty.SetDifficultyState;
 import interface_adapter.set_difficulty.SetDifficultyViewModel;
 
 /**
@@ -39,6 +39,8 @@ public class GameRoomView extends JPanel implements PropertyChangeListener {
 
     // private JLabel betOfPlayer1;
     // private JLabel betOfPlayer2;
+
+    private JLabel errorField;
 
     private final JButton exitButton;
     private final JButton hitButton;
@@ -72,7 +74,7 @@ public class GameRoomView extends JPanel implements PropertyChangeListener {
         player1id = new JLabel("Player 1", SwingConstants.TOP);
         cardsOfPlayer1 = new JLabel("Cards of Player1", SwingConstants.TOP);
         player1difficultyInput = new JTextField(2);
-        LabelTextPanel player1Difficulty = new LabelTextPanel(new JLabel("player difficulty:"), player1difficultyInput);
+        final LabelTextPanel player1Difficulty = new LabelTextPanel(new JLabel("player difficulty:"), player1difficultyInput);
         final JPanel player1Panel = new JPanel();
         player1Panel.setLayout(new BoxLayout(player1Panel, BoxLayout.Y_AXIS));
         player1Panel.add(player1id);
@@ -82,7 +84,7 @@ public class GameRoomView extends JPanel implements PropertyChangeListener {
         player2id = new JLabel("Player 2", SwingConstants.TOP);
         cardsOfPlayer2 = new JLabel("Cards of Player2", SwingConstants.TOP);
         player2difficultyInput = new JTextField(2);
-        LabelTextPanel player2difficulty = new LabelTextPanel(new JLabel("player difficulty:"), player2difficultyInput);
+        final LabelTextPanel player2difficulty = new LabelTextPanel(new JLabel("player difficulty:"), player2difficultyInput);
         final JPanel player2Panel = new JPanel();
         player2Panel.setLayout(new BoxLayout(player2Panel, BoxLayout.Y_AXIS));
         player2Panel.add(player2id);
@@ -93,6 +95,7 @@ public class GameRoomView extends JPanel implements PropertyChangeListener {
         playersPanel.setLayout(new FlowLayout());
         playersPanel.add(player1Panel);
         playersPanel.add(player2Panel);
+        playersPanel.add(errorField);
 
         // bottom part: buttons-exit, hit, stay, etc.
         exitButton = new JButton("Exit");
@@ -125,13 +128,17 @@ public class GameRoomView extends JPanel implements PropertyChangeListener {
         //        )
     }
 
-    // TODO: add property change for changing of cards.
+    // TODO: add property change for changing of cards.changing of difficulty
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-
+        if (evt.getPropertyName().equals("state")) {
+            final SetDifficultyState state = (SetDifficultyState) evt.getNewValue();
+            this.errorField.setText(state.getErrorMessage());
+        }
     }
 
     public void setSetDifficultyController(SetDifficultyController setDifficultyController) {
         this.setDifficultyController = setDifficultyController;
     }
+
 }

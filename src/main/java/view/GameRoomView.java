@@ -1,15 +1,15 @@
 package view;
 
-import interface_adapter.set_difficulty.SetDifficultyState;
-import interface_adapter.set_difficulty.SetDifficultyController;
-import interface_adapter.set_difficulty.SetDifficultyViewModel;
-
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 import javax.swing.*;
+
+import interface_adapter.set_difficulty.SetDifficultyState;
+import interface_adapter.set_difficulty.SetDifficultyController;
+import interface_adapter.set_difficulty.SetDifficultyViewModel;
 
 /**
  * The View for when the user is setting up a game.
@@ -33,6 +33,9 @@ public class GameRoomView extends JPanel implements PropertyChangeListener {
 
     private JLabel cardsOfPlayer1;
     private JLabel cardsOfPlayer2;
+
+    private JTextField player1difficultyInput;
+    private JTextField player2difficultyInput;
 
     // private JLabel betOfPlayer1;
     // private JLabel betOfPlayer2;
@@ -67,18 +70,24 @@ public class GameRoomView extends JPanel implements PropertyChangeListener {
 
         // middle part: players
         player1id = new JLabel("Player 1", SwingConstants.TOP);
-        cardsOfPlayer1 = new JLabel("Cards of Player1", SwingConstants.BOTTOM);
+        cardsOfPlayer1 = new JLabel("Cards of Player1", SwingConstants.TOP);
+        player1difficultyInput = new JTextField(2);
+        LabelTextPanel player1Difficulty = new LabelTextPanel(new JLabel("player difficulty:"), player1difficultyInput);
         final JPanel player1Panel = new JPanel();
         player1Panel.setLayout(new BoxLayout(player1Panel, BoxLayout.Y_AXIS));
         player1Panel.add(player1id);
         player1Panel.add(cardsOfPlayer1);
+        player1Panel.add(player1Difficulty);
 
         player2id = new JLabel("Player 2", SwingConstants.TOP);
-        cardsOfPlayer2 = new JLabel("Cards of Player2", SwingConstants.BOTTOM);
+        cardsOfPlayer2 = new JLabel("Cards of Player2", SwingConstants.TOP);
+        player2difficultyInput = new JTextField(2);
+        LabelTextPanel player2difficulty = new LabelTextPanel(new JLabel("player difficulty:"), player2difficultyInput);
         final JPanel player2Panel = new JPanel();
         player2Panel.setLayout(new BoxLayout(player2Panel, BoxLayout.Y_AXIS));
         player2Panel.add(player2id);
         player2Panel.add(cardsOfPlayer2);
+        player2Panel.add(player2difficulty);
 
         final JPanel playersPanel = new JPanel();
         playersPanel.setLayout(new FlowLayout());

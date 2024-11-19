@@ -45,14 +45,11 @@ public class GameLibraryView extends JPanel implements PropertyChangeListener {
         this.gameLibraryViewModel = gameLibraryViewModel;
         this.gameLibraryViewModel.addPropertyChangeListener(this);
 
-        final String[] availableGames = gameLibraryViewModel.getState().getAvailableGames();
-
         final JLabel title = new JLabel("Game Library Screen");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         gameSelection.setLayout(new BoxLayout(gameSelection, BoxLayout.Y_AXIS));
         gameSelection.setAlignmentX(Component.CENTER_ALIGNMENT);
-        setGameSelection(availableGames);
 
         final JLabel playerIDInfo = new JLabel("Currently logged in as: ");
         playerIDInfo.setAlignmentX(Component.CENTER_ALIGNMENT);

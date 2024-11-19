@@ -17,7 +17,6 @@ public class BlackjackRoom implements Room {
     private final String roomName;
     private final String gameName;
     private List<Player> curPlayers;
-    private int round;
     private String curTurnPlayer;
     private String status;
     private Deck deck;
@@ -29,7 +28,6 @@ public class BlackjackRoom implements Room {
         this.roomName = roomName;
         this.gameName = gameName;
         this.curPlayers = curPlayers;
-        this.round = 1;
         this.curTurnPlayer = curPlayers.get(0).getPlayerID();
         this.status = "Initializing";
         final ApiDataAccessInterface apiDataAccessInterface = new ApiDataAccess();

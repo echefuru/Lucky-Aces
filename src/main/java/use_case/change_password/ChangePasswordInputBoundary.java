@@ -1,7 +1,5 @@
 package use_case.change_password;
 
-import interface_adapter.gamelibrary.GameLibraryState;
-
 /**
  * The Change Password Use Case.
  */
@@ -20,7 +18,6 @@ public interface ChangePasswordInputBoundary {
 
     /**
      * Executes the switch to game library view use case.
-     * @param gameLibraryState current player
      */
-    void switchToGameLibraryView(GameLibraryState gameLibraryState);
+    void switchToGameLibraryView();
 }

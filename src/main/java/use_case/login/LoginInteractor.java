@@ -7,12 +7,12 @@ import entity.player.Player;
  */
 public class LoginInteractor implements LoginInputBoundary {
     private final LoginUserDataAccessInterface userDataAccessObject;
-    private final LoginGameListDataAccessInterface gameListDataAccessObject;
+    private final LoginGameInfoDataAccessInterface gameListDataAccessObject;
     private final LoginOutputBoundary loginPresenter;
 
     public LoginInteractor(LoginUserDataAccessInterface userDataAccessInterface,
                            LoginOutputBoundary loginOutputBoundary,
-                           LoginGameListDataAccessInterface gameListDataAccessObject) {
+                           LoginGameInfoDataAccessInterface gameListDataAccessObject) {
         this.userDataAccessObject = userDataAccessInterface;
         this.loginPresenter = loginOutputBoundary;
         this.gameListDataAccessObject = gameListDataAccessObject;

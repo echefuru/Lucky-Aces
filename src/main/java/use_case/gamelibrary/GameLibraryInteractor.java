@@ -35,4 +35,14 @@ public class GameLibraryInteractor implements GameLibraryInputBoundary {
     public void switchToChangePasswordView(ChangePasswordState changePasswordState) {
         gameLibraryPresenter.switchToChangePasswordView(changePasswordState);
     }
+
+    @Override
+    public void search(String info) {
+        final String[] availableGames = gameInfoDataAccessObject.getAvailableGames();
+        final boolean[] availableGamesVisible = new boolean[availableGames.length];
+        for (int i = 0; i < availableGames.length; i++) {
+            availableGamesVisible[i] = availableGames[i].toLowerCase().contains(info.toLowerCase());
+        }
+        gameLibraryPresenter.search(availableGamesVisible);
+    }
 }

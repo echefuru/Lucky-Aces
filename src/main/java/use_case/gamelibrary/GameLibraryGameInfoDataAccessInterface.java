@@ -25,4 +25,10 @@ public interface GameLibraryGameInfoDataAccessInterface {
      * @return true if and only if the game is ready to be played.
      */
     boolean isAvailable(String game);
+
+    /**
+     * Return the list of available games in the program.
+     * @return array of the ids of the available games.
+     */
+    String[] getAvailableGames();
 }

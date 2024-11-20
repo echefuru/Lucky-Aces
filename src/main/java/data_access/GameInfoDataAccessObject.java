@@ -22,6 +22,7 @@ public class GameInfoDataAccessObject implements GameLibraryGameInfoDataAccessIn
         LoginGameInfoDataAccessInterface {
     private final Map<String, GameInfo> games;
     private final String[] availableGames;
+    private final boolean[] availableGamesVisible;
 
     public GameInfoDataAccessObject(String filePath) {
         try {
@@ -43,6 +44,9 @@ public class GameInfoDataAccessObject implements GameLibraryGameInfoDataAccessIn
             }
             availableGames = games.keySet().toArray(new String[0]);
             Arrays.sort(availableGames);
+
+            availableGamesVisible = new boolean[availableGames.length];
+            Arrays.fill(availableGamesVisible, true);
         }
         catch (IOException | URISyntaxException ex) {
             throw new RuntimeException(ex);
@@ -67,5 +71,10 @@ public class GameInfoDataAccessObject implements GameLibraryGameInfoDataAccessIn
     @Override
     public String[] getAvailableGames() {
         return availableGames;
+    }
+
+    @Override
+    public boolean[] getAvailableGamesVisible() {
+        return availableGamesVisible;
     }
 }

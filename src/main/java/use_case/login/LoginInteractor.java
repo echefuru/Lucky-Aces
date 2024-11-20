@@ -36,8 +36,9 @@ public class LoginInteractor implements LoginInputBoundary {
 
                 userDataAccessObject.setCurrentPlayerID(player.getPlayerID());
                 final String[] availableGames = gameListDataAccessObject.getAvailableGames();
+                final boolean[] availableGamesVisible = gameListDataAccessObject.getAvailableGamesVisible();
                 final LoginOutputData loginOutputData = new LoginOutputData(player.getPlayerID(), false,
-                        availableGames);
+                        availableGames, availableGamesVisible);
                 loginPresenter.prepareSuccessView(loginOutputData);
             }
         }

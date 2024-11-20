@@ -99,9 +99,7 @@ public class GameLibraryView extends JPanel implements PropertyChangeListener {
                 evt -> {
                     if (evt.getSource().equals(search)) {
                         final String info = searchInputField.getText();
-                        for (JButton button: games) {
-                            setVisible(info, button);
-                        }
+                        gameLibraryController.search(info);
                     }
                 }
         );
@@ -124,7 +122,7 @@ public class GameLibraryView extends JPanel implements PropertyChangeListener {
             playerID.setText(state.getPlayerID());
             this.errorField.setText(state.getSelectGameError());
 
-            this.setGameSelection(state.getAvailableGames());
+            this.setGameSelection(state.getAvailableGames(), state.getAvailableGamesVisible());
         }
     }
 
@@ -141,7 +139,7 @@ public class GameLibraryView extends JPanel implements PropertyChangeListener {
         this.logoutController = logoutController;
     }
 
-    private void setGameSelection(String[] availableGames) {
+    private void setGameSelection(String[] availableGames, boolean[] availableGamesVisible) {
         this.gameSelection.removeAll();
         this.gameSelection.revalidate();
         this.gameSelection.repaint();
@@ -150,6 +148,7 @@ public class GameLibraryView extends JPanel implements PropertyChangeListener {
         for (int i = 0; i < availableGames.length; i++) {
             games[i] = new JButton(availableGames[i]);
             games[i].setAlignmentX(Component.CENTER_ALIGNMENT);
+            games[i].setVisible(availableGamesVisible[i]);
             gameSelection.add(games[i]);
         }
 
@@ -161,18 +160,6 @@ public class GameLibraryView extends JPanel implements PropertyChangeListener {
                         }
                     }
             );
-        }
-    }
-
-    private void setVisible(String info, JButton button) {
-        if ("".equals(info)) {
-            button.setVisible(true);
-        }
-        else if (button.getText().toLowerCase().contains(info.toLowerCase())) {
-            button.setVisible(true);
-        }
-        else {
-            button.setVisible(false);
         }
     }
 }

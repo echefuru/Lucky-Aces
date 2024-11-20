@@ -30,4 +30,12 @@ public class GameLibraryController {
     public void switchToChangePasswordView(ChangePasswordState changePasswordState) {
         gameLibraryUseCaseInteractor.switchToChangePasswordView(changePasswordState);
     }
+
+    /**
+     * Executes the "search" Use Case.
+     * @param info search input
+     */
+    public void search(String info) {
+        gameLibraryUseCaseInteractor.search(info);
+    }
 }

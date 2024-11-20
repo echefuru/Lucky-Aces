@@ -9,4 +9,10 @@ public interface LoginGameInfoDataAccessInterface {
      * @return array of the ids of the available games.
      */
     String[] getAvailableGames();
+
+    /**
+     * Return the list of visible of available games' buttons in the program.
+     * @return array of the booleans of the visible of available games' buttons.
+     */
+    boolean[] getAvailableGamesVisible();
 }

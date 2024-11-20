@@ -1,8 +1,6 @@
 package view;
 
 import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -22,60 +20,57 @@ import interface_adapter.login.LoginViewModel;
 /**
  * The View for when the user is logging into the program.
  */
-public class LoginView extends JPanel implements ActionListener, PropertyChangeListener {
+public class LoginView extends JPanel implements PropertyChangeListener {
 
     private final String viewName = "log in";
     private final LoginViewModel loginViewModel;
 
     private final JTextField playerIDInputField = new JTextField(15);
-    private final JLabel playerIDErrorField = new JLabel();
-
     private final JPasswordField passwordInputField = new JPasswordField(15);
-    private final JLabel passwordErrorField = new JLabel();
+
+    private final JLabel errorField = new JLabel();
 
     private final JButton logIn;
     private final JButton goToSignup;
     private LoginController loginController;
 
     public LoginView(LoginViewModel loginViewModel) {
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         this.loginViewModel = loginViewModel;
         this.loginViewModel.addPropertyChangeListener(this);
 
-        final JLabel title = new JLabel("Login Screen");
+        final JLabel title = new JLabel("Player Login");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         final LabelTextPanel playerIDInfo = new LabelTextPanel(
-                new JLabel("playerID"), playerIDInputField);
+                new JLabel("Player ID"), playerIDInputField);
         final LabelTextPanel passwordInfo = new LabelTextPanel(
                 new JLabel("Password"), passwordInputField);
 
+        playerIDInfo.setAlignmentX(Component.CENTER_ALIGNMENT);
+        passwordInfo.setAlignmentX(Component.CENTER_ALIGNMENT);
+
         final JPanel buttons = new JPanel();
-        logIn = new JButton("log in");
+        logIn = new JButton("Log in");
         buttons.add(logIn);
-        goToSignup = new JButton("go to signup");
+        goToSignup = new JButton("Go to signup");
         buttons.add(goToSignup);
 
-        logIn.addActionListener(
-                new ActionListener() {
-                    public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(logIn)) {
-                            final LoginState currentState = loginViewModel.getState();
+        logIn.addActionListener(evt -> {
+            if (evt.getSource().equals(logIn)) {
+                final LoginState currentState = loginViewModel.getState();
 
-                            loginController.execute(
-                                    currentState.getPlayerID(),
-                                    currentState.getPassword()
-                            );
-                        }
-                    }
-                }
-        );
+                loginController.execute(
+                        currentState.getPlayerID(),
+                        currentState.getPassword()
+                );
+            }
+        });
 
-        goToSignup.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                if (evt.getSource().equals(goToSignup)) {
-                    loginController.switchToSignupView();
-                }
+        goToSignup.addActionListener(evt -> {
+            if (evt.getSource().equals(goToSignup)) {
+                loginController.switchToSignupView();
             }
         });
 
@@ -131,24 +126,16 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
 
         this.add(title);
         this.add(playerIDInfo);
-        this.add(playerIDErrorField);
         this.add(passwordInfo);
+        this.add(errorField);
         this.add(buttons);
-    }
-
-    /**
-     * React to a button click that results in evt.
-     * @param evt the ActionEvent to react to
-     */
-    public void actionPerformed(ActionEvent evt) {
-        System.out.println("Click " + evt.getActionCommand());
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         final LoginState state = (LoginState) evt.getNewValue();
         setFields(state);
-        playerIDErrorField.setText(state.getLoginError());
+        errorField.setText(state.getLoginError());
     }
 
     private void setFields(LoginState state) {

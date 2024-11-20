@@ -8,7 +8,6 @@ import javax.swing.WindowConstants;
 
 import data_access.GameListDataAccessObject;
 import data_access.InMemoryUserDataAccessObject;
-import entity.game_info.GameInfo;
 import entity.game_info.GameInfoFactory;
 import entity.player.CommonPlayerFactory;
 import entity.player.PlayerFactory;
@@ -247,16 +246,17 @@ public class AppBuilder {
     }
 
     /**
-     * Creates the JFrame for the application and initially sets the SignupView to be displayed.
+     * Creates the JFrame for the application and initially sets the LoginView to be displayed.
      * @return the application
      */
     public JFrame build() {
         final JFrame application = new JFrame("Lucky Aces");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        application.setResizable(false);
 
         application.add(cardPanel);
 
-        viewManagerModel.setState(signupView.getViewName());
+        viewManagerModel.setState(loginView.getViewName());
         viewManagerModel.firePropertyChanged();
 
         return application;

@@ -1,6 +1,7 @@
 package app;
 
 import javax.swing.JFrame;
+import java.awt.*;
 
 /**
  * The Main class of our application.
@@ -12,6 +13,8 @@ public class Main {
      */
     public static void main(String[] args) {
         final AppBuilder appBuilder = new AppBuilder();
+        final int width = 1080;
+        final int height = 720;
         // add the Logout Use Case to the app using the appBuilder
         final JFrame application = appBuilder
                                             .addLoginView()
@@ -28,6 +31,7 @@ public class Main {
                                             .build();
 
         application.pack();
+        application.setSize(new Dimension(width, height));
         application.setVisible(true);
     }
 }

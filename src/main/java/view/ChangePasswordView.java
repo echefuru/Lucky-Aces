@@ -16,7 +16,6 @@ import javax.swing.event.DocumentListener;
 import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.change_password.ChangePasswordState;
 import interface_adapter.change_password.ChangePasswordViewModel;
-import interface_adapter.gamelibrary.GameLibraryState;
 import interface_adapter.logout.LogoutController;
 
 /**
@@ -99,10 +98,7 @@ public class ChangePasswordView extends JPanel implements PropertyChangeListener
                 // This creates an anonymous subclass of ActionListener and instantiates it.
                 evt -> {
                     if (evt.getSource().equals(cancel)) {
-                        final GameLibraryState gameLibraryState = new GameLibraryState();
-                        gameLibraryState.setPlayerID(playerID.getText());
-
-                        changePasswordController.switchToGameLibraryView(gameLibraryState);
+                        changePasswordController.switchToGameLibraryView();
                     }
                 }
         );

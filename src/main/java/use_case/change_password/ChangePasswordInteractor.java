@@ -2,7 +2,6 @@ package use_case.change_password;
 
 import entity.player.Player;
 import entity.player.PlayerFactory;
-import interface_adapter.gamelibrary.GameLibraryState;
 
 /**
  * The Change Password Interactor.
@@ -37,7 +36,7 @@ public class ChangePasswordInteractor implements ChangePasswordInputBoundary {
     }
 
     @Override
-    public void switchToGameLibraryView(GameLibraryState gameLibraryState) {
-        userPresenter.switchToGameLibraryView(gameLibraryState);
+    public void switchToGameLibraryView() {
+        userPresenter.switchToGameLibraryView();
     }
 }

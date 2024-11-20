@@ -1,7 +1,5 @@
 package use_case.change_password;
 
-import interface_adapter.gamelibrary.GameLibraryState;
-
 /**
  * The output boundary for the Change Password Use Case.
  */
@@ -25,7 +23,6 @@ public interface ChangePasswordOutputBoundary {
 
     /**
      * Switch to game library view use case.
-     * @param gameLibraryState current player
      */
-    void switchToGameLibraryView(GameLibraryState gameLibraryState);
+    void switchToGameLibraryView();
 }

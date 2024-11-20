@@ -36,6 +36,11 @@ public class GameLibraryPresenter implements GameLibraryOutputBoundary {
         this.gameSetupViewModel.setState(gameSetupState);
         this.gameSetupViewModel.firePropertyChanged();
 
+        final GameLibraryState gameLibraryState = gameLibraryViewModel.getState();
+        gameLibraryState.setSelectGameError(null);
+        this.gameLibraryViewModel.setState(gameLibraryState);
+        this.gameLibraryViewModel.firePropertyChanged();
+
         this.viewManagerModel.setState(gameSetupViewModel.getViewName());
         this.viewManagerModel.firePropertyChanged();
     }
@@ -44,7 +49,8 @@ public class GameLibraryPresenter implements GameLibraryOutputBoundary {
     public void prepareFailView(String message) {
         final GameLibraryState gameLibraryState = gameLibraryViewModel.getState();
         gameLibraryState.setSelectGameError(message);
-        gameLibraryViewModel.firePropertyChanged();
+        this.gameLibraryViewModel.setState(gameLibraryState);
+        this.gameLibraryViewModel.firePropertyChanged();
     }
 
     @Override

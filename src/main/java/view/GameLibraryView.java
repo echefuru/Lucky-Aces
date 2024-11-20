@@ -45,14 +45,11 @@ public class GameLibraryView extends JPanel implements PropertyChangeListener {
         this.gameLibraryViewModel = gameLibraryViewModel;
         this.gameLibraryViewModel.addPropertyChangeListener(this);
 
-        final String[] availableGames = gameLibraryViewModel.getState().getAvailableGames();
-
         final JLabel title = new JLabel("Game Library Screen");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         gameSelection.setLayout(new BoxLayout(gameSelection, BoxLayout.Y_AXIS));
         gameSelection.setAlignmentX(Component.CENTER_ALIGNMENT);
-        setGameSelection(availableGames);
 
         final JLabel playerIDInfo = new JLabel("Currently logged in as: ");
         playerIDInfo.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -125,9 +122,9 @@ public class GameLibraryView extends JPanel implements PropertyChangeListener {
         if (evt.getPropertyName().equals("state")) {
             final GameLibraryState state = (GameLibraryState) evt.getNewValue();
             playerID.setText(state.getPlayerID());
-            this.setGameSelection(state.getAvailableGames());
-
             this.errorField.setText(state.getSelectGameError());
+
+            this.setGameSelection(state.getAvailableGames());
         }
     }
 
@@ -146,6 +143,8 @@ public class GameLibraryView extends JPanel implements PropertyChangeListener {
 
     private void setGameSelection(String[] availableGames) {
         this.gameSelection.removeAll();
+        this.gameSelection.revalidate();
+        this.gameSelection.repaint();
 
         this.games = new JButton[availableGames.length];
         for (int i = 0; i < availableGames.length; i++) {

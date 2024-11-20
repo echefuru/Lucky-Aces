@@ -61,4 +61,13 @@ public class GameLibraryPresenter implements GameLibraryOutputBoundary {
         viewManagerModel.setState(changePasswordViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }
+
+    @Override
+    public void search(boolean[] availableGamesVisible) {
+        final GameLibraryState gameLibraryState = gameLibraryViewModel.getState();
+        gameLibraryState.setAvailableGamesVisible(availableGamesVisible);
+
+        this.gameLibraryViewModel.setState(gameLibraryState);
+        this.gameLibraryViewModel.firePropertyChanged();
+    }
 }

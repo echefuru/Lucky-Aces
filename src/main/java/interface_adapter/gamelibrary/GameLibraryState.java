@@ -7,6 +7,7 @@ public class GameLibraryState {
     private String playerID = "";
 
     private String[] availableGames = {};
+    private boolean[] availableGamesVisible = {};
 
     private String selectGameError;
 
@@ -28,6 +29,14 @@ public class GameLibraryState {
 
     public String[] getAvailableGames() {
         return this.availableGames;
+    }
+
+    public void setAvailableGamesVisible(boolean[] availableGamesVisible) {
+        this.availableGamesVisible = availableGamesVisible;
+    }
+
+    public boolean[] getAvailableGamesVisible() {
+        return this.availableGamesVisible;
     }
 
     public String getSelectGameError() {

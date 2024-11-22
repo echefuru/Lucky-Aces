@@ -27,7 +27,19 @@ public interface GameLibraryOutputBoundary {
 
     /**
      * Prepares the view for the search use case.
-     * @param availableGamesVisible Visible of all games
+     * @param availableGamesVisible Visible of all games.
      */
     void search(boolean[] availableGamesVisible);
+
+    /**
+     * Executes the view for "filter".
+     * @param gameTypes of all games.
+     */
+    void executeFilter(String[] gameTypes);
+
+    /**
+     * Prepares the view for the filter use case.
+     * @param availableGamesVisible Visible of all games.
+     */
+    void filter(boolean[] availableGamesVisible);
 }

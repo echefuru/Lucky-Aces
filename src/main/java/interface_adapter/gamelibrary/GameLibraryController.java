@@ -38,4 +38,20 @@ public class GameLibraryController {
     public void search(String info) {
         gameLibraryUseCaseInteractor.search(info);
     }
+
+    /**
+     * Executes the "filter" Use Case.
+     */
+    public void executeFilter() {
+        gameLibraryUseCaseInteractor.executeFilter();
+    }
+
+    /**
+     * Handle the "filter" Use Case.
+     * @param typeInput The type of game chosen by the user
+     * @param playerCount The number of players selected by the user
+     */
+    public void filter(String typeInput, int playerCount) {
+        gameLibraryUseCaseInteractor.filter(typeInput, playerCount);
+    }
 }

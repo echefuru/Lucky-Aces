@@ -24,4 +24,16 @@ public interface GameLibraryInputBoundary {
      * @param info search input
      */
     void search(String info);
+
+    /**
+     * Executes the "filter" Use Case.
+     */
+    void executeFilter();
+
+    /**
+     * Handle the "filter" Use Case.
+     * @param typeInput The type of game chosen by the user
+     * @param playerCount The number of players selected by the user
+     */
+    void filter(String typeInput, int playerCount);
 }

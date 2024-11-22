@@ -70,4 +70,21 @@ public class GameLibraryPresenter implements GameLibraryOutputBoundary {
         this.gameLibraryViewModel.setState(gameLibraryState);
         this.gameLibraryViewModel.firePropertyChanged();
     }
+
+    @Override
+    public void executeFilter(String[] gameTypes) {
+        final GameLibraryState gameLibraryState = gameLibraryViewModel.getState();
+        gameLibraryState.setGameTypes(gameTypes);
+
+        gameLibraryViewModel.firePropertyChanged("filter");
+    }
+
+    @Override
+    public void filter(boolean[] availableGamesVisible) {
+        final GameLibraryState gameLibraryState = gameLibraryViewModel.getState();
+        gameLibraryState.setAvailableGamesVisible(availableGamesVisible);
+
+        this.gameLibraryViewModel.setState(gameLibraryState);
+        this.gameLibraryViewModel.firePropertyChanged();
+    }
 }

@@ -7,6 +7,7 @@ import java.beans.PropertyChangeListener;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -32,6 +33,9 @@ public class GameLibraryView extends JPanel implements PropertyChangeListener {
     private final JButton search = new JButton("Search");
     private final JTextField searchInputField = new JTextField(15);
 
+    private final String filterText = "Filter";
+    private final JButton filter = new JButton(filterText);
+
     private final JLabel errorField = new JLabel();
 
     private JButton[] games;
@@ -48,9 +52,6 @@ public class GameLibraryView extends JPanel implements PropertyChangeListener {
         final JLabel title = new JLabel("Game Library Screen");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        gameSelection.setLayout(new BoxLayout(gameSelection, BoxLayout.Y_AXIS));
-        gameSelection.setAlignmentX(Component.CENTER_ALIGNMENT);
-
         final JLabel playerIDInfo = new JLabel("Currently logged in as: ");
         playerIDInfo.setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -59,6 +60,7 @@ public class GameLibraryView extends JPanel implements PropertyChangeListener {
         final JPanel searchPanel = new JPanel();
         searchPanel.add(searchInputField);
         searchPanel.add(search);
+        searchPanel.add(filter);
 
         final JPanel errorPanel = new JPanel();
         errorPanel.add(errorField);
@@ -104,6 +106,15 @@ public class GameLibraryView extends JPanel implements PropertyChangeListener {
                 }
         );
 
+        filter.addActionListener(
+                // This creates an anonymous subclass of ActionListener and instantiates it.
+                evt -> {
+                    if (evt.getSource().equals(filter)) {
+                        gameLibraryController.executeFilter();
+                    }
+                }
+        );
+
         this.add(title);
         this.add(playerIDInfo);
         this.add(playerID);
@@ -123,6 +134,55 @@ public class GameLibraryView extends JPanel implements PropertyChangeListener {
             this.errorField.setText(state.getSelectGameError());
 
             this.setGameSelection(state.getAvailableGames(), state.getAvailableGamesVisible());
+        }
+        else if (evt.getPropertyName().equals(filterText.toLowerCase())) {
+            final GameLibraryState state = (GameLibraryState) evt.getNewValue();
+            final String[] options = state.getGameTypes();
+
+            final int typeInput = JOptionPane.showOptionDialog(
+                    null,
+                    "<html>Please select the type you want to play:<br>"
+                            + "(If you don't want to limit the type of games, you can just close the window.)</html>",
+                    filterText, JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+            final String type;
+            if (typeInput == -1) {
+                type = "";
+            }
+            else {
+                type = options[typeInput];
+            }
+
+            while (true) {
+                final String playerInput = JOptionPane.showInputDialog(
+                        null,
+                        "<html>Please enter the specific number of players you want:<br>"
+                                + "(If you don't want to limit the number of players, "
+                                + "you can just close or cancel the window.)</html>",
+                        filterText, JOptionPane.QUESTION_MESSAGE
+                );
+
+                if (playerInput == null) {
+                    gameLibraryController.filter(type, -1);
+                    break;
+                }
+                try {
+                    final int playerCount = Integer.parseInt(playerInput);
+                    if (playerCount >= 0) {
+                        gameLibraryController.filter(type, playerCount);
+                        break;
+                    }
+                    else {
+                        JOptionPane.showMessageDialog(
+                                null, "Please enter a number greater or equal to 0!",
+                                "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+                catch (NumberFormatException exception) {
+                    JOptionPane.showMessageDialog(
+                            null, "Invalid input, please enter an integer!",
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
         }
     }
 
@@ -151,6 +211,9 @@ public class GameLibraryView extends JPanel implements PropertyChangeListener {
             games[i].setVisible(availableGamesVisible[i]);
             gameSelection.add(games[i]);
         }
+
+        gameSelection.setLayout(new BoxLayout(gameSelection, BoxLayout.Y_AXIS));
+        gameSelection.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         for (JButton game : games) {
             game.addActionListener(

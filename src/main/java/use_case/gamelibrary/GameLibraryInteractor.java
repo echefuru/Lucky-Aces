@@ -31,10 +31,10 @@ public class GameLibraryInteractor implements GameLibraryInputBoundary {
         }
     }
 
-    @Override
-    public void switchToChangePasswordView(ChangePasswordState changePasswordState) {
-        gameLibraryPresenter.switchToChangePasswordView(changePasswordState);
-    }
+//    @Override
+//    public void switchToChangePasswordView(ChangePasswordState changePasswordState) {
+//        gameLibraryPresenter.switchToChangePasswordView(changePasswordState);
+//    }
 
     @Override
     public void search(String info) {

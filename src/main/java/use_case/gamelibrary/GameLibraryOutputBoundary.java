@@ -19,11 +19,11 @@ public interface GameLibraryOutputBoundary {
      */
     void prepareFailView(String errorMessage);
 
-    /**
-     * Switch to Change password view use case.
-     * @param changePasswordState current player
-     */
-    void switchToChangePasswordView(ChangePasswordState changePasswordState);
+//    /**
+//     * Switch to Change password view use case.
+//     * @param changePasswordState current player
+//     */
+//    void switchToChangePasswordView(ChangePasswordState changePasswordState);
 
     /**
      * Prepares the view for the search use case.

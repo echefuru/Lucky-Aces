@@ -13,16 +13,16 @@ import use_case.gamelibrary.GameLibraryOutputData;
  */
 public class GameLibraryPresenter implements GameLibraryOutputBoundary {
     private final ViewManagerModel viewManagerModel;
-    private final ChangePasswordViewModel changePasswordViewModel;
+    // private final ChangePasswordViewModel changePasswordViewModel;
     private final GameSetupViewModel gameSetupViewModel;
     private final GameLibraryViewModel gameLibraryViewModel;
 
     public GameLibraryPresenter(ViewManagerModel viewManagerModel,
-                                ChangePasswordViewModel changePasswordViewModel,
+                                // ChangePasswordViewModel changePasswordViewModel,
                                 GameSetupViewModel gameSetupViewModel,
                                 GameLibraryViewModel gameLibraryViewModel) {
         this.viewManagerModel = viewManagerModel;
-        this.changePasswordViewModel = changePasswordViewModel;
+        // this.changePasswordViewModel = changePasswordViewModel;
         this.gameSetupViewModel = gameSetupViewModel;
         this.gameLibraryViewModel = gameLibraryViewModel;
     }
@@ -53,14 +53,14 @@ public class GameLibraryPresenter implements GameLibraryOutputBoundary {
         this.gameLibraryViewModel.firePropertyChanged();
     }
 
-    @Override
-    public void switchToChangePasswordView(ChangePasswordState changePasswordState) {
-        this.changePasswordViewModel.setState(changePasswordState);
-        this.changePasswordViewModel.firePropertyChanged();
-
-        viewManagerModel.setState(changePasswordViewModel.getViewName());
-        viewManagerModel.firePropertyChanged();
-    }
+//    @Override
+//    public void switchToChangePasswordView(ChangePasswordState changePasswordState) {
+//        this.changePasswordViewModel.setState(changePasswordState);
+//        this.changePasswordViewModel.firePropertyChanged();
+//
+//        viewManagerModel.setState(changePasswordViewModel.getViewName());
+//        viewManagerModel.firePropertyChanged();
+//    }
 
     @Override
     public void search(boolean[] availableGamesVisible) {

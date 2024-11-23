@@ -13,11 +13,11 @@ public interface GameLibraryInputBoundary {
      */
     void execute(GameLibraryInputData gameLibraryInputData);
 
-    /**
-     * Executes the switch to change password view use case.
-     * @param changePasswordState current player
-     */
-    void switchToChangePasswordView(ChangePasswordState changePasswordState);
+//    /**
+//     * Executes the switch to change password view use case.
+//     * @param changePasswordState current player
+//     */
+//    void switchToChangePasswordView(ChangePasswordState changePasswordState);
 
     /**
      * Executes the "search" Use Case.

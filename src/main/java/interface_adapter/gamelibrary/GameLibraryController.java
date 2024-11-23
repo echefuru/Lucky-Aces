@@ -23,13 +23,13 @@ public class GameLibraryController {
         gameLibraryUseCaseInteractor.execute(gameLibraryInputData);
     }
 
-    /**
-     * Executes the "switch to ChangePasswordView" Use Case.
-     * @param changePasswordState current player
-     */
-    public void switchToChangePasswordView(ChangePasswordState changePasswordState) {
-        gameLibraryUseCaseInteractor.switchToChangePasswordView(changePasswordState);
-    }
+//    /**
+//     * Executes the "switch to ChangePasswordView" Use Case.
+//     * @param changePasswordState current player
+//     */
+//    public void switchToChangePasswordView(ChangePasswordState changePasswordState) {
+//        gameLibraryUseCaseInteractor.switchToChangePasswordView(changePasswordState);
+//    }
 
     /**
      * Executes the "search" Use Case.

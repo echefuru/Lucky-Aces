@@ -13,13 +13,11 @@ import org.json.JSONObject;
 
 import data_type.GameInfo;
 import use_case.GameLibraryGameInfoDataAccessInterface;
-import use_case.login.LoginGameInfoDataAccessInterface;
 
 /**
  * In-memory implementation of the DAO of the list of available games in the program.
  */
-public class GameInfoDataAccessObject implements GameLibraryGameInfoDataAccessInterface,
-        LoginGameInfoDataAccessInterface {
+public class GameInfoDataAccessObject implements GameLibraryGameInfoDataAccessInterface {
     private final Map<String, GameInfo> games;
     private final String[] availableGames;
     private final boolean[] availableGamesVisible;
@@ -75,11 +73,5 @@ public class GameInfoDataAccessObject implements GameLibraryGameInfoDataAccessIn
     @Override
     public String[] getAvailableGames() {
         return availableGames;
-    }
-
-    // What's the point of this if we already have this property in the Map?
-    @Override
-    public boolean[] getAvailableGamesVisible() {
-        return availableGamesVisible;
     }
 }

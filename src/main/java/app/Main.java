@@ -14,18 +14,14 @@ public class Main {
         final AppBuilder appBuilder = new AppBuilder();
         // add the Logout Use Case to the app using the appBuilder
         final JFrame application = appBuilder
-                                            // .addLoginView()
-                                            // .addSignupView()
+                                            // Views.
                                             .addGameLibraryView()
                                             .addGameSetupView()
-                                            // .addChangePasswordView()
-                                            // .addSignupUseCase()
-                                            // .addLoginUseCase()
-                                            // .addChangePasswordUseCase()
-                                            // .addLogoutUseCase()
-                                            .addInitializationUseCase() // new
+                                            // Use Cases.
+                                            .addInitializationUseCase()
                                             .addGameLibraryUseCase()
                                             .addGameSetupUseCase()
+                                            // Build.
                                             .build();
 
         application.pack();

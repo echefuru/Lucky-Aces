@@ -1,6 +1,5 @@
 package interface_adapter.gamelibrary;
 
-import interface_adapter.change_password.ChangePasswordState;
 import use_case.gamelibrary.GameLibraryInputBoundary;
 import use_case.gamelibrary.GameLibraryInputData;
 

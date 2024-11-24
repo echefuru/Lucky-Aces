@@ -12,13 +12,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import interface_adapter.change_password.ChangePasswordState;
 import interface_adapter.gamelibrary.GameLibraryController;
-import interface_adapter.gamelibrary.GameLibraryState;
 import interface_adapter.gamelibrary.GameLibraryViewModel;
 import interface_adapter.gamelibrary.InitializationController;
-import interface_adapter.logout.LogoutController;
-import use_case.initialization.InitializationOutputData;
 
 /**
  * The View for when the user first opens the program.
@@ -64,38 +60,12 @@ public class GameLibraryView extends JPanel implements ActionListener, PropertyC
                 }
         );
 
-//        changePassword.addActionListener(
-//                // This creates an anonymous subclass of ActionListener and instantiates it.
-//                evt -> {
-//                    if (evt.getSource().equals(changePassword)) {
-//                        final ChangePasswordState changePasswordState = new ChangePasswordState();
-//                        changePasswordState.setPlayerID(playerID.getText());
-//
-//                        gameLibraryController.switchToChangePasswordView(changePasswordState);
-//                    }
-//                }
-//        );
-
-//        logOut.addActionListener(
-//                // This creates an anonymous subclass of ActionListener and instantiates it.
-//                evt -> {
-//                    if (evt.getSource().equals(logOut)) {
-//                        // execute the logout use case through the Controller
-//                        // 1. get the state out of the loggedInViewModel. It contains the playerID.
-//                        // 2. Execute the logout Controller.
-//                        final GameLibraryState currentState = gameLibraryViewModel.getState();
-//                        logoutController.execute(currentState.getPlayerID());
-//                    }
-//                }
-//        );
-
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         this.add(title);
         this.add(searchPanel);
         this.add(gameSelection);
         this.add(errorField);
-        // this.add(buttons);
     }
 
     // TODO: Why was this is loginView in lab5? Just because some buttons had listeners without impl where they just
@@ -115,7 +85,6 @@ public class GameLibraryView extends JPanel implements ActionListener, PropertyC
 //            final GameLibraryState state = (GameLibraryState) evt.getNewValue();
 //            this.errorField.setText(state.getSelectGameError());
 //
-//            // TODO why was this here?
 //            // this.setGameSelection(state.getAvailableGames());
 //        }
         if (evt.getPropertyName().equals("initialization")) {
@@ -123,6 +92,7 @@ public class GameLibraryView extends JPanel implements ActionListener, PropertyC
             initializationController.execute();
             final String[] availableGames = gameLibraryViewModel.getState().getAvailableGames();
             setGameSelection(availableGames);
+            // Should this if run and then let the presenter fire action "state" which is caught in above if?
         }
     }
 
@@ -147,6 +117,7 @@ public class GameLibraryView extends JPanel implements ActionListener, PropertyC
             gameSelection.add(games[i]);
         }
 
+        // TODO: These actions are next steps in program.
         for (JButton game : games) {
             game.addActionListener(
                     evt -> {

@@ -1,8 +1,6 @@
 package interface_adapter.gamelibrary;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.change_password.ChangePasswordState;
-import interface_adapter.change_password.ChangePasswordViewModel;
 import interface_adapter.game_setup.GameSetupState;
 import interface_adapter.game_setup.GameSetupViewModel;
 import use_case.gamelibrary.GameLibraryOutputBoundary;
@@ -52,15 +50,6 @@ public class GameLibraryPresenter implements GameLibraryOutputBoundary {
         this.gameLibraryViewModel.setState(gameLibraryState);
         this.gameLibraryViewModel.firePropertyChanged();
     }
-
-//    @Override
-//    public void switchToChangePasswordView(ChangePasswordState changePasswordState) {
-//        this.changePasswordViewModel.setState(changePasswordState);
-//        this.changePasswordViewModel.firePropertyChanged();
-//
-//        viewManagerModel.setState(changePasswordViewModel.getViewName());
-//        viewManagerModel.firePropertyChanged();
-//    }
 
     @Override
     public void search(boolean[] availableGamesVisible) {

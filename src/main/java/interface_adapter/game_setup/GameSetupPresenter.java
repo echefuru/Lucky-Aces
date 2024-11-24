@@ -1,7 +1,7 @@
 package interface_adapter.game_setup;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.gamelibrary.GameLibraryViewModel;
+import interface_adapter.game_library_select.GameLibraryViewModel;
 import use_case.game_setup.GameSetupOutputBoundary;
 
 /**

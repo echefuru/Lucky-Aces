@@ -7,4 +7,9 @@ public interface GameLibraryInputBoundary {
      */
     void execute();
 
+    /**
+     * Executes the "search" Use Case.
+     * @param info search input
+     */
+    void search(String info);
 }

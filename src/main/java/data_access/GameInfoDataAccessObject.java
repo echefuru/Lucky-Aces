@@ -38,17 +38,11 @@ public class GameInfoDataAccessObject implements GameLibraryGameInfoDataAccessIn
 
                 final GameInfo gameInfo = new GameInfo(name, description, maxPlayers, minPlayers, isAvailable);
 
-                if (gameInfo.isAvailable()) {
-                    games.put(name, gameInfo);
-                }
+                games.put(name, gameInfo);
             }
 
             availableGames = games.keySet().toArray(new String[0]);
             Arrays.sort(availableGames);
-
-            // What's the point of this if we already have this property in the Map?
-//            availableGamesVisible = new boolean[availableGames.length];
-//            Arrays.fill(availableGamesVisible, true);
         }
         catch (IOException | URISyntaxException ex) {
             throw new RuntimeException(ex);
@@ -65,7 +59,6 @@ public class GameInfoDataAccessObject implements GameLibraryGameInfoDataAccessIn
         return games.get(game).getDescription();
     }
 
-    // TODO: Where/why is this used
     @Override
     public boolean isAvailable(String game) {
         return games.get(game).isAvailable();

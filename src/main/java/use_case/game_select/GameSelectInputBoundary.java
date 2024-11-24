@@ -10,10 +10,4 @@ public interface GameSelectInputBoundary {
      * @param gameSelectInputData the input data for this use case
      */
     void execute(GameSelectInputData gameSelectInputData);
-
-//    /**
-//     * Executes the "search" Use Case.
-//     * @param info search input
-//     */
-//    void search(String info);
 }

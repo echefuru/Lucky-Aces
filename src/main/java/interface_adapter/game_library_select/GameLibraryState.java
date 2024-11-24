@@ -6,6 +6,7 @@ package interface_adapter.game_library_select;
 public class GameLibraryState {
 
     private String[] availableGames;
+    private boolean[] availableGamesVisible = {};
     private String selectGameError;
 
     public String[] getAvailableGames() {
@@ -14,6 +15,14 @@ public class GameLibraryState {
 
     public void setAvailableGames(String[] availableGames) {
         this.availableGames = availableGames;
+    }
+
+    public void setAvailableGamesVisible(boolean[] availableGamesVisible) {
+        this.availableGamesVisible = availableGamesVisible;
+    }
+
+    public boolean[] getAvailableGamesVisible() {
+        return this.availableGamesVisible;
     }
 
     public String getSelectGameError() {

@@ -7,16 +7,24 @@ import use_case.game_library.GameLibraryInputBoundary;
  */
 public class GameLibraryController {
 
-    private final GameLibraryInputBoundary initializationInteractor;
+    private final GameLibraryInputBoundary gameLibraryInteractor;
 
-    public GameLibraryController(GameLibraryInputBoundary initializationInteractor) {
-        this.initializationInteractor = initializationInteractor;
+    public GameLibraryController(GameLibraryInputBoundary gameLibraryInteractor) {
+        this.gameLibraryInteractor = gameLibraryInteractor;
     }
 
     /**
      * Execute the game Initialization Use Case.
      */
     public void execute() {
-        initializationInteractor.execute();
+        gameLibraryInteractor.execute();
+    }
+
+    /**
+     * Executes the "search" Use Case.
+     * @param info search input
+     */
+    public void search(String info) {
+        gameLibraryInteractor.search(info);
     }
 }

@@ -50,16 +50,15 @@ public class GameLibraryView extends JPanel implements ActionListener, PropertyC
         searchPanel.add(searchInputField);
         searchPanel.add(search);
 
-        // TODO: This would need its own controller.
-        search.addActionListener(this);
-                // This creates an anonymous subclass of ActionListener and instantiates it.
-                // evt -> {
-                //    if (evt.getSource().equals(search)) {
-                //        final String info = searchInputField.getText();
-                //        gameLibraryController.search(info);
-                //    }
-                // }
-        // );
+        search.addActionListener(
+                 // This creates an anonymous subclass of ActionListener and instantiates it.
+                 evt -> {
+                    if (evt.getSource().equals(search)) {
+                        final String info = searchInputField.getText();
+                        gameLibraryController.search(info);
+                    }
+                 }
+        );
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -88,7 +87,12 @@ public class GameLibraryView extends JPanel implements ActionListener, PropertyC
             // TODO: Update this.
             errorField.setText(gameLibraryViewModel.getState().getSelectGameError());
         }
-        if (evt.getPropertyName().equals("build")) {
+        else if (evt.getPropertyName().equals("search")) {
+            final String[] availableGames = gameLibraryViewModel.getState().getAvailableGames();
+            final boolean[] availableGamesVisible = gameLibraryViewModel.getState().getAvailableGamesVisible();
+            setSearchSelection(availableGames, availableGamesVisible);
+        }
+        else if (evt.getPropertyName().equals("build")) {
             // Initialization Use Case which runs before any user action; on start-up action fired from the AppBuilder.
             gameLibraryController.execute();
         }
@@ -107,11 +111,40 @@ public class GameLibraryView extends JPanel implements ActionListener, PropertyC
     }
 
     private void setGameSelection(String[] availableGames) {
+        this.gameSelection.removeAll();
+        this.gameSelection.revalidate();
+        this.gameSelection.repaint();
+
         games = new JButton[availableGames.length];
         for (int i = 0; i < availableGames.length; i++) {
             games[i] = new JButton(availableGames[i]);
             games[i].setAlignmentX(Component.CENTER_ALIGNMENT);
             games[i].setVisible(true);
+            gameSelection.add(games[i]);
+        }
+
+        // TODO: These actions are next steps in program.
+        for (JButton game : games) {
+            game.addActionListener(
+                    evt -> {
+                        if (evt.getSource().equals(game)) {
+                            gameSelectController.execute(game.getText());
+                        }
+                    }
+            );
+        }
+    }
+
+    private void setSearchSelection(String[] availableGames, boolean[] availableGamesVisible) {
+        this.gameSelection.removeAll();
+        this.gameSelection.revalidate();
+        this.gameSelection.repaint();
+
+        games = new JButton[availableGames.length];
+        for (int i = 0; i < availableGames.length; i++) {
+            games[i] = new JButton(availableGames[i]);
+            games[i].setAlignmentX(Component.CENTER_ALIGNMENT);
+            games[i].setVisible(availableGamesVisible[i]);
             gameSelection.add(games[i]);
         }
 

@@ -7,10 +7,10 @@ import use_case.game_select.GameSelectInputData;
  * Controller for the game library Use Case.
  */
 public class GameSelectController {
-    private final GameSelectInputBoundary gameLibraryUseCaseInteractor;
+    private final GameSelectInputBoundary gameSelectInteractor;
 
-    public GameSelectController(GameSelectInputBoundary gamelibraryUseCaseInteractor) {
-        this.gameLibraryUseCaseInteractor = gamelibraryUseCaseInteractor;
+    public GameSelectController(GameSelectInputBoundary gameSelectInteractor) {
+        this.gameSelectInteractor = gameSelectInteractor;
     }
 
     /**
@@ -19,14 +19,6 @@ public class GameSelectController {
      */
     public void execute(String selectedGame) {
         final GameSelectInputData gameSelectInputData = new GameSelectInputData(selectedGame);
-        gameLibraryUseCaseInteractor.execute(gameSelectInputData);
+        gameSelectInteractor.execute(gameSelectInputData);
     }
-
-//    /**
-//     * Executes the "search" Use Case.
-//     * @param info search input
-//     */
-//    public void search(String info) {
-//        gameLibraryUseCaseInteractor.search(info);
-//    }
 }

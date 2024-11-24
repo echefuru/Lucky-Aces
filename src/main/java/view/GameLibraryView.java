@@ -45,14 +45,11 @@ public class GameLibraryView extends JPanel implements PropertyChangeListener {
         this.gameLibraryViewModel = gameLibraryViewModel;
         this.gameLibraryViewModel.addPropertyChangeListener(this);
 
-        final String[] availableGames = gameLibraryViewModel.getState().getAvailableGames();
-
         final JLabel title = new JLabel("Game Library Screen");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         gameSelection.setLayout(new BoxLayout(gameSelection, BoxLayout.Y_AXIS));
         gameSelection.setAlignmentX(Component.CENTER_ALIGNMENT);
-        setGameSelection(availableGames);
 
         final JLabel playerIDInfo = new JLabel("Currently logged in as: ");
         playerIDInfo.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -102,9 +99,7 @@ public class GameLibraryView extends JPanel implements PropertyChangeListener {
                 evt -> {
                     if (evt.getSource().equals(search)) {
                         final String info = searchInputField.getText();
-                        for (JButton button: games) {
-                            setVisible(info, button);
-                        }
+                        gameLibraryController.search(info);
                     }
                 }
         );
@@ -125,9 +120,9 @@ public class GameLibraryView extends JPanel implements PropertyChangeListener {
         if (evt.getPropertyName().equals("state")) {
             final GameLibraryState state = (GameLibraryState) evt.getNewValue();
             playerID.setText(state.getPlayerID());
-            this.setGameSelection(state.getAvailableGames());
-
             this.errorField.setText(state.getSelectGameError());
+
+            this.setGameSelection(state.getAvailableGames(), state.getAvailableGamesVisible());
         }
     }
 
@@ -144,13 +139,16 @@ public class GameLibraryView extends JPanel implements PropertyChangeListener {
         this.logoutController = logoutController;
     }
 
-    private void setGameSelection(String[] availableGames) {
+    private void setGameSelection(String[] availableGames, boolean[] availableGamesVisible) {
         this.gameSelection.removeAll();
+        this.gameSelection.revalidate();
+        this.gameSelection.repaint();
 
         this.games = new JButton[availableGames.length];
         for (int i = 0; i < availableGames.length; i++) {
             games[i] = new JButton(availableGames[i]);
             games[i].setAlignmentX(Component.CENTER_ALIGNMENT);
+            games[i].setVisible(availableGamesVisible[i]);
             gameSelection.add(games[i]);
         }
 
@@ -162,18 +160,6 @@ public class GameLibraryView extends JPanel implements PropertyChangeListener {
                         }
                     }
             );
-        }
-    }
-
-    private void setVisible(String info, JButton button) {
-        if ("".equals(info)) {
-            button.setVisible(true);
-        }
-        else if (button.getText().toLowerCase().contains(info.toLowerCase())) {
-            button.setVisible(true);
-        }
-        else {
-            button.setVisible(false);
         }
     }
 }

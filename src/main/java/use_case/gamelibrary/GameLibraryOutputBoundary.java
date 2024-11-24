@@ -24,4 +24,10 @@ public interface GameLibraryOutputBoundary {
      * @param changePasswordState current player
      */
     void switchToChangePasswordView(ChangePasswordState changePasswordState);
+
+    /**
+     * Prepares the view for the search use case.
+     * @param availableGamesVisible Visible of all games
+     */
+    void search(boolean[] availableGamesVisible);
 }

@@ -1,7 +1,6 @@
 package interface_adapter.change_password;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.gamelibrary.GameLibraryState;
 import interface_adapter.gamelibrary.GameLibraryViewModel;
 import interface_adapter.login.LoginState;
 import interface_adapter.login.LoginViewModel;
@@ -55,10 +54,7 @@ public class ChangePasswordPresenter implements ChangePasswordOutputBoundary {
     }
 
     @Override
-    public void switchToGameLibraryView(GameLibraryState gameLibraryState) {
-        this.gameLibraryViewModel.setState(gameLibraryState);
-        this.gameLibraryViewModel.firePropertyChanged();
-
+    public void switchToGameLibraryView() {
         viewManagerModel.setState(gameLibraryViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }

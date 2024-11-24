@@ -18,4 +18,10 @@ public interface GameLibraryInputBoundary {
      * @param changePasswordState current player
      */
     void switchToChangePasswordView(ChangePasswordState changePasswordState);
+
+    /**
+     * Executes the "search" Use Case.
+     * @param info search input
+     */
+    void search(String info);
 }

@@ -1,32 +1,29 @@
-package interface_adapter.gamelibrary;
+package interface_adapter.game_library_select;
 
 import interface_adapter.ViewManagerModel;
 import interface_adapter.game_setup.GameSetupState;
 import interface_adapter.game_setup.GameSetupViewModel;
-import use_case.gamelibrary.GameLibraryOutputBoundary;
-import use_case.gamelibrary.GameLibraryOutputData;
+import use_case.game_select.GameSelectOutputBoundary;
+import use_case.game_select.GameSelectOutputData;
 
 /**
  * The Presenter for the Game library Use Case.
  */
-public class GameLibraryPresenter implements GameLibraryOutputBoundary {
+public class GameSelectPresenter implements GameSelectOutputBoundary {
     private final ViewManagerModel viewManagerModel;
-    // private final ChangePasswordViewModel changePasswordViewModel;
     private final GameSetupViewModel gameSetupViewModel;
     private final GameLibraryViewModel gameLibraryViewModel;
 
-    public GameLibraryPresenter(ViewManagerModel viewManagerModel,
-                                // ChangePasswordViewModel changePasswordViewModel,
-                                GameSetupViewModel gameSetupViewModel,
-                                GameLibraryViewModel gameLibraryViewModel) {
+    public GameSelectPresenter(ViewManagerModel viewManagerModel,
+                               GameSetupViewModel gameSetupViewModel,
+                               GameLibraryViewModel gameLibraryViewModel) {
         this.viewManagerModel = viewManagerModel;
-        // this.changePasswordViewModel = changePasswordViewModel;
         this.gameSetupViewModel = gameSetupViewModel;
         this.gameLibraryViewModel = gameLibraryViewModel;
     }
 
     @Override
-    public void prepareSuccessView(GameLibraryOutputData outputData) {
+    public void prepareSuccessView(GameSelectOutputData outputData) {
         // On success, switch to the game setup view.
         final GameSetupState gameSetupState = gameSetupViewModel.getState();
         gameSetupState.setGameName(outputData.getGameName());
@@ -34,10 +31,11 @@ public class GameLibraryPresenter implements GameLibraryOutputBoundary {
         this.gameSetupViewModel.setState(gameSetupState);
         this.gameSetupViewModel.firePropertyChanged();
 
-        final GameLibraryState gameLibraryState = gameLibraryViewModel.getState();
-        gameLibraryState.setSelectGameError(null);
-        this.gameLibraryViewModel.setState(gameLibraryState);
-        this.gameLibraryViewModel.firePropertyChanged();
+        // TODO: What was this doing?
+//        final GameLibraryState gameLibraryState = gameLibraryViewModel.getState();
+//        gameLibraryState.setSelectGameError(null);
+//        this.gameLibraryViewModel.setState(gameLibraryState);
+//        this.gameLibraryViewModel.firePropertyChanged();
 
         this.viewManagerModel.setState(gameSetupViewModel.getViewName());
         this.viewManagerModel.firePropertyChanged();
@@ -51,12 +49,12 @@ public class GameLibraryPresenter implements GameLibraryOutputBoundary {
         this.gameLibraryViewModel.firePropertyChanged();
     }
 
-    @Override
-    public void search(boolean[] availableGamesVisible) {
-        final GameLibraryState gameLibraryState = gameLibraryViewModel.getState();
-        // gameLibraryState.setAvailableGamesVisible(availableGamesVisible);
-
-        this.gameLibraryViewModel.setState(gameLibraryState);
-        this.gameLibraryViewModel.firePropertyChanged();
-    }
+//    @Override
+//    public void search(boolean[] availableGamesVisible) {
+//        final GameLibraryState gameLibraryState = gameLibraryViewModel.getState();
+//        // gameLibraryState.setAvailableGamesVisible(availableGamesVisible);
+//
+//        this.gameLibraryViewModel.setState(gameLibraryState);
+//        this.gameLibraryViewModel.firePropertyChanged();
+//    }
 }

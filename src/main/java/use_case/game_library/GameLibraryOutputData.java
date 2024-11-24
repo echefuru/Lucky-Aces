@@ -1,13 +1,13 @@
-package use_case.initialization;
+package use_case.game_library;
 
 /**
  * Output Data for the Initialization Use Case.
  */
-public class InitializationOutputData {
+public class GameLibraryOutputData {
 
     private final String[] games;
 
-    public InitializationOutputData(String[] games) {
+    public GameLibraryOutputData(String[] games) {
         this.games = games;
     }
 

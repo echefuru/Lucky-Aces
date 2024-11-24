@@ -1,6 +1,6 @@
-package use_case.initialization;
+package use_case.game_library;
 
-public interface InitializationInputBoundary {
+public interface GameLibraryInputBoundary {
 
     /**
      * Execute the game Initialization Use Case.

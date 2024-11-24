@@ -1,4 +1,4 @@
-package interface_adapter.gamelibrary;
+package interface_adapter.game_library_select;
 
 /**
  * The State information representing the GameLibrary's state at the initial screen.
@@ -6,7 +6,6 @@ package interface_adapter.gamelibrary;
 public class GameLibraryState {
 
     private String[] availableGames;
-    // private boolean[] availableGamesVisible;
     private String selectGameError;
 
     public String[] getAvailableGames() {
@@ -16,15 +15,6 @@ public class GameLibraryState {
     public void setAvailableGames(String[] availableGames) {
         this.availableGames = availableGames;
     }
-
-    // What's the point of this?
-//    public boolean[] getAvailableGamesVisible() {
-//        return this.availableGamesVisible;
-//    }
-
-//    public void setAvailableGamesVisible(boolean[] availableGamesVisible) {
-//        this.availableGamesVisible = availableGamesVisible;
-//    }
 
     public String getSelectGameError() {
         return selectGameError;

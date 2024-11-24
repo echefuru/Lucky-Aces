@@ -13,16 +13,16 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.game_setup.GameSetupController;
 import interface_adapter.game_setup.GameSetupPresenter;
 import interface_adapter.game_setup.GameSetupViewModel;
-import interface_adapter.gamelibrary.*;
+import interface_adapter.game_library_select.*;
 import use_case.game_setup.GameSetupInputBoundary;
 import use_case.game_setup.GameSetupInteractor;
 import use_case.game_setup.GameSetupOutputBoundary;
-import use_case.gamelibrary.GameLibraryInputBoundary;
-import use_case.gamelibrary.GameLibraryInteractor;
-import use_case.gamelibrary.GameLibraryOutputBoundary;
-import use_case.initialization.InitializationInputBoundary;
-import use_case.initialization.InitializationInteractor;
-import use_case.initialization.InitializationOutputBoundary;
+import use_case.game_select.GameSelectInputBoundary;
+import use_case.game_select.GameSelectInteractor;
+import use_case.game_select.GameSelectOutputBoundary;
+import use_case.game_library.GameLibraryInputBoundary;
+import use_case.game_library.GameLibraryInteractor;
+import use_case.game_library.GameLibraryOutputBoundary;
 import view.GameLibraryView;
 import view.GameSetupView;
 import view.ViewManager;
@@ -81,35 +81,35 @@ public class AppBuilder {
     }
 
     /**
-     * Adds the Initialization Use Case to the application.
+     * Adds the Game Library Use Case to the application.
      * @return this builder
      */
-    public AppBuilder addInitializationUseCase() {
-        final InitializationOutputBoundary initializationPresenter = new InitializationPresenter(
+    public AppBuilder addGameLibraryUseCase() {
+        final GameLibraryOutputBoundary gameLibraryPresenter = new GameLibraryPresenter(
                 gameLibraryViewModel,
                 viewManagerModel);
-        final InitializationInputBoundary initializationInteractor = new InitializationInteractor(
+        final GameLibraryInputBoundary gameLibraryInteractor = new GameLibraryInteractor(
                 gameInfoDataAccessObject,
-                initializationPresenter);
-        final InitializationController initializationController = new InitializationController(
-                initializationInteractor);
-        gameLibraryView.setInitializationController(initializationController);
+                gameLibraryPresenter);
+        final GameLibraryController gameLibraryController = new GameLibraryController(
+                gameLibraryInteractor);
+        gameLibraryView.setGameLibraryController(gameLibraryController);
         return this;
     }
 
     /**
-     * Adds the Game Library Case to the application.
+     * Adds the Game Select Use Case to the application.
      * @return this builder
      */
-    public AppBuilder addGameLibraryUseCase() {
-        final GameLibraryOutputBoundary gameLibraryPresenter = new GameLibraryPresenter(viewManagerModel,
+    public AppBuilder addGameSelectUseCase() {
+        final GameSelectOutputBoundary gameSelectPresenter = new GameSelectPresenter(viewManagerModel,
                 gameSetupViewModel,
                 gameLibraryViewModel);
-        final GameLibraryInputBoundary gameLibraryInteractor = new GameLibraryInteractor(gameLibraryPresenter,
+        final GameSelectInputBoundary gameSelectInteractor = new GameSelectInteractor(gameSelectPresenter,
                 gameInfoDataAccessObject);
 
-        final GameLibraryController gameLibraryController = new GameLibraryController(gameLibraryInteractor);
-        gameLibraryView.setGameLibraryController(gameLibraryController);
+        final GameSelectController gameSelectController = new GameSelectController(gameSelectInteractor);
+        gameLibraryView.setGameSelectController(gameSelectController);
         return this;
     }
 
@@ -139,9 +139,8 @@ public class AppBuilder {
         application.add(mainPanel);
 
         viewManagerModel.setState(gameLibraryView.getViewName());
-        // viewManagerModel.firePropertyChanged("");
-        // TODO: Is it valid to do this instead?
-        gameLibraryViewModel.firePropertyChanged("initialization");
+        viewManagerModel.firePropertyChanged();
+        gameLibraryViewModel.firePropertyChanged("build");
 
         return application;
     }

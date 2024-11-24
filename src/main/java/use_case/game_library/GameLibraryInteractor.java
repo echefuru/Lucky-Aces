@@ -1,14 +1,14 @@
-package use_case.initialization;
+package use_case.game_library;
 
 import use_case.GameLibraryGameInfoDataAccessInterface;
 
-public class InitializationInteractor implements InitializationInputBoundary {
+public class GameLibraryInteractor implements GameLibraryInputBoundary {
 
     private final GameLibraryGameInfoDataAccessInterface gameInfoDataAccessObject;
-    private final InitializationOutputBoundary initializationPresenter;
+    private final GameLibraryOutputBoundary initializationPresenter;
 
-    public InitializationInteractor(GameLibraryGameInfoDataAccessInterface gameInfoDataAccessObject,
-                                    InitializationOutputBoundary initializationPresenter) {
+    public GameLibraryInteractor(GameLibraryGameInfoDataAccessInterface gameInfoDataAccessObject,
+                                 GameLibraryOutputBoundary initializationPresenter) {
         this.gameInfoDataAccessObject = gameInfoDataAccessObject;
         this.initializationPresenter = initializationPresenter;
     }
@@ -21,7 +21,7 @@ public class InitializationInteractor implements InitializationInputBoundary {
             initializationPresenter.prepareFailView("No available games, check game_info.json.");
         }
         else {
-            final InitializationOutputData outputData = new InitializationOutputData(gameInfoDataAccessObject
+            final GameLibraryOutputData outputData = new GameLibraryOutputData(gameInfoDataAccessObject
                     .getAvailableGames());
             initializationPresenter.prepareSuccessView(outputData);
         }

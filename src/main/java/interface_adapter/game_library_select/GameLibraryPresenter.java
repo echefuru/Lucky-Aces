@@ -1,25 +1,25 @@
-package interface_adapter.gamelibrary;
+package interface_adapter.game_library_select;
 
 import interface_adapter.ViewManagerModel;
-import use_case.initialization.InitializationOutputBoundary;
-import use_case.initialization.InitializationOutputData;
+import use_case.game_library.GameLibraryOutputBoundary;
+import use_case.game_library.GameLibraryOutputData;
 
 /**
  * The Presenter for the Initialization Use Case.
  */
-public class InitializationPresenter implements InitializationOutputBoundary {
+public class GameLibraryPresenter implements GameLibraryOutputBoundary {
 
     private final GameLibraryViewModel gameLibraryViewModel;
     private final ViewManagerModel viewManagerModel;
 
-    public InitializationPresenter(GameLibraryViewModel gameLibraryViewModel,
-                                   ViewManagerModel viewManagerModel) {
+    public GameLibraryPresenter(GameLibraryViewModel gameLibraryViewModel,
+                                ViewManagerModel viewManagerModel) {
         this.gameLibraryViewModel = gameLibraryViewModel;
         this.viewManagerModel = viewManagerModel;
     }
 
     @Override
-    public void prepareSuccessView(InitializationOutputData outputData) {
+    public void prepareSuccessView(GameLibraryOutputData outputData) {
         // On success, display GameLibraryView with available games.
         final GameLibraryState gameLibraryState = gameLibraryViewModel.getState();
         gameLibraryState.setAvailableGames(outputData.getGames());

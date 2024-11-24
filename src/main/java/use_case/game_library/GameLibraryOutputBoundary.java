@@ -1,15 +1,15 @@
-package use_case.initialization;
+package use_case.game_library;
 
 /**
  * The output boundary for the Initialization Use Case.
  */
-public interface InitializationOutputBoundary {
+public interface GameLibraryOutputBoundary {
 
     /**
      * Prepares the success view for the Initialization Use Case.
      * @param outputData the output data
      */
-    void prepareSuccessView(InitializationOutputData outputData);
+    void prepareSuccessView(GameLibraryOutputData outputData);
 
     /**
      * Prepares the failure view for the Initialization Use Case.

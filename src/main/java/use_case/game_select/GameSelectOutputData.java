@@ -1,13 +1,13 @@
-package use_case.gamelibrary;
+package use_case.game_select;
 
 /**
  * Output Data for the game library Use Case.
  */
-public class GameLibraryOutputData {
+public class GameSelectOutputData {
     private final String gameName;
     private final String gameDescription;
 
-    public GameLibraryOutputData(String gameName, String gameDescription) {
+    public GameSelectOutputData(String gameName, String gameDescription) {
         this.gameName = gameName;
         this.gameDescription = gameDescription;
     }

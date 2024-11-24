@@ -12,9 +12,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import interface_adapter.gamelibrary.GameLibraryController;
-import interface_adapter.gamelibrary.GameLibraryViewModel;
-import interface_adapter.gamelibrary.InitializationController;
+import interface_adapter.game_library_select.GameSelectController;
+import interface_adapter.game_library_select.GameLibraryViewModel;
+import interface_adapter.game_library_select.GameLibraryController;
 
 /**
  * The View for when the user first opens the program.
@@ -23,8 +23,8 @@ public class GameLibraryView extends JPanel implements ActionListener, PropertyC
 
     private final String viewName = "game_library_view";
     private final GameLibraryViewModel gameLibraryViewModel;
-    private InitializationController initializationController;
     private GameLibraryController gameLibraryController;
+    private GameSelectController gameSelectController;
 
     private final JButton search = new JButton("Search");
     private final JTextField searchInputField = new JTextField(15);
@@ -50,15 +50,16 @@ public class GameLibraryView extends JPanel implements ActionListener, PropertyC
         searchPanel.add(searchInputField);
         searchPanel.add(search);
 
-        search.addActionListener(
+        // TODO: This would need its own controller.
+        search.addActionListener(this);
                 // This creates an anonymous subclass of ActionListener and instantiates it.
-                evt -> {
-                    if (evt.getSource().equals(search)) {
-                        final String info = searchInputField.getText();
-                        gameLibraryController.search(info);
-                    }
-                }
-        );
+                // evt -> {
+                //    if (evt.getSource().equals(search)) {
+                //        final String info = searchInputField.getText();
+                //        gameLibraryController.search(info);
+                //    }
+                // }
+        // );
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -68,7 +69,7 @@ public class GameLibraryView extends JPanel implements ActionListener, PropertyC
         this.add(errorField);
     }
 
-    // TODO: Why was this is loginView in lab5? Just because some buttons had listeners without impl where they just
+    // Why was this is loginView in lab5? Just because some buttons had listeners without impl where they just
     // passed the view itself as action listener, so this just sends the button click text out to show that no impl yet?
     /**
      * React to a button click that results in evt.
@@ -81,31 +82,28 @@ public class GameLibraryView extends JPanel implements ActionListener, PropertyC
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-//        if (evt.getPropertyName().equals("state")) {
-//            final GameLibraryState state = (GameLibraryState) evt.getNewValue();
-//            this.errorField.setText(state.getSelectGameError());
-//
-//            // this.setGameSelection(state.getAvailableGames());
-//        }
-        if (evt.getPropertyName().equals("initialization")) {
-            // Initialization Use Case which runs before any user action; on start-up action fired from the AppBuilder.
-            initializationController.execute();
+        if (evt.getPropertyName().equals("state")) {
             final String[] availableGames = gameLibraryViewModel.getState().getAvailableGames();
             setGameSelection(availableGames);
-            // Should this if run and then let the presenter fire action "state" which is caught in above if?
+            // TODO: Update this.
+            errorField.setText(gameLibraryViewModel.getState().getSelectGameError());
         }
-    }
-
-    public String getViewName() {
-        return viewName;
-    }
-
-    public void setInitializationController(InitializationController initializationController) {
-        this.initializationController = initializationController;
+        if (evt.getPropertyName().equals("build")) {
+            // Initialization Use Case which runs before any user action; on start-up action fired from the AppBuilder.
+            gameLibraryController.execute();
+        }
     }
 
     public void setGameLibraryController(GameLibraryController gameLibraryController) {
         this.gameLibraryController = gameLibraryController;
+    }
+
+    public void setGameSelectController(GameSelectController gameSelectController) {
+        this.gameSelectController = gameSelectController;
+    }
+
+    public String getViewName() {
+        return viewName;
     }
 
     private void setGameSelection(String[] availableGames) {
@@ -122,7 +120,7 @@ public class GameLibraryView extends JPanel implements ActionListener, PropertyC
             game.addActionListener(
                     evt -> {
                         if (evt.getSource().equals(game)) {
-                            gameLibraryController.execute(game.getText());
+                            gameSelectController.execute(game.getText());
                         }
                     }
             );

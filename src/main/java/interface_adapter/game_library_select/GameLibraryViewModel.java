@@ -1,4 +1,4 @@
-package interface_adapter.gamelibrary;
+package interface_adapter.game_library_select;
 
 import interface_adapter.ViewModel;
 

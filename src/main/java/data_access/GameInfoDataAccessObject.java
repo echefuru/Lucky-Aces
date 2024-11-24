@@ -20,7 +20,7 @@ import use_case.GameLibraryGameInfoDataAccessInterface;
 public class GameInfoDataAccessObject implements GameLibraryGameInfoDataAccessInterface {
     private final Map<String, GameInfo> games;
     private final String[] availableGames;
-    private final boolean[] availableGamesVisible;
+    // private final boolean[] availableGamesVisible;
 
     public GameInfoDataAccessObject(String filePath) {
         try {
@@ -47,8 +47,8 @@ public class GameInfoDataAccessObject implements GameLibraryGameInfoDataAccessIn
             Arrays.sort(availableGames);
 
             // What's the point of this if we already have this property in the Map?
-            availableGamesVisible = new boolean[availableGames.length];
-            Arrays.fill(availableGamesVisible, true);
+//            availableGamesVisible = new boolean[availableGames.length];
+//            Arrays.fill(availableGamesVisible, true);
         }
         catch (IOException | URISyntaxException ex) {
             throw new RuntimeException(ex);
@@ -65,6 +65,7 @@ public class GameInfoDataAccessObject implements GameLibraryGameInfoDataAccessIn
         return games.get(game).getDescription();
     }
 
+    // TODO: Where/why is this used
     @Override
     public boolean isAvailable(String game) {
         return games.get(game).isAvailable();

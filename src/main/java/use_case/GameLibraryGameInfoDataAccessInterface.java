@@ -1,4 +1,4 @@
-package use_case.gamelibrary;
+package use_case;
 
 /**
  * Data access for the game library use case.

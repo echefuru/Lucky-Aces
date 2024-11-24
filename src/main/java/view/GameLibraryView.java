@@ -1,6 +1,8 @@
 package view;
 
 import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -14,60 +16,53 @@ import interface_adapter.change_password.ChangePasswordState;
 import interface_adapter.gamelibrary.GameLibraryController;
 import interface_adapter.gamelibrary.GameLibraryState;
 import interface_adapter.gamelibrary.GameLibraryViewModel;
+import interface_adapter.gamelibrary.InitializationController;
 import interface_adapter.logout.LogoutController;
+import use_case.initialization.InitializationOutputData;
 
 /**
- * The View for when the user is logged into the program.
+ * The View for when the user first opens the program.
  */
-public class GameLibraryView extends JPanel implements PropertyChangeListener {
+public class GameLibraryView extends JPanel implements ActionListener, PropertyChangeListener {
 
-    private final String viewName = "Game Library";
+    private final String viewName = "game_library_view";
     private final GameLibraryViewModel gameLibraryViewModel;
-    // private final JLabel passwordErrorField = new JLabel();
+    private InitializationController initializationController;
     private GameLibraryController gameLibraryController;
-    // private LogoutController logoutController;
-
-    // private final JLabel playerID;
 
     private final JButton search = new JButton("Search");
     private final JTextField searchInputField = new JTextField(15);
 
     private final JLabel errorField = new JLabel();
 
-    private JButton[] games;
     private final JPanel gameSelection = new JPanel();
-
-    // private final JButton logOut = new JButton("Log Out");
-    // private final JButton changePassword = new JButton("Change Password");
+    private JButton[] games;
 
     // @SuppressWarnings("checkstyle:UnusedLocalVariable")
     public GameLibraryView(GameLibraryViewModel gameLibraryViewModel) {
+
         this.gameLibraryViewModel = gameLibraryViewModel;
         this.gameLibraryViewModel.addPropertyChangeListener(this);
 
         final JLabel title = new JLabel("Game Library Screen");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        gameSelection.setLayout(new BoxLayout(gameSelection, BoxLayout.Y_AXIS));
-        gameSelection.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        // final JLabel playerIDInfo = new JLabel("Currently logged in as: ");
-        // playerIDInfo.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        // playerID = new JLabel();
+        // final JPanel errorPanel = new JPanel();
+        // errorPanel.add(errorField);
 
         final JPanel searchPanel = new JPanel();
         searchPanel.add(searchInputField);
         searchPanel.add(search);
 
-        final JPanel errorPanel = new JPanel();
-        errorPanel.add(errorField);
-
-        // final JPanel buttons = new JPanel();
-        // buttons.add(logOut);
-        // buttons.add(changePassword);
-
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        search.addActionListener(
+                // This creates an anonymous subclass of ActionListener and instantiates it.
+                evt -> {
+                    if (evt.getSource().equals(search)) {
+                        final String info = searchInputField.getText();
+                        gameLibraryController.search(info);
+                    }
+                }
+        );
 
 //        changePassword.addActionListener(
 //                // This creates an anonymous subclass of ActionListener and instantiates it.
@@ -94,35 +89,40 @@ public class GameLibraryView extends JPanel implements PropertyChangeListener {
 //                }
 //        );
 
-        search.addActionListener(
-                // This creates an anonymous subclass of ActionListener and instantiates it.
-                evt -> {
-                    if (evt.getSource().equals(search)) {
-                        final String info = searchInputField.getText();
-                        gameLibraryController.search(info);
-                    }
-                }
-        );
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         this.add(title);
-        // this.add(playerIDInfo);
-        // this.add(playerID);
-
         this.add(searchPanel);
-        this.add(errorPanel);
         this.add(gameSelection);
-        // this.add(passwordErrorField);
+        this.add(errorField);
         // this.add(buttons);
+    }
+
+    // TODO: Why was this is loginView in lab5? Just because some buttons had listeners without impl where they just
+    // passed the view itself as action listener, so this just sends the button click text out to show that no impl yet?
+    /**
+     * React to a button click that results in evt.
+     * @param evt the ActionEvent to react to
+     */
+    @Override
+    public void actionPerformed(ActionEvent evt) {
+        System.out.println("Click " + evt.getActionCommand());
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        if (evt.getPropertyName().equals("state")) {
-            final GameLibraryState state = (GameLibraryState) evt.getNewValue();
-            // playerID.setText(state.getPlayerID());
-            this.errorField.setText(state.getSelectGameError());
-
-            this.setGameSelection(state.getAvailableGames(), state.getAvailableGamesVisible());
+//        if (evt.getPropertyName().equals("state")) {
+//            final GameLibraryState state = (GameLibraryState) evt.getNewValue();
+//            this.errorField.setText(state.getSelectGameError());
+//
+//            // TODO why was this here?
+//            // this.setGameSelection(state.getAvailableGames());
+//        }
+        if (evt.getPropertyName().equals("initialization")) {
+            // Initialization Use Case which runs before any user action; on start-up action fired from the AppBuilder.
+            initializationController.execute();
+            final String[] availableGames = gameLibraryViewModel.getState().getAvailableGames();
+            setGameSelection(availableGames);
         }
     }
 
@@ -130,25 +130,20 @@ public class GameLibraryView extends JPanel implements PropertyChangeListener {
         return viewName;
     }
 
+    public void setInitializationController(InitializationController initializationController) {
+        this.initializationController = initializationController;
+    }
+
     public void setGameLibraryController(GameLibraryController gameLibraryController) {
         this.gameLibraryController = gameLibraryController;
     }
 
-//    public void setLogoutController(LogoutController logoutController) {
-//        // save the logout controller in the instance variable.
-//        this.logoutController = logoutController;
-//    }
-
-    private void setGameSelection(String[] availableGames, boolean[] availableGamesVisible) {
-        this.gameSelection.removeAll();
-        this.gameSelection.revalidate();
-        this.gameSelection.repaint();
-
-        this.games = new JButton[availableGames.length];
+    private void setGameSelection(String[] availableGames) {
+        games = new JButton[availableGames.length];
         for (int i = 0; i < availableGames.length; i++) {
             games[i] = new JButton(availableGames[i]);
             games[i].setAlignmentX(Component.CENTER_ALIGNMENT);
-            games[i].setVisible(availableGamesVisible[i]);
+            games[i].setVisible(true);
             gameSelection.add(games[i]);
         }
 

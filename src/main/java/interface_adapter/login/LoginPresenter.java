@@ -32,9 +32,9 @@ public class LoginPresenter implements LoginOutputBoundary {
         // On success, switch to the game library view.
 
         final GameLibraryState gameLibraryState = gameLibraryViewModel.getState();
-        gameLibraryState.setPlayerID(response.getPlayerID());
+        // gameLibraryState.setPlayerID(response.getPlayerID());
         gameLibraryState.setAvailableGames(response.getAvailableGames());
-        gameLibraryState.setAvailableGamesVisible(response.getAvailableGamesVisible());
+        // gameLibraryState.setAvailableGamesVisible(response.getAvailableGamesVisible());
 
         this.gameLibraryViewModel.setState(gameLibraryState);
         this.gameLibraryViewModel.firePropertyChanged();

@@ -12,7 +12,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import data_type.GameInfo;
-import use_case.gamelibrary.GameLibraryGameInfoDataAccessInterface;
+import use_case.GameLibraryGameInfoDataAccessInterface;
 import use_case.login.LoginGameInfoDataAccessInterface;
 
 /**
@@ -40,11 +40,15 @@ public class GameInfoDataAccessObject implements GameLibraryGameInfoDataAccessIn
 
                 final GameInfo gameInfo = new GameInfo(name, description, maxPlayers, minPlayers, isAvailable);
 
-                games.put(name, gameInfo);
+                if (gameInfo.isAvailable()) {
+                    games.put(name, gameInfo);
+                }
             }
+
             availableGames = games.keySet().toArray(new String[0]);
             Arrays.sort(availableGames);
 
+            // What's the point of this if we already have this property in the Map?
             availableGamesVisible = new boolean[availableGames.length];
             Arrays.fill(availableGamesVisible, true);
         }
@@ -73,6 +77,7 @@ public class GameInfoDataAccessObject implements GameLibraryGameInfoDataAccessIn
         return availableGames;
     }
 
+    // What's the point of this if we already have this property in the Map?
     @Override
     public boolean[] getAvailableGamesVisible() {
         return availableGamesVisible;

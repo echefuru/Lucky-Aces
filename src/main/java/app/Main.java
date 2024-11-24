@@ -23,6 +23,7 @@ public class Main {
                                             // .addLoginUseCase()
                                             // .addChangePasswordUseCase()
                                             // .addLogoutUseCase()
+                                            .addInitializationUseCase() // new
                                             .addGameLibraryUseCase()
                                             .addGameSetupUseCase()
                                             .build();

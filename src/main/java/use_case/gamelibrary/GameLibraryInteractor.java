@@ -1,6 +1,6 @@
 package use_case.gamelibrary;
 
-import interface_adapter.change_password.ChangePasswordState;
+import use_case.GameLibraryGameInfoDataAccessInterface;
 
 /**
  * The game library Interactor.

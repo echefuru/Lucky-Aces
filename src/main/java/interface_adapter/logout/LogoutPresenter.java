@@ -36,7 +36,7 @@ public class LogoutPresenter implements LogoutOutputBoundary {
         // 1. get the LoggedInState out of the appropriate View Model,
         final GameLibraryState gameLibraryState = gameLibraryViewModel.getState();
         // 2. set the playerID in the state to the empty string
-        gameLibraryState.setPlayerID("");
+        // gameLibraryState.setPlayerID("");
         // 3. set the state in the LoggedInViewModel to the updated state
         gameLibraryViewModel.setState(gameLibraryState);
         // 4. firePropertyChanged so that the View that is listening is updated.

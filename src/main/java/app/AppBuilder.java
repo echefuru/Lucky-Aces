@@ -15,9 +15,7 @@ import interface_adapter.change_password.ChangePasswordViewModel;
 import interface_adapter.game_setup.GameSetupController;
 import interface_adapter.game_setup.GameSetupPresenter;
 import interface_adapter.game_setup.GameSetupViewModel;
-import interface_adapter.gamelibrary.GameLibraryController;
-import interface_adapter.gamelibrary.GameLibraryPresenter;
-import interface_adapter.gamelibrary.GameLibraryViewModel;
+import interface_adapter.gamelibrary.*;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.signup.SignupViewModel;
 import use_case.game_setup.GameSetupInputBoundary;
@@ -26,6 +24,9 @@ import use_case.game_setup.GameSetupOutputBoundary;
 import use_case.gamelibrary.GameLibraryInputBoundary;
 import use_case.gamelibrary.GameLibraryInteractor;
 import use_case.gamelibrary.GameLibraryOutputBoundary;
+import use_case.initialization.InitializationInputBoundary;
+import use_case.initialization.InitializationInteractor;
+import use_case.initialization.InitializationOutputBoundary;
 import view.ChangePasswordView;
 import view.GameLibraryView;
 import view.GameSetupView;
@@ -176,15 +177,32 @@ public class AppBuilder {
 //    }
 
     /**
+     * Adds the Initialization Use Case to the application.
+     * @return this builder
+     */
+    public AppBuilder addInitializationUseCase() {
+        final InitializationOutputBoundary initializationPresenter = new InitializationPresenter(
+                gameLibraryViewModel,
+                viewManagerModel);
+        final InitializationInputBoundary initializationInteractor = new InitializationInteractor(
+                gameInfoDataAccessObject,
+                initializationPresenter);
+        final InitializationController initializationController = new InitializationController(
+                initializationInteractor);
+        gameLibraryView.setInitializationController(initializationController);
+        return this;
+    }
+
+    /**
      * Adds the Game Library Case to the application.
      * @return this builder
      */
     public AppBuilder addGameLibraryUseCase() {
-        final GameLibraryOutputBoundary gameLibraryOutputBoundary = new GameLibraryPresenter(viewManagerModel,
+        final GameLibraryOutputBoundary gameLibraryPresenter = new GameLibraryPresenter(viewManagerModel,
                 // changepasswordViewModel,
                 gameSetupViewModel,
                 gameLibraryViewModel);
-        final GameLibraryInputBoundary gameLibraryInteractor = new GameLibraryInteractor(gameLibraryOutputBoundary,
+        final GameLibraryInputBoundary gameLibraryInteractor = new GameLibraryInteractor(gameLibraryPresenter,
                 gameInfoDataAccessObject);
 
         final GameLibraryController gameLibraryController = new GameLibraryController(gameLibraryInteractor);
@@ -234,7 +252,9 @@ public class AppBuilder {
         application.add(mainPanel);
 
         viewManagerModel.setState(gameLibraryView.getViewName());
-        viewManagerModel.firePropertyChanged();
+        // viewManagerModel.firePropertyChanged("");
+        // TODO: Is it valid to do this instead?
+        gameLibraryViewModel.firePropertyChanged("initialization");
 
         return application;
     }

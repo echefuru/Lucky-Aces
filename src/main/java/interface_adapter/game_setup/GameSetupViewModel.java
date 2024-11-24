@@ -6,8 +6,11 @@ import interface_adapter.ViewModel;
  * View model for the game setup use case.
  */
 public class GameSetupViewModel extends ViewModel<GameSetupState> {
+
+    private static final String VIEW_NAME = "game_setup";
+
     public GameSetupViewModel() {
-        super("Game Setup");
+        super(VIEW_NAME);
         setState(new GameSetupState());
     }
 }

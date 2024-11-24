@@ -17,4 +17,6 @@ public class ViewConstants {
 
     static final int INPUT_COLUMNS = 15;
     static final int INPUT_PADDING = 5;
+
+    static final float TITLE_FONT_SIZE = 20;
 }

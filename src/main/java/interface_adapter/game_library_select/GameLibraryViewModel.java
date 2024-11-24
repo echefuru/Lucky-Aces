@@ -7,8 +7,10 @@ import interface_adapter.ViewModel;
  */
 public class GameLibraryViewModel extends ViewModel<GameLibraryState> {
 
+    private static final String VIEW_NAME = "game_library";
+
     public GameLibraryViewModel() {
-        super("Game Library");
+        super(VIEW_NAME);
         setState(new GameLibraryState());
     }
 

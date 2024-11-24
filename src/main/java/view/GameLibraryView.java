@@ -7,12 +7,7 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 import interface_adapter.game_library_select.GameLibraryController;
 import interface_adapter.game_library_select.GameLibraryState;
@@ -47,6 +42,8 @@ public class GameLibraryView extends JPanel implements ActionListener, PropertyC
         final JLabel title = new JLabel("Game Library");
         title.setFont(title.getFont().deriveFont(ViewConstants.TITLE_FONT_SIZE));
 
+        final JLabel titleLogo = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("logo.png")));
+
         final JPanel searchPanel = new JPanel();
         searchPanel.add(searchInputField);
         searchPanel.add(search);
@@ -61,13 +58,15 @@ public class GameLibraryView extends JPanel implements ActionListener, PropertyC
                  }
         );
 
-        addContent(title, searchPanel);
+        addContent(title, searchPanel, titleLogo);
     }
 
-    private void addContent(JLabel title, JPanel searchPanel) {
+    private void addContent(JLabel title, JPanel searchPanel, JLabel titleLogo) {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        this.add(Box.createRigidArea(new Dimension(ViewConstants.WINDOW_WIDTH, ViewConstants.QUARTER_HEIGHT)));
+        titleLogo.setAlignmentX(Component.CENTER_ALIGNMENT);
+        this.add(titleLogo);
+
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         this.add(title);

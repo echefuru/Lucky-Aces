@@ -42,8 +42,11 @@ public class ChangePasswordView extends JPanel implements PropertyChangeListener
         final JLabel title = new JLabel("Change Password Screen");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        final LabelTextPanel passwordInfo = new LabelTextPanel(
-                new JLabel("Password"), passwordInputField);
+        final LabelTextPanel playerInputPanel =
+                new LabelTextPanel(new JLabel("Password"),
+                                   passwordInputField,
+                                   ViewConstants.INPUT_PADDING,
+                                   ViewConstants.LINE_HEIGHT);
 
         final JLabel playerIDInfo = new JLabel("Currently logged in:");
         playerID = new JLabel();
@@ -106,7 +109,7 @@ public class ChangePasswordView extends JPanel implements PropertyChangeListener
         this.add(playerIDInfo);
         this.add(playerID);
 
-        this.add(passwordInfo);
+        this.add(playerInputPanel);
         this.add(passwordErrorField);
         this.add(buttons);
     }

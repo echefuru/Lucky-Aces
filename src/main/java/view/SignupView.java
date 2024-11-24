@@ -1,11 +1,13 @@
 package view;
 
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -23,36 +25,37 @@ import interface_adapter.signup.SignupViewModel;
 /**
  * The View for the Signup Use Case.
  */
-public class SignupView extends JPanel implements ActionListener, PropertyChangeListener {
-    private final String viewName = "sign up";
+public class SignupView extends JPanel implements PropertyChangeListener {
+    private final String viewName = SignupViewModel.VIEW_NAME;
 
     private final SignupViewModel signupViewModel;
-    private final JTextField playerIDInputField = new JTextField(15);
-    private final JPasswordField passwordInputField = new JPasswordField(15);
-    private final JPasswordField repeatPasswordInputField = new JPasswordField(15);
+    private final JTextField playerIDInputField = new JTextField(ViewConstants.INPUT_COLUMNS);
+    private final JPasswordField passwordInputField = new JPasswordField(ViewConstants.INPUT_COLUMNS);
+    private final JPasswordField repeatPasswordInputField = new JPasswordField(ViewConstants.INPUT_COLUMNS);
     private SignupController signupController;
-
-    private final JButton signUp;
-    private final JButton toLogin;
 
     public SignupView(SignupViewModel signupViewModel) {
         this.signupViewModel = signupViewModel;
         signupViewModel.addPropertyChangeListener(this);
 
         final JLabel title = new JLabel(SignupViewModel.TITLE_LABEL);
-        title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        final LabelTextPanel playerIDInfo = new LabelTextPanel(
-                new JLabel(SignupViewModel.PLAYERID_LABEL), playerIDInputField);
-        final LabelTextPanel passwordInfo = new LabelTextPanel(
-                new JLabel(SignupViewModel.PASSWORD_LABEL), passwordInputField);
-        final LabelTextPanel repeatPasswordInfo = new LabelTextPanel(
-                new JLabel(SignupViewModel.REPEAT_PASSWORD_LABEL), repeatPasswordInputField);
+        final LabelTextPanel playerInputPanel =
+                new LabelTextPanel(new JLabel(SignupViewModel.PLAYER_ID_LABEL),
+                                   playerIDInputField,
+                                   ViewConstants.INPUT_PADDING,
+                                   ViewConstants.LINE_HEIGHT);
+        playerInputPanel.addLabelText(new JLabel(SignupViewModel.PASSWORD_LABEL),
+                                      passwordInputField
+        );
+        playerInputPanel.addLabelText(new JLabel(SignupViewModel.REPEAT_PASSWORD_LABEL),
+                                      repeatPasswordInputField
+        );
 
         final JPanel buttons = new JPanel();
-        toLogin = new JButton(SignupViewModel.TO_LOGIN_BUTTON_LABEL);
+        final JButton toLogin = new JButton(SignupViewModel.TO_LOGIN_BUTTON_LABEL);
         buttons.add(toLogin);
-        signUp = new JButton(SignupViewModel.SIGNUP_BUTTON_LABEL);
+        final JButton signUp = new JButton(SignupViewModel.SIGNUP_BUTTON_LABEL);
         buttons.add(signUp);
 
         signUp.addActionListener(
@@ -86,10 +89,12 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
+        this.add(Box.createRigidArea(new Dimension(ViewConstants.THIRD_WIDTH, ViewConstants.THIRD_HEIGHT)));
+
+        title.setAlignmentX(Component.CENTER_ALIGNMENT);
         this.add(title);
-        this.add(playerIDInfo);
-        this.add(passwordInfo);
-        this.add(repeatPasswordInfo);
+        this.add(playerInputPanel);
+        buttons.setMaximumSize(new Dimension(ViewConstants.THIRD_WIDTH, ViewConstants.LINE_HEIGHT));
         this.add(buttons);
     }
 
@@ -169,11 +174,6 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                 documentListenerHelper();
             }
         });
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent evt) {
-        JOptionPane.showMessageDialog(this, "Cancel not implemented yet.");
     }
 
     @Override

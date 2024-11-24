@@ -1,9 +1,11 @@
 package view;
 
 import java.awt.Component;
+import java.awt.Dimension;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -22,11 +24,11 @@ import interface_adapter.login.LoginViewModel;
  */
 public class LoginView extends JPanel implements PropertyChangeListener {
 
-    private final String viewName = "log in";
+    private final String viewName = LoginViewModel.VIEW_NAME;
     private final LoginViewModel loginViewModel;
 
-    private final JTextField playerIDInputField = new JTextField(15);
-    private final JPasswordField passwordInputField = new JPasswordField(15);
+    private final JTextField playerIDInputField = new JTextField(ViewConstants.INPUT_COLUMNS);
+    private final JPasswordField passwordInputField = new JPasswordField(ViewConstants.INPUT_COLUMNS);
 
     private final JLabel errorField = new JLabel();
 
@@ -35,26 +37,22 @@ public class LoginView extends JPanel implements PropertyChangeListener {
     private LoginController loginController;
 
     public LoginView(LoginViewModel loginViewModel) {
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
         this.loginViewModel = loginViewModel;
         this.loginViewModel.addPropertyChangeListener(this);
 
-        final JLabel title = new JLabel("Player Login");
-        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        final JLabel title = new JLabel(LoginViewModel.TITLE_LABEL);
 
-        final LabelTextPanel playerIDInfo = new LabelTextPanel(
-                new JLabel("Player ID"), playerIDInputField);
-        final LabelTextPanel passwordInfo = new LabelTextPanel(
-                new JLabel("Password"), passwordInputField);
-
-        playerIDInfo.setAlignmentX(Component.CENTER_ALIGNMENT);
-        passwordInfo.setAlignmentX(Component.CENTER_ALIGNMENT);
+        final LabelTextPanel playerInputPanel =
+                new LabelTextPanel(new JLabel(LoginViewModel.PLAYER_ID_LABEL),
+                                   playerIDInputField,
+                                   ViewConstants.INPUT_PADDING,
+                                   ViewConstants.LINE_HEIGHT);
+        playerInputPanel.addLabelText(new JLabel(LoginViewModel.PASSWORD_LABEL), passwordInputField);
 
         final JPanel buttons = new JPanel();
-        logIn = new JButton("Log in");
+        logIn = new JButton(LoginViewModel.LOGIN_BUTTON_LABEL);
         buttons.add(logIn);
-        goToSignup = new JButton("Go to signup");
+        goToSignup = new JButton(LoginViewModel.TO_SIGNUP_BUTTON_LABEL);
         buttons.add(goToSignup);
 
         logIn.addActionListener(evt -> {
@@ -98,8 +96,6 @@ public class LoginView extends JPanel implements PropertyChangeListener {
             }
         });
 
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
         passwordInputField.getDocument().addDocumentListener(new DocumentListener() {
 
             private void documentListenerHelper() {
@@ -124,10 +120,20 @@ public class LoginView extends JPanel implements PropertyChangeListener {
             }
         });
 
+        addComponents(title, playerInputPanel, buttons);
+    }
+
+    private void addComponents(JLabel title, LabelTextPanel playerInputPanel, JPanel buttons) {
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
+        this.add(Box.createRigidArea(new Dimension(ViewConstants.WINDOW_WIDTH, ViewConstants.THIRD_HEIGHT)));
+
+        title.setAlignmentX(Component.CENTER_ALIGNMENT);
         this.add(title);
-        this.add(playerIDInfo);
-        this.add(passwordInfo);
+        this.add(playerInputPanel);
+        errorField.setAlignmentX(Component.CENTER_ALIGNMENT);
         this.add(errorField);
+        buttons.setMaximumSize(new Dimension(ViewConstants.WINDOW_WIDTH, ViewConstants.LINE_HEIGHT));
         this.add(buttons);
     }
 
@@ -135,6 +141,7 @@ public class LoginView extends JPanel implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent evt) {
         final LoginState state = (LoginState) evt.getNewValue();
         setFields(state);
+
         errorField.setText(state.getLoginError());
     }
 

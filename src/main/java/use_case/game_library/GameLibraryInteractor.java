@@ -29,14 +29,4 @@ public class GameLibraryInteractor implements GameLibraryInputBoundary {
             gameLibraryPresenter.prepareSuccessView(outputData);
         }
     }
-
-    @Override
-    public void search(String info) {
-        final String[] availableGames = gameInfoDataAccessObject.getAvailableGames();
-        final boolean[] availableGamesVisible = new boolean[availableGames.length];
-        for (int i = 0; i < availableGames.length; i++) {
-            availableGamesVisible[i] = availableGames[i].toLowerCase().contains(info.toLowerCase());
-        }
-        gameLibraryPresenter.search(availableGamesVisible);
-    }
 }

@@ -12,6 +12,7 @@ import javax.swing.*;
 import interface_adapter.game_library_select.GameLibraryController;
 import interface_adapter.game_library_select.GameLibraryState;
 import interface_adapter.game_library_select.GameLibraryViewModel;
+import interface_adapter.game_library_select.GameSearchController;
 import interface_adapter.game_library_select.GameSelectController;
 
 /**
@@ -23,6 +24,7 @@ public class GameLibraryView extends JPanel implements ActionListener, PropertyC
     private final GameLibraryViewModel gameLibraryViewModel;
     private GameLibraryController gameLibraryController;
     private GameSelectController gameSelectController;
+    private GameSearchController gameSearchController;
 
     private final JButton search = new JButton("Search");
     private final JTextField searchInputField = new JTextField(15);
@@ -52,8 +54,8 @@ public class GameLibraryView extends JPanel implements ActionListener, PropertyC
                  // This creates an anonymous subclass of ActionListener and instantiates it.
                  evt -> {
                     if (evt.getSource().equals(search)) {
-                        final String info = searchInputField.getText();
-                        gameLibraryController.search(info);
+                        final String searchInput = searchInputField.getText();
+                        gameSearchController.execute(searchInput);
                     }
                  }
         );
@@ -121,6 +123,10 @@ public class GameLibraryView extends JPanel implements ActionListener, PropertyC
 
     public void setGameSelectController(GameSelectController gameSelectController) {
         this.gameSelectController = gameSelectController;
+    }
+
+    public void setGameSearchController(GameSearchController gameSearchController) {
+        this.gameSearchController = gameSearchController;
     }
 
     public String getViewName() {

@@ -6,7 +6,7 @@ package interface_adapter.game_library_select;
 public class GameLibraryState {
 
     private String[] availableGames;
-    private boolean[] availableGamesVisible = {};
+    private boolean[] availableGamesVisible;
     private String selectGameError;
 
     public String[] getAvailableGames() {

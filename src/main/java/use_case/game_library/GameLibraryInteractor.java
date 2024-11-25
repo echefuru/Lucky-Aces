@@ -2,6 +2,9 @@ package use_case.game_library;
 
 import use_case.GameLibraryGameInfoDataAccessInterface;
 
+/**
+ * The interactor for the initialization use case.
+ */
 public class GameLibraryInteractor implements GameLibraryInputBoundary {
 
     private final GameLibraryGameInfoDataAccessInterface gameInfoDataAccessObject;

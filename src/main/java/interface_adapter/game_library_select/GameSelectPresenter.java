@@ -31,6 +31,7 @@ public class GameSelectPresenter implements GameSelectOutputBoundary {
         this.gameSetupViewModel.setState(gameSetupState);
         this.gameSetupViewModel.firePropertyChanged();
 
+        // Clears the error field in Game Library
         final GameLibraryState gameLibraryState = gameLibraryViewModel.getState();
         gameLibraryState.setSelectGameError(null);
         this.gameLibraryViewModel.setState(gameLibraryState);

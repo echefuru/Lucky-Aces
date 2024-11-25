@@ -10,23 +10,28 @@ import data_access.GameInfoDataAccessObject;
 import entity.player.CommonPlayerFactory;
 import entity.player.PlayerFactory;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.game_library_select.GameLibraryController;
+import interface_adapter.game_library_select.GameLibraryPresenter;
+import interface_adapter.game_library_select.GameLibraryViewModel;
+import interface_adapter.game_library_select.GameSearchController;
+import interface_adapter.game_library_select.GameSearchPresenter;
+import interface_adapter.game_library_select.GameSelectController;
+import interface_adapter.game_library_select.GameSelectPresenter;
 import interface_adapter.game_setup.GameSetupController;
 import interface_adapter.game_setup.GameSetupPresenter;
 import interface_adapter.game_setup.GameSetupViewModel;
-import interface_adapter.game_library_select.*;
-import use_case.game_search.GameSearchInputBoundary;
-import use_case.game_search.GameSearchInteractor;
-import use_case.game_search.GameSearchOutputBoundary;
-import use_case.game_search.GameSearchOutputData;
-import use_case.game_setup.GameSetupInputBoundary;
-import use_case.game_setup.GameSetupInteractor;
-import use_case.game_setup.GameSetupOutputBoundary;
-import use_case.game_select.GameSelectInputBoundary;
-import use_case.game_select.GameSelectInteractor;
-import use_case.game_select.GameSelectOutputBoundary;
 import use_case.game_library.GameLibraryInputBoundary;
 import use_case.game_library.GameLibraryInteractor;
 import use_case.game_library.GameLibraryOutputBoundary;
+import use_case.game_search.GameSearchInputBoundary;
+import use_case.game_search.GameSearchInteractor;
+import use_case.game_search.GameSearchOutputBoundary;
+import use_case.game_select.GameSelectInputBoundary;
+import use_case.game_select.GameSelectInteractor;
+import use_case.game_select.GameSelectOutputBoundary;
+import use_case.game_setup.GameSetupInputBoundary;
+import use_case.game_setup.GameSetupInteractor;
+import use_case.game_setup.GameSetupOutputBoundary;
 import view.GameLibraryView;
 import view.GameSetupView;
 import view.ViewManager;
@@ -122,7 +127,8 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addGameSearchUseCase() {
-        final GameSearchOutputBoundary gameSearchPresenter = new GameSearchPresenter(viewManagerModel, gameLibraryViewModel);
+        final GameSearchOutputBoundary gameSearchPresenter = new GameSearchPresenter(viewManagerModel, 
+                                                                                     gameLibraryViewModel);
         final GameSearchInputBoundary gameSearchInteractor = new GameSearchInteractor(gameSearchPresenter,
                 gameInfoDataAccessObject);
 
@@ -153,6 +159,7 @@ public class AppBuilder {
     public JFrame build() {
         final JFrame application = new JFrame("Lucky Aces");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        application.setResizable(false);
 
         application.add(mainPanel);
 

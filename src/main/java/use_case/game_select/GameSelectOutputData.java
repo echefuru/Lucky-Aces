@@ -1,7 +1,7 @@
 package use_case.game_select;
 
 /**
- * Output Data for the game library Use Case.
+ * Output Data for the select game use case.
  */
 public class GameSelectOutputData {
     private final String gameName;

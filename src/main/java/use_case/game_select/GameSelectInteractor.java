@@ -3,7 +3,7 @@ package use_case.game_select;
 import use_case.GameLibraryGameInfoDataAccessInterface;
 
 /**
- * The game library Interactor.
+ * The select game interactor.
  */
 public class GameSelectInteractor implements GameSelectInputBoundary {
 

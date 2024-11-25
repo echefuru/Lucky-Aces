@@ -1,19 +1,20 @@
 package data_access;
 
-import entity.Card;
-import entity.Deck;
-import entity.Suit;
-import entity.Rank;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import org.json.JSONArray;
-import org.json.JSONObject;
-import use_case.ApiDataAccessInterface;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import entity.Card;
+import entity.Deck;
+import entity.Rank;
+import entity.Suit;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import use_case.ApiDataAccessInterface;
 
 /**
  * DAO for Deck management, retrieved from external API.
@@ -122,25 +123,25 @@ public class ApiDataAccess implements ApiDataAccessInterface {
     }
 
     // TODO: Get rid of this main; was used for dev testing of this class.
-    public static void main(String[] args) throws IOException {
-        ApiDataAccessInterface dao = new ApiDataAccess();
-
-        Deck deck = dao.createDeck();
-        Card card = dao.draw(deck);
-        System.out.println("Drawing 1 card, 51 remaining.");
-        System.out.println(card.getRank() + ", " + card.getSuit());
-
-        System.out.println("Drawing 51 cards, none remaining.");
-        List<Card> cards = dao.draw(deck, 51);
-        for (Card c : cards) {
-            System.out.println(c.getRank() + ", " + c.getSuit());
-        }
-
-        System.out.println("Shuffling deck, back to 52 remaining.");
-        dao.shuffle(deck);
-
-        System.out.println("Drawing 1 card again.");
-        Card card1 = dao.draw(deck);
-        System.out.println(card1.getRank() + ", " + card1.getSuit());
-    }
+//    public static void main(String[] args) throws IOException {
+//        ApiDataAccessInterface dao = new ApiDataAccess();
+//
+//        Deck deck = dao.createDeck();
+//        Card card = dao.draw(deck);
+//        System.out.println("Drawing 1 card, 51 remaining.");
+//        System.out.println(card.getRank() + ", " + card.getSuit());
+//
+//        System.out.println("Drawing 51 cards, none remaining.");
+//        List<Card> cards = dao.draw(deck, 51);
+//        for (Card c : cards) {
+//            System.out.println(c.getRank() + ", " + c.getSuit());
+//        }
+//
+//        System.out.println("Shuffling deck, back to 52 remaining.");
+//        dao.shuffle(deck);
+//
+//        System.out.println("Drawing 1 card again.");
+//        Card card1 = dao.draw(deck);
+//        System.out.println(card1.getRank() + ", " + card1.getSuit());
+//    }
 }

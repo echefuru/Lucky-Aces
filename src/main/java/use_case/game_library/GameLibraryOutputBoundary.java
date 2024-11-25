@@ -16,10 +16,4 @@ public interface GameLibraryOutputBoundary {
      * @param errorMessage the explanation of the failure
      */
     void prepareFailView(String errorMessage);
-
-    /**
-     * Prepares the view for the search use case.
-     * @param availableGamesVisible Visible of all games
-     */
-    void search(boolean[] availableGamesVisible);
 }

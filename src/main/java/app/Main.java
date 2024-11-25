@@ -1,5 +1,7 @@
 package app;
 
+import java.awt.Dimension;
+
 import javax.swing.JFrame;
 
 /**
@@ -12,6 +14,8 @@ public class Main {
      */
     public static void main(String[] args) {
         final AppBuilder appBuilder = new AppBuilder();
+        final int width = 1280;
+        final int height = 720;
         // add the Logout Use Case to the app using the appBuilder
         final JFrame application = appBuilder
                                             // Views
@@ -25,6 +29,7 @@ public class Main {
                                             .build();
 
         application.pack();
+        application.setSize(new Dimension(width, height));
         application.setVisible(true);
     }
 }

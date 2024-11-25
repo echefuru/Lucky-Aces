@@ -10,19 +10,23 @@ import data_access.GameInfoDataAccessObject;
 import entity.player.CommonPlayerFactory;
 import entity.player.PlayerFactory;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.game_library_select.GameLibraryController;
+import interface_adapter.game_library_select.GameLibraryPresenter;
+import interface_adapter.game_library_select.GameLibraryViewModel;
+import interface_adapter.game_library_select.GameSelectController;
+import interface_adapter.game_library_select.GameSelectPresenter;
 import interface_adapter.game_setup.GameSetupController;
 import interface_adapter.game_setup.GameSetupPresenter;
 import interface_adapter.game_setup.GameSetupViewModel;
-import interface_adapter.game_library_select.*;
-import use_case.game_setup.GameSetupInputBoundary;
-import use_case.game_setup.GameSetupInteractor;
-import use_case.game_setup.GameSetupOutputBoundary;
-import use_case.game_select.GameSelectInputBoundary;
-import use_case.game_select.GameSelectInteractor;
-import use_case.game_select.GameSelectOutputBoundary;
 import use_case.game_library.GameLibraryInputBoundary;
 import use_case.game_library.GameLibraryInteractor;
 import use_case.game_library.GameLibraryOutputBoundary;
+import use_case.game_select.GameSelectInputBoundary;
+import use_case.game_select.GameSelectInteractor;
+import use_case.game_select.GameSelectOutputBoundary;
+import use_case.game_setup.GameSetupInputBoundary;
+import use_case.game_setup.GameSetupInteractor;
+import use_case.game_setup.GameSetupOutputBoundary;
 import view.GameLibraryView;
 import view.GameSetupView;
 import view.ViewManager;
@@ -135,6 +139,7 @@ public class AppBuilder {
     public JFrame build() {
         final JFrame application = new JFrame("Lucky Aces");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        application.setResizable(false);
 
         application.add(mainPanel);
 

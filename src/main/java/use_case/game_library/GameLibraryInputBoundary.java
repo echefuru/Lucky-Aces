@@ -1,5 +1,8 @@
 package use_case.game_library;
 
+/**
+ * The initialization use case.
+ */
 public interface GameLibraryInputBoundary {
 
     /**

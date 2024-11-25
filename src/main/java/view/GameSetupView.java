@@ -1,9 +1,11 @@
 package view;
 
 import java.awt.Component;
+import java.awt.Dimension;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -18,7 +20,7 @@ import interface_adapter.game_setup.GameSetupViewModel;
  */
 public class GameSetupView extends JPanel implements PropertyChangeListener {
 
-    private final String viewName = "Game Setup";
+    private final String viewName;
     private final GameSetupViewModel gameSetupViewModel;
     private GameSetupController gameSetupController;
 
@@ -35,16 +37,15 @@ public class GameSetupView extends JPanel implements PropertyChangeListener {
     public GameSetupView(GameSetupViewModel gameSetupViewModel) {
         this.gameSetupViewModel = gameSetupViewModel;
         this.gameSetupViewModel.addPropertyChangeListener(this);
+        this.viewName = gameSetupViewModel.getViewName();
 
         gameName = new JLabel();
-        gameName.setAlignmentX(Component.CENTER_ALIGNMENT);
+        gameName.setFont(gameName.getFont().deriveFont(ViewConstants.TITLE_FONT_SIZE));
 
         gameDescription = new JLabel();
-        gameDescription.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         final JPanel options = new JPanel();
         options.setLayout(new BoxLayout(options, BoxLayout.Y_AXIS));
-        options.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         gameRules = new JButton("Game Rules");
         gameRules.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -55,7 +56,6 @@ public class GameSetupView extends JPanel implements PropertyChangeListener {
         options.add(config);
 
         final JPanel actions = new JPanel();
-        actions.setLayout(new BoxLayout(actions, BoxLayout.X_AXIS));
         actions.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         exit = new JButton("Return to Game Library");
@@ -66,8 +66,6 @@ public class GameSetupView extends JPanel implements PropertyChangeListener {
         play.setAlignmentX(Component.RIGHT_ALIGNMENT);
         actions.add(play);
 
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
         exit.addActionListener(
                 evt -> {
                     if (evt.getSource().equals(exit)) {
@@ -76,9 +74,23 @@ public class GameSetupView extends JPanel implements PropertyChangeListener {
                 }
         );
 
+        addContents(options, actions);
+    }
+
+    private void addContents(JPanel options, JPanel actions) {
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
+        this.add(Box.createRigidArea(new Dimension(ViewConstants.WINDOW_WIDTH, ViewConstants.QUARTER_HEIGHT)));
+
+        gameName.setAlignmentX(Component.CENTER_ALIGNMENT);
         this.add(gameName);
+
+        gameDescription.setAlignmentX(Component.CENTER_ALIGNMENT);
+        gameDescription.setMaximumSize(new Dimension(ViewConstants.THIRD_WIDTH, ViewConstants.WINDOW_HEIGHT));
         this.add(gameDescription);
+
         this.add(options);
+
         this.add(actions);
     }
 
@@ -87,7 +99,7 @@ public class GameSetupView extends JPanel implements PropertyChangeListener {
         if (evt.getPropertyName().equals("state")) {
             final GameSetupState state = (GameSetupState) evt.getNewValue();
             gameName.setText(state.getGameName());
-            gameDescription.setText(state.getGameDescription());
+            gameDescription.setText("<html>" + state.getGameDescription() + "</html>");
         }
     }
 

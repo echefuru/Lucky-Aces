@@ -1,7 +1,7 @@
 package use_case.game_select;
 
 /**
- * The input data for the game library Use Case.
+ * The input data for the select game use case.
  */
 public class GameSelectInputData {
 

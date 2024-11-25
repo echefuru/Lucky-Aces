@@ -10,6 +10,8 @@ import data_access.GameInfoDataAccessObject;
 import entity.player.CommonPlayerFactory;
 import entity.player.PlayerFactory;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.game_library_select.GameFilterController;
+import interface_adapter.game_library_select.GameFilterPresenter;
 import interface_adapter.game_library_select.GameLibraryController;
 import interface_adapter.game_library_select.GameLibraryPresenter;
 import interface_adapter.game_library_select.GameLibraryViewModel;
@@ -20,6 +22,9 @@ import interface_adapter.game_library_select.GameSelectPresenter;
 import interface_adapter.game_setup.GameSetupController;
 import interface_adapter.game_setup.GameSetupPresenter;
 import interface_adapter.game_setup.GameSetupViewModel;
+import use_case.game_filter.GameFilterInputBoundary;
+import use_case.game_filter.GameFilterInteractor;
+import use_case.game_filter.GameFilterOutputBoundary;
 import use_case.game_library.GameLibraryInputBoundary;
 import use_case.game_library.GameLibraryInteractor;
 import use_case.game_library.GameLibraryOutputBoundary;
@@ -134,6 +139,21 @@ public class AppBuilder {
 
         final GameSearchController gameSearchController = new GameSearchController(gameSearchInteractor);
         gameLibraryView.setGameSearchController(gameSearchController);
+        return this;
+    }
+
+    /**
+     * Adds the Game Filter Use Case to the application.
+     * @return this builder
+     */
+    public AppBuilder addGameFilterUseCase() {
+        final GameFilterOutputBoundary gameFilterPresenter = new GameFilterPresenter(viewManagerModel,
+                gameLibraryViewModel);
+        final GameFilterInputBoundary gameFilterInteractor = new GameFilterInteractor(gameFilterPresenter,
+                gameInfoDataAccessObject);
+
+        final GameFilterController gameFilterController = new GameFilterController(gameFilterInteractor);
+        gameLibraryView.setGameFilterController(gameFilterController);
         return this;
     }
 

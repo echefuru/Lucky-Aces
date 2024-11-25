@@ -26,6 +26,7 @@ public class Main {
                                             .addGameSelectUseCase()
                                             .addGameSetupUseCase()
                                             .addGameSearchUseCase()
+                                            .addGameFilterUseCase()
                                             // Build
                                             .build();
 

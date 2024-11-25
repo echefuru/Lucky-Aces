@@ -6,13 +6,16 @@ package data_type;
 public class GameInfo {
     private final String name;
     private final String description;
+    private final String rules;
     private final int maxPlayers;
     private final int minPlayers;
     private final boolean isAvailable;
 
-    public GameInfo(String name, String description, int maxPlayers, int minPlayers, boolean isAvailable) {
+    public GameInfo(String name, String description, String rules, int maxPlayers, int minPlayers,
+                    boolean isAvailable) {
         this.name = name;
         this.description = description;
+        this.rules = rules;
         this.maxPlayers = maxPlayers;
         this.minPlayers = minPlayers;
         this.isAvailable = isAvailable;
@@ -32,6 +35,10 @@ public class GameInfo {
      */
     public String getDescription() {
         return description;
+    }
+
+    public String getRules() {
+        return rules;
     }
 
     /**

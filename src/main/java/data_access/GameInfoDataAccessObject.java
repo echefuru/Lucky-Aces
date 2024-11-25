@@ -12,12 +12,12 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import data_type.GameInfo;
-import use_case.GameLibraryGameInfoDataAccessInterface;
+import use_case.GameInfoDataAccessInterface;
 
 /**
  * In-memory implementation of the DAO of the list of available games in the program.
  */
-public class GameInfoDataAccessObject implements GameLibraryGameInfoDataAccessInterface {
+public class GameInfoDataAccessObject implements GameInfoDataAccessInterface {
     private final Map<String, GameInfo> games;
     private final String[] availableGames;
 
@@ -31,11 +31,12 @@ public class GameInfoDataAccessObject implements GameLibraryGameInfoDataAccessIn
                 final JSONObject game = data.getJSONObject(i);
                 final String name = game.getString("name");
                 final String description = game.getString("description");
+                final String rules = game.getString("rules");
                 final int maxPlayers = game.getInt("max_players");
                 final int minPlayers = game.getInt("min_players");
                 final boolean isAvailable = game.getBoolean("is_available");
 
-                final GameInfo gameInfo = new GameInfo(name, description, maxPlayers, minPlayers, isAvailable);
+                final GameInfo gameInfo = new GameInfo(name, description, rules, maxPlayers, minPlayers, isAvailable);
 
                 games.put(name, gameInfo);
             }
@@ -56,6 +57,11 @@ public class GameInfoDataAccessObject implements GameLibraryGameInfoDataAccessIn
     @Override
     public String getDescription(String game) {
         return games.get(game).getDescription();
+    }
+
+    @Override
+    public String getRules(String game) {
+        return games.get(game).getRules();
     }
 
     @Override

@@ -1,6 +1,6 @@
 package use_case.game_select;
 
-import use_case.GameLibraryGameInfoDataAccessInterface;
+import use_case.GameInfoDataAccessInterface;
 
 /**
  * The select game interactor.
@@ -8,10 +8,10 @@ import use_case.GameLibraryGameInfoDataAccessInterface;
 public class GameSelectInteractor implements GameSelectInputBoundary {
 
     private final GameSelectOutputBoundary gameSelectPresenter;
-    private final GameLibraryGameInfoDataAccessInterface gameInfoDataAccessObject;
+    private final GameInfoDataAccessInterface gameInfoDataAccessObject;
 
     public GameSelectInteractor(GameSelectOutputBoundary gameSelectPresenter,
-                                GameLibraryGameInfoDataAccessInterface gameInfoDataAccessObject) {
+                                GameInfoDataAccessInterface gameInfoDataAccessObject) {
         this.gameSelectPresenter = gameSelectPresenter;
         this.gameInfoDataAccessObject = gameInfoDataAccessObject;
     }
@@ -23,7 +23,9 @@ public class GameSelectInteractor implements GameSelectInputBoundary {
         if (gameInfoDataAccessObject.isAvailable(selectedGame)) {
             final String gameName = gameInfoDataAccessObject.getName(selectedGame);
             final String gameDescription = gameInfoDataAccessObject.getDescription(selectedGame);
-            final GameSelectOutputData gameSelectOutputData = new GameSelectOutputData(gameName, gameDescription);
+            final String gameRules = gameInfoDataAccessObject.getRules(selectedGame);
+            final GameSelectOutputData gameSelectOutputData = new GameSelectOutputData(selectedGame,
+                    gameName, gameDescription, gameRules);
             gameSelectPresenter.prepareSuccessView(gameSelectOutputData);
         }
         else {

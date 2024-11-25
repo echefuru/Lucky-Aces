@@ -1,5 +1,11 @@
 package use_case.game_library;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import org.json.JSONArray;
+
 import use_case.GameLibraryGameInfoDataAccessInterface;
 
 /**
@@ -18,14 +24,28 @@ public class GameLibraryInteractor implements GameLibraryInputBoundary {
 
     @Override
     public void execute() {
-
         final String[] availableGames = gameInfoDataAccessObject.getAvailableGames();
+
+        // setting the game type
+        final List<String> types = new ArrayList<>();
+        for (String game : availableGames) {
+            final JSONArray type = gameInfoDataAccessObject.getType(game);
+            for (int j = 0; j < type.length(); j++) {
+                if (!(types.contains(type.getString(j)))) {
+                    types.add(type.getString(j));
+                }
+            }
+        }
+        final String[] gameTypes = types.toArray(new String[types.size()]);
+        Arrays.sort(gameTypes);
+
+        // game library build
         if (availableGames.length == 0) {
             gameLibraryPresenter.prepareFailView("No available games, check game_info.json.");
         }
         else {
-            final GameLibraryOutputData outputData = new GameLibraryOutputData(gameInfoDataAccessObject
-                    .getAvailableGames());
+            final GameLibraryOutputData outputData = new GameLibraryOutputData(
+                    gameInfoDataAccessObject.getAvailableGames(), gameTypes);
             gameLibraryPresenter.prepareSuccessView(outputData);
         }
     }

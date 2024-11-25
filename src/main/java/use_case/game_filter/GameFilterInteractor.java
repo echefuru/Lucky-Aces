@@ -1,9 +1,5 @@
 package use_case.game_filter;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import org.json.JSONArray;
 
 import use_case.GameLibraryGameInfoDataAccessInterface;
@@ -19,25 +15,6 @@ public class GameFilterInteractor implements GameFilterInputBoundary {
                                 GameLibraryGameInfoDataAccessInterface gameInfoDataAccessObject) {
         this.gameFilterPresenter = gameFilterPresenter;
         this.gameInfoDataAccessObject = gameInfoDataAccessObject;
-    }
-
-    @Override
-    public void execute() {
-        final String[] availableGames = gameInfoDataAccessObject.getAvailableGames();
-        final List<String> types = new ArrayList<>();
-        for (String game : availableGames) {
-            final JSONArray type = gameInfoDataAccessObject.getType(game);
-            for (int j = 0; j < type.length(); j++) {
-                if (!(types.contains(type.getString(j)))) {
-                    types.add(type.getString(j));
-                }
-            }
-        }
-        final String[] gameTypes = types.toArray(new String[types.size()]);
-        Arrays.sort(gameTypes);
-
-        final GameFilterOutputData outputData = new GameFilterOutputData(gameTypes);
-        gameFilterPresenter.prepareSuccessView(outputData);
     }
 
     @Override

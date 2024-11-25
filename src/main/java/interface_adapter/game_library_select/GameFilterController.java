@@ -14,13 +14,6 @@ public class GameFilterController {
     }
 
     /**
-     * Executes the game filter Use Case.
-     */
-    public void execute() {
-        gameFilterInteractor.execute();
-    }
-
-    /**
      * Executes the game filter Use Case and process the input data.
      * @param gameType the type that was selected.
      * @param playerCount the player count that was entered.

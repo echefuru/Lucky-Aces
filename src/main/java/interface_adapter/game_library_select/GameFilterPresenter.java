@@ -18,22 +18,11 @@ public class GameFilterPresenter implements GameFilterOutputBoundary {
 
     @Override
     public void prepareSuccessView(GameFilterOutputData gameFilterOutputData) {
-        if (gameFilterOutputData.getGameTypes().length != 0) {
-            final String[] gameTypes = gameFilterOutputData.getGameTypes();
-            final GameLibraryState gameLibraryState = gameLibraryViewModel.getState();
-            gameLibraryState.setGameTypes(gameTypes);
-
-            this.gameLibraryViewModel.setState(gameLibraryState);
-            this.gameLibraryViewModel.firePropertyChanged("filter");
-        }
-        else {
-            final boolean[] availableGamesVisible = gameFilterOutputData.getGamesVisible();
-            final GameLibraryState gameLibraryState = gameLibraryViewModel.getState();
-            gameLibraryState.setAvailableGamesVisible(availableGamesVisible);
-
-            this.gameLibraryViewModel.setState(gameLibraryState);
-            this.gameLibraryViewModel.firePropertyChanged("search");
-        }
+        final boolean[] availableGamesVisible = gameFilterOutputData.getGamesVisible();
+        final GameLibraryState gameLibraryState = gameLibraryViewModel.getState();
+        gameLibraryState.setAvailableGamesVisible(availableGamesVisible);
+        this.gameLibraryViewModel.setState(gameLibraryState);
+        this.gameLibraryViewModel.firePropertyChanged("search");
     }
 
     @Override

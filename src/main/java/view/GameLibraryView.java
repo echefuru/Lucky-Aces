@@ -76,7 +76,9 @@ public class GameLibraryView extends JPanel implements ActionListener, PropertyC
                 // This creates an anonymous subclass of ActionListener and instantiates it.
                 evt -> {
                     if (evt.getSource().equals(filter)) {
-                        gameFilterController.execute();
+                        final GameLibraryState state = gameLibraryViewModel.getState();
+                        final String[] options = state.getGameTypes();
+                        executeFilter(options);
                     }
                 }
         );
@@ -136,55 +138,6 @@ public class GameLibraryView extends JPanel implements ActionListener, PropertyC
             final String[] availableGames = gameLibraryViewModel.getState().getAvailableGames();
             setGameSelection(availableGames);
         }
-        else if (evt.getPropertyName().equals("filter")) {
-            final GameLibraryState state = gameLibraryViewModel.getState();
-            final String[] options = state.getGameTypes();
-
-            final int typeInput = JOptionPane.showOptionDialog(
-                    null,
-                    "<html>Please select the type you want to play:<br>"
-                            + "(If you don't want to limit the type of games, you can just close the window.)</html>",
-                    filterText, JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
-            final String type;
-            if (typeInput == -1) {
-                type = "";
-            }
-            else {
-                type = options[typeInput];
-            }
-
-            while (true) {
-                final String playerInput = JOptionPane.showInputDialog(
-                        null,
-                        "<html>Please enter the specific number of players you want:<br>"
-                                + "(If you don't want to limit the number of players, "
-                                + "you can just close or cancel the window.)</html>",
-                        filterText, JOptionPane.QUESTION_MESSAGE
-                );
-
-                if (playerInput == null) {
-                    gameFilterController.execute(type, -1);
-                    break;
-                }
-                try {
-                    final int playerCount = Integer.parseInt(playerInput);
-                    if (playerCount >= 0) {
-                        gameFilterController.execute(type, playerCount);
-                        break;
-                    }
-                    else {
-                        JOptionPane.showMessageDialog(
-                                null, "Please enter a number greater or equal to 0!",
-                                "Error", JOptionPane.ERROR_MESSAGE);
-                    }
-                }
-                catch (NumberFormatException exception) {
-                    JOptionPane.showMessageDialog(
-                            null, "Invalid input, please enter an integer!",
-                            "Error", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        }
     }
 
     public void setGameLibraryController(GameLibraryController gameLibraryController) {
@@ -234,6 +187,53 @@ public class GameLibraryView extends JPanel implements ActionListener, PropertyC
     private void setGameVisible(boolean[] availableGamesVisible) {
         for (int i = 0; i < games.length; i++) {
             games[i].setVisible(availableGamesVisible[i]);
+        }
+    }
+
+    private void executeFilter(String[] options) {
+        final int typeInput = JOptionPane.showOptionDialog(
+                null,
+                "<html>Please select the type you want to play:<br>"
+                        + "(If you don't want to limit the type of games, you can just close the window.)</html>",
+                filterText, JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+        final String type;
+        if (typeInput == -1) {
+            type = "";
+        }
+        else {
+            type = options[typeInput];
+        }
+
+        while (true) {
+            final String playerInput = JOptionPane.showInputDialog(
+                    null,
+                    "<html>Please enter the specific number of players you want:<br>"
+                            + "(If you don't want to limit the number of players, "
+                            + "you can just close or cancel the window.)</html>",
+                    filterText, JOptionPane.QUESTION_MESSAGE
+            );
+
+            if (playerInput == null) {
+                gameFilterController.execute(type, -1);
+                break;
+            }
+            try {
+                final int playerCount = Integer.parseInt(playerInput);
+                if (playerCount >= 0) {
+                    gameFilterController.execute(type, playerCount);
+                    break;
+                }
+                else {
+                    JOptionPane.showMessageDialog(
+                            null, "Please enter a number greater or equal to 0!",
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+            catch (NumberFormatException exception) {
+                JOptionPane.showMessageDialog(
+                        null, "Invalid input, please enter an integer!",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
 }

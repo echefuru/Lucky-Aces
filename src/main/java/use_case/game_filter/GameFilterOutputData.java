@@ -4,12 +4,7 @@ package use_case.game_filter;
  * Output Data for the Game Filter Use Case.
  */
 public class GameFilterOutputData {
-    private boolean[] gamesVisible = {};
-    private String[] gameTypes = {};
-
-    public GameFilterOutputData(String[] gameTypes) {
-        this.gameTypes = gameTypes;
-    }
+    private boolean[] gamesVisible;
 
     public GameFilterOutputData(boolean[] gamesVisible) {
         this.gamesVisible = gamesVisible;
@@ -17,9 +12,5 @@ public class GameFilterOutputData {
 
     public boolean[] getGamesVisible() {
         return gamesVisible;
-    }
-
-    public String[] getGameTypes() {
-        return gameTypes;
     }
 }

@@ -80,7 +80,8 @@ public class GameRoomView extends JPanel implements PropertyChangeListener {
         player1id = new JLabel("Player 1", SwingConstants.TOP);
         cardsOfPlayer1 = new JLabel("Cards of Player1", SwingConstants.TOP);
         player1difficultyInput = new JTextField(2);
-        final LabelTextPanel player1Difficulty = new LabelTextPanel(new JLabel("player difficulty (1 or 2):"), player1difficultyInput);
+        final LabelTextPanel player1Difficulty = new LabelTextPanel(new JLabel("player difficulty (1 or 2):"),
+                player1difficultyInput, 2, 8);
         final JPanel player1Panel = new JPanel();
         player1Panel.setLayout(new BoxLayout(player1Panel, BoxLayout.Y_AXIS));
         player1Panel.add(player1id);
@@ -90,7 +91,8 @@ public class GameRoomView extends JPanel implements PropertyChangeListener {
         player2id = new JLabel("Player 2", SwingConstants.TOP);
         cardsOfPlayer2 = new JLabel("Cards of Player2", SwingConstants.TOP);
         player2difficultyInput = new JTextField(2);
-        final LabelTextPanel player2difficulty = new LabelTextPanel(new JLabel("player difficulty (1 or 2):"), player2difficultyInput);
+        final LabelTextPanel player2difficulty = new LabelTextPanel(new JLabel("player difficulty (1 or 2):"),
+                player2difficultyInput, 2, 8);
         final JPanel player2Panel = new JPanel();
         player2Panel.setLayout(new BoxLayout(player2Panel, BoxLayout.Y_AXIS));
         player2Panel.add(player2id);

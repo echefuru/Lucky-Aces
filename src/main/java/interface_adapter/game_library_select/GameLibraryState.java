@@ -9,6 +9,8 @@ public class GameLibraryState {
     private boolean[] availableGamesVisible;
     private String selectGameError;
 
+    private String[] gameTypes = {};
+
     public String[] getAvailableGames() {
         return this.availableGames;
     }
@@ -31,5 +33,13 @@ public class GameLibraryState {
 
     public void setSelectGameError(String selectGameError) {
         this.selectGameError = selectGameError;
+    }
+
+    public void setGameTypes(String[] gameTypes) {
+        this.gameTypes = gameTypes;
+    }
+
+    public String[] getGameTypes() {
+        return this.gameTypes;
     }
 }

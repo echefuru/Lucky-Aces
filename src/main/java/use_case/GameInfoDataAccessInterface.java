@@ -3,7 +3,7 @@ package use_case;
 /**
  * Data access for the game library use case.
  */
-public interface GameLibraryGameInfoDataAccessInterface {
+public interface GameInfoDataAccessInterface {
 
     /**
      * Retrieve the name of the given game.
@@ -18,6 +18,13 @@ public interface GameLibraryGameInfoDataAccessInterface {
      * @return the game's description
      */
     String getDescription(String game);
+
+    /**
+     * Retrieve the rules of the given game.
+     * @param game id of the game
+     * @return the rules of the game
+     */
+    String getRules(String game);
 
     /**
      * Check if the given game is available in the program.

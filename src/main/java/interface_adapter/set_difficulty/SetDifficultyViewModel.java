@@ -7,7 +7,7 @@ import interface_adapter.ViewModel;
  */
 public class SetDifficultyViewModel extends ViewModel<SetDifficultyState> {
 
-    public SetDifficultyViewModel(String viewName) {
+    public SetDifficultyViewModel() {
         super("Game Room");
         setState(new SetDifficultyState());
     }

@@ -25,6 +25,7 @@ import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.logout.LogoutPresenter;
+import interface_adapter.set_difficulty.SetDifficultyViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
@@ -46,12 +47,7 @@ import use_case.logout.LogoutOutputBoundary;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
-import view.ChangePasswordView;
-import view.GameLibraryView;
-import view.GameSetupView;
-import view.LoginView;
-import view.SignupView;
-import view.ViewManager;
+import view.*;
 
 /**
  * The AppBuilder class is responsible for putting together the pieces of
@@ -86,6 +82,8 @@ public class AppBuilder {
     private GameSetupViewModel gameSetupViewModel;
     private ChangePasswordView changepasswordView;
     private ChangePasswordViewModel changepasswordViewModel;
+    private GameRoomView gameRoomView;
+    private SetDifficultyViewModel setDifficultyViewModel;
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
@@ -143,6 +141,17 @@ public class AppBuilder {
         gameSetupViewModel = new GameSetupViewModel();
         gameSetupView = new GameSetupView(gameSetupViewModel);
         cardPanel.add(gameSetupView, gameSetupView.getViewName());
+        return this;
+    }
+
+    /**
+     * Adds the Game Room View to the application.
+     * @return this builder
+     */
+    public AppBuilder addGameRoomView() {
+        setDifficultyViewModel = new SetDifficultyViewModel();
+        gameRoomView = new GameRoomView(setDifficultyViewModel);
+        cardPanel.add(gameRoomView, gameRoomView.getViewName());
         return this;
     }
 

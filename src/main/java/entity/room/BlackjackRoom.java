@@ -19,9 +19,7 @@ public class BlackjackRoom implements Room {
     private String curTurnPlayer;
     private String status;
     private Deck deck;
-    // TODO: should also contain an attribute to store the bet.
-    // TODO: should create ComputerPlayer class.
-    // TODO: finally, update the initiator and other affected classes.
+    // TODO: should also contain an attribute to store the bet (and update the constructor).
 
     public BlackjackRoom(String roomName, String gameName, List<Player> curPlayers) throws IOException {
         this.roomName = roomName;
@@ -36,6 +34,16 @@ public class BlackjackRoom implements Room {
     @Override
     public String getStatus() {
         return this.status;
+    }
+
+    @Override
+    public List<Player> getPlayers() {
+        return this.curPlayers;
+    }
+
+    @Override
+    public String getName() {
+        return this.roomName;
     }
 
     // TODO: need to get Bankroll to make a bet each round. Fix this.

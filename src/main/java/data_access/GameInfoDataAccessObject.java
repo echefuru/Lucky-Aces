@@ -20,7 +20,6 @@ import use_case.GameLibraryGameInfoDataAccessInterface;
 public class GameInfoDataAccessObject implements GameLibraryGameInfoDataAccessInterface {
     private final Map<String, GameInfo> games;
     private final String[] availableGames;
-    // private final boolean[] availableGamesVisible;
 
     public GameInfoDataAccessObject(String filePath) {
         try {

@@ -19,12 +19,4 @@ public class GameLibraryController {
     public void execute() {
         gameLibraryInteractor.execute();
     }
-
-    /**
-     * Executes the "search" Use Case.
-     * @param info search input
-     */
-    public void search(String info) {
-        gameLibraryInteractor.search(info);
-    }
 }

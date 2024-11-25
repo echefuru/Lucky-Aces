@@ -11,6 +11,7 @@ public class ViewConstants {
     static final int THIRD_HEIGHT = WINDOW_HEIGHT / 3;
     static final int QUARTER_HEIGHT = WINDOW_HEIGHT / 4;
 
+    static final int HALF_WIDTH = WINDOW_WIDTH / 2;
     static final int THIRD_WIDTH = WINDOW_WIDTH / 3;
 
     static final int LINE_HEIGHT = 35;

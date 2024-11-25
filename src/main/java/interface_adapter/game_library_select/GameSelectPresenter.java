@@ -26,8 +26,10 @@ public class GameSelectPresenter implements GameSelectOutputBoundary {
     public void prepareSuccessView(GameSelectOutputData outputData) {
         // On success, switch to the game setup view.
         final GameSetupState gameSetupState = gameSetupViewModel.getState();
+        gameSetupState.setSelectedGame(outputData.getSelectedGame());
         gameSetupState.setGameName(outputData.getGameName());
         gameSetupState.setGameDescription(outputData.getGameDescription());
+        gameSetupState.setGameRules(outputData.getGameRules());
         this.gameSetupViewModel.setState(gameSetupState);
         this.gameSetupViewModel.firePropertyChanged();
 

@@ -4,7 +4,7 @@ package view;
  * Constants related to views.
  */
 public class ViewConstants {
-    static final int WINDOW_WIDTH = 1080;
+    static final int WINDOW_WIDTH = 1280;
     static final int WINDOW_HEIGHT = 720;
 
     static final int HALF_HEIGHT = WINDOW_HEIGHT / 2;

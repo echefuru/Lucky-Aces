@@ -14,6 +14,10 @@ import interface_adapter.game_setup.GameSetupController;
 import interface_adapter.game_setup.GameSetupPresenter;
 import interface_adapter.game_setup.GameSetupViewModel;
 import interface_adapter.game_library_select.*;
+import use_case.game_search.GameSearchInputBoundary;
+import use_case.game_search.GameSearchInteractor;
+import use_case.game_search.GameSearchOutputBoundary;
+import use_case.game_search.GameSearchOutputData;
 import use_case.game_setup.GameSetupInputBoundary;
 import use_case.game_setup.GameSetupInteractor;
 import use_case.game_setup.GameSetupOutputBoundary;
@@ -110,6 +114,20 @@ public class AppBuilder {
 
         final GameSelectController gameSelectController = new GameSelectController(gameSelectInteractor);
         gameLibraryView.setGameSelectController(gameSelectController);
+        return this;
+    }
+
+    /**
+     * Adds the Game Search Use Case to the application.
+     * @return this builder
+     */
+    public AppBuilder addGameSearchUseCase() {
+        final GameSearchOutputBoundary gameSearchPresenter = new GameSearchPresenter(viewManagerModel, gameLibraryViewModel);
+        final GameSearchInputBoundary gameSearchInteractor = new GameSearchInteractor(gameSearchPresenter,
+                gameInfoDataAccessObject);
+
+        final GameSearchController gameSearchController = new GameSearchController(gameSearchInteractor);
+        gameLibraryView.setGameSearchController(gameSearchController);
         return this;
     }
 

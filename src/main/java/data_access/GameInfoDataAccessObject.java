@@ -34,8 +34,9 @@ public class GameInfoDataAccessObject implements GameLibraryGameInfoDataAccessIn
                 final int maxPlayers = game.getInt("max_players");
                 final int minPlayers = game.getInt("min_players");
                 final boolean isAvailable = game.getBoolean("is_available");
+                final JSONArray type = game.getJSONArray("type");
 
-                final GameInfo gameInfo = new GameInfo(name, description, maxPlayers, minPlayers, isAvailable);
+                final GameInfo gameInfo = new GameInfo(name, description, maxPlayers, minPlayers, isAvailable, type);
 
                 games.put(name, gameInfo);
             }
@@ -66,5 +67,20 @@ public class GameInfoDataAccessObject implements GameLibraryGameInfoDataAccessIn
     @Override
     public String[] getAvailableGames() {
         return availableGames;
+    }
+
+    @Override
+    public JSONArray getType(String game) {
+        return games.get(game).getType();
+    }
+
+    @Override
+    public int getMaxPlayer(String game) {
+        return games.get(game).getMaxPlayers();
+    }
+
+    @Override
+    public int getMinPlayer(String game) {
+        return games.get(game).getMinPlayers();
     }
 }

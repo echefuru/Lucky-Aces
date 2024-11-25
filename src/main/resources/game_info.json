@@ -5,7 +5,8 @@
     "description": "Also named \"21\". The goal of the game is to have cards that add up to points lower than or equal to 21, but higher than the dealer.",
     "max_players": 5,
     "min_players": 1,
-    "is_available": true
+    "is_available": true,
+    "type": ["Luck-Based Games", "Comparing Card Games"]
   },
   {
     "game": "placeholder1",
@@ -13,7 +14,8 @@
     "description": "A placeholder game.",
     "max_players": 0,
     "min_players": 0,
-    "is_available": false
+    "is_available": false,
+    "type": ["Strategy-Based Games"]
   },
   {
     "game": "placeholder2",
@@ -21,6 +23,7 @@
     "description": "Another placeholder game.",
     "max_players": 10,
     "min_players": 5,
-    "is_available": false
+    "is_available": false,
+    "type": ["Gambling Games", "Luck-Based Games"]
   }
 ]

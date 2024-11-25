@@ -1,5 +1,7 @@
 package use_case;
 
+import org.json.JSONArray;
+
 /**
  * Data access for the game library use case.
  */
@@ -31,4 +33,25 @@ public interface GameLibraryGameInfoDataAccessInterface {
      * @return array of the ids of the available games.
      */
     String[] getAvailableGames();
+
+    /**
+     * Return the type of the given game in the program.
+     * @param game id of the game.
+     * @return array of the types of the given game.
+     */
+    JSONArray getType(String game);
+
+    /**
+     * Return the max_players of the given game in the program.
+     * @param game id of the game.
+     * @return the max_players of the given game in the program.
+     */
+    int getMaxPlayer(String game);
+
+    /**
+     * Return the min_players of the given game in the program.
+     * @param game id of the game.
+     * @return the min_players of the given game in the program.
+     */
+    int getMinPlayer(String game);
 }

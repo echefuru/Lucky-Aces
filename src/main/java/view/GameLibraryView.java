@@ -1,165 +1,165 @@
 package view;
 
 import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
 
-import interface_adapter.change_password.ChangePasswordState;
-import interface_adapter.gamelibrary.GameLibraryController;
-import interface_adapter.gamelibrary.GameLibraryState;
-import interface_adapter.gamelibrary.GameLibraryViewModel;
-import interface_adapter.logout.LogoutController;
+import interface_adapter.game_library_select.GameLibraryController;
+import interface_adapter.game_library_select.GameLibraryState;
+import interface_adapter.game_library_select.GameLibraryViewModel;
+import interface_adapter.game_library_select.GameSearchController;
+import interface_adapter.game_library_select.GameSelectController;
 
 /**
- * The View for when the user is logged into the program.
+ * The View for when the user first opens the program.
  */
-public class GameLibraryView extends JPanel implements PropertyChangeListener {
+public class GameLibraryView extends JPanel implements ActionListener, PropertyChangeListener {
 
-    private final String viewName = "Game Library";
+    private final String viewName;
     private final GameLibraryViewModel gameLibraryViewModel;
-    private final JLabel passwordErrorField = new JLabel();
     private GameLibraryController gameLibraryController;
-    private LogoutController logoutController;
-
-    private final JLabel playerID;
+    private GameSelectController gameSelectController;
+    private GameSearchController gameSearchController;
 
     private final JButton search = new JButton("Search");
     private final JTextField searchInputField = new JTextField(15);
 
     private final JLabel errorField = new JLabel();
 
-    private JButton[] games;
     private final JPanel gameSelection = new JPanel();
-
-    private final JButton logOut = new JButton("Log Out");
-    private final JButton changePassword = new JButton("Change Password");
+    private JButton[] games;
 
     // @SuppressWarnings("checkstyle:UnusedLocalVariable")
     public GameLibraryView(GameLibraryViewModel gameLibraryViewModel) {
+
         this.gameLibraryViewModel = gameLibraryViewModel;
         this.gameLibraryViewModel.addPropertyChangeListener(this);
+        this.viewName = gameLibraryViewModel.getViewName();
 
-        final JLabel title = new JLabel("Game Library Screen");
-        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        final JLabel title = new JLabel("Game Library");
+        title.setFont(title.getFont().deriveFont(ViewConstants.TITLE_FONT_SIZE));
 
-        gameSelection.setLayout(new BoxLayout(gameSelection, BoxLayout.Y_AXIS));
-        gameSelection.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        final JLabel playerIDInfo = new JLabel("Currently logged in as: ");
-        playerIDInfo.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        playerID = new JLabel();
+        final JLabel titleLogo = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("logo.png")));
 
         final JPanel searchPanel = new JPanel();
         searchPanel.add(searchInputField);
         searchPanel.add(search);
 
-        final JPanel errorPanel = new JPanel();
-        errorPanel.add(errorField);
+        search.addActionListener(
+                 // This creates an anonymous subclass of ActionListener and instantiates it.
+                 evt -> {
+                    if (evt.getSource().equals(search)) {
+                        final String searchInput = searchInputField.getText();
+                        gameSearchController.execute(searchInput);
+                    }
+                 }
+        );
 
-        final JPanel buttons = new JPanel();
-        buttons.add(logOut);
-        buttons.add(changePassword);
+        addContent(title, searchPanel, titleLogo);
+    }
 
+    private void addContent(JLabel title, JPanel searchPanel, JLabel titleLogo) {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        changePassword.addActionListener(
-                // This creates an anonymous subclass of ActionListener and instantiates it.
-                evt -> {
-                    if (evt.getSource().equals(changePassword)) {
-                        final ChangePasswordState changePasswordState = new ChangePasswordState();
-                        changePasswordState.setPlayerID(playerID.getText());
+        titleLogo.setAlignmentX(Component.CENTER_ALIGNMENT);
+        this.add(titleLogo);
 
-                        gameLibraryController.switchToChangePasswordView(changePasswordState);
-                    }
-                }
-        );
-
-        logOut.addActionListener(
-                // This creates an anonymous subclass of ActionListener and instantiates it.
-                evt -> {
-                    if (evt.getSource().equals(logOut)) {
-                        // execute the logout use case through the Controller
-                        // 1. get the state out of the loggedInViewModel. It contains the playerID.
-                        // 2. Execute the logout Controller.
-                        final GameLibraryState currentState = gameLibraryViewModel.getState();
-                        logoutController.execute(currentState.getPlayerID());
-                    }
-                }
-        );
-
-        search.addActionListener(
-                // This creates an anonymous subclass of ActionListener and instantiates it.
-                evt -> {
-                    if (evt.getSource().equals(search)) {
-                        final String info = searchInputField.getText();
-                        gameLibraryController.search(info);
-                    }
-                }
-        );
+        title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         this.add(title);
-        this.add(playerIDInfo);
-        this.add(playerID);
 
+        searchPanel.setMaximumSize(new Dimension(ViewConstants.WINDOW_WIDTH, ViewConstants.LINE_HEIGHT));
         this.add(searchPanel);
-        this.add(errorPanel);
+
+        errorField.setAlignmentX(Component.CENTER_ALIGNMENT);
+        this.add(errorField);
+
+        gameSelection.setLayout(new BoxLayout(gameSelection, BoxLayout.Y_AXIS));
         this.add(gameSelection);
-        this.add(passwordErrorField);
-        this.add(buttons);
+
+    }
+
+    // Placeholder for checking button clicks
+    /**
+     * React to a button click that results in evt.
+     * @param evt the ActionEvent to react to
+     */
+    @Override
+    public void actionPerformed(ActionEvent evt) {
+        System.out.println("Click " + evt.getActionCommand());
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("state")) {
-            final GameLibraryState state = (GameLibraryState) evt.getNewValue();
-            playerID.setText(state.getPlayerID());
-            this.errorField.setText(state.getSelectGameError());
-
-            this.setGameSelection(state.getAvailableGames(), state.getAvailableGamesVisible());
+            // TODO: Update this.
+            errorField.setText(gameLibraryViewModel.getState().getSelectGameError());
         }
-    }
+        else if (evt.getPropertyName().equals("search")) {
+            final GameLibraryState state = gameLibraryViewModel.getState();
+            final boolean[] availableGamesVisible = state.getAvailableGamesVisible();
+            setGameVisible(availableGamesVisible);
 
-    public String getViewName() {
-        return viewName;
+            // Clears the error field
+            state.setSelectGameError(null);
+            errorField.setText("");
+        }
+        else if (evt.getPropertyName().equals("build")) {
+            // Initialization Use Case which runs before any user action; on start-up action fired from the AppBuilder.
+            gameLibraryController.execute();
+            final String[] availableGames = gameLibraryViewModel.getState().getAvailableGames();
+            setGameSelection(availableGames);
+        }
     }
 
     public void setGameLibraryController(GameLibraryController gameLibraryController) {
         this.gameLibraryController = gameLibraryController;
     }
 
-    public void setLogoutController(LogoutController logoutController) {
-        // save the logout controller in the instance variable.
-        this.logoutController = logoutController;
+    public void setGameSelectController(GameSelectController gameSelectController) {
+        this.gameSelectController = gameSelectController;
     }
 
-    private void setGameSelection(String[] availableGames, boolean[] availableGamesVisible) {
+    public void setGameSearchController(GameSearchController gameSearchController) {
+        this.gameSearchController = gameSearchController;
+    }
+
+    public String getViewName() {
+        return viewName;
+    }
+
+    private void setGameSelection(String[] availableGames) {
         this.gameSelection.removeAll();
         this.gameSelection.revalidate();
         this.gameSelection.repaint();
 
-        this.games = new JButton[availableGames.length];
+        games = new JButton[availableGames.length];
         for (int i = 0; i < availableGames.length; i++) {
             games[i] = new JButton(availableGames[i]);
             games[i].setAlignmentX(Component.CENTER_ALIGNMENT);
-            games[i].setVisible(availableGamesVisible[i]);
             gameSelection.add(games[i]);
         }
 
+        // TODO: These actions are next steps in program.
         for (JButton game : games) {
             game.addActionListener(
                     evt -> {
                         if (evt.getSource().equals(game)) {
-                            gameLibraryController.execute(game.getText());
+                            gameSelectController.execute(game.getText());
                         }
                     }
             );
+        }
+    }
+
+    private void setGameVisible(boolean[] availableGamesVisible) {
+        for (int i = 0; i < games.length; i++) {
+            games[i].setVisible(availableGamesVisible[i]);
         }
     }
 }

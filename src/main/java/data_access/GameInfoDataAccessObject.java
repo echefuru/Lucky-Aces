@@ -12,17 +12,14 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import data_type.GameInfo;
-import use_case.gamelibrary.GameLibraryGameInfoDataAccessInterface;
-import use_case.login.LoginGameInfoDataAccessInterface;
+import use_case.GameLibraryGameInfoDataAccessInterface;
 
 /**
  * In-memory implementation of the DAO of the list of available games in the program.
  */
-public class GameInfoDataAccessObject implements GameLibraryGameInfoDataAccessInterface,
-        LoginGameInfoDataAccessInterface {
+public class GameInfoDataAccessObject implements GameLibraryGameInfoDataAccessInterface {
     private final Map<String, GameInfo> games;
     private final String[] availableGames;
-    private final boolean[] availableGamesVisible;
 
     public GameInfoDataAccessObject(String filePath) {
         try {
@@ -42,11 +39,9 @@ public class GameInfoDataAccessObject implements GameLibraryGameInfoDataAccessIn
 
                 games.put(name, gameInfo);
             }
+
             availableGames = games.keySet().toArray(new String[0]);
             Arrays.sort(availableGames);
-
-            availableGamesVisible = new boolean[availableGames.length];
-            Arrays.fill(availableGamesVisible, true);
         }
         catch (IOException | URISyntaxException ex) {
             throw new RuntimeException(ex);
@@ -71,10 +66,5 @@ public class GameInfoDataAccessObject implements GameLibraryGameInfoDataAccessIn
     @Override
     public String[] getAvailableGames() {
         return availableGames;
-    }
-
-    @Override
-    public boolean[] getAvailableGamesVisible() {
-        return availableGamesVisible;
     }
 }

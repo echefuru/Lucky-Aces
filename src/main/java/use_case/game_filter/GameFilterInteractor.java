@@ -43,11 +43,10 @@ public class GameFilterInteractor implements GameFilterInputBoundary {
             if (minPlayers <= playerCount && playerCount <= maxPlayers || playerCount == -1) {
                 playerBool = true;
             }
-
             availableGamesVisible[i] = typeBool && playerBool;
         }
 
-        final GameFilterOutputData outputData = new GameFilterOutputData(availableGamesVisible);
+        final GameFilterOutputData outputData = new GameFilterOutputData(availableGamesVisible, typeInput, playerCount);
         gameFilterPresenter.prepareSuccessView(outputData);
     }
 }

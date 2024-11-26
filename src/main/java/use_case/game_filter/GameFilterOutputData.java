@@ -5,12 +5,24 @@ package use_case.game_filter;
  */
 public class GameFilterOutputData {
     private boolean[] gamesVisible;
+    private String gamesType;
+    private int playerCount;
 
-    public GameFilterOutputData(boolean[] gamesVisible) {
+    public GameFilterOutputData(boolean[] gamesVisible, String gamesType, int playerCount) {
         this.gamesVisible = gamesVisible;
+        this.gamesType = gamesType;
+        this.playerCount = playerCount;
     }
 
     public boolean[] getGamesVisible() {
         return gamesVisible;
+    }
+
+    public String getGamesType() {
+        return gamesType;
+    }
+
+    public int getPlayerCount() {
+        return playerCount;
     }
 }

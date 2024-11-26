@@ -8,6 +8,7 @@ public class GameLibraryState {
     private String[] availableGames;
     private boolean[] availableGamesVisible;
     private String selectGameError;
+    private String filterMessage;
 
     private String[] gameTypes = {};
 
@@ -41,5 +42,13 @@ public class GameLibraryState {
 
     public String[] getGameTypes() {
         return this.gameTypes;
+    }
+
+    public String getFilterMessage() {
+        return filterMessage;
+    }
+
+    public void setFilterMessage(String filterMessage) {
+        this.filterMessage = filterMessage;
     }
 }

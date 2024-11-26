@@ -21,8 +21,28 @@ public class GameFilterPresenter implements GameFilterOutputBoundary {
         final boolean[] availableGamesVisible = gameFilterOutputData.getGamesVisible();
         final GameLibraryState gameLibraryState = gameLibraryViewModel.getState();
         gameLibraryState.setAvailableGamesVisible(availableGamesVisible);
+        final String gameType;
+        if ("".equals(gameFilterOutputData.getGamesType())) {
+            gameType = "any";
+        }
+        else {
+            gameType = gameFilterOutputData.getGamesType();
+        }
+        String filterMessage = String.format(
+                "<html>Search is not activated.<br>Filter is activated:<br>"
+                        + "Selected game type is: %s.<br>"
+                        + "Number of players selected is: ",
+                gameType);
+        if (gameFilterOutputData.getPlayerCount() == -1) {
+            filterMessage = filterMessage + "any.<html>";
+        }
+        else {
+            filterMessage = filterMessage + gameFilterOutputData.getPlayerCount() + ".<html>";
+        }
+        gameLibraryState.setFilterMessage(filterMessage);
+
         this.gameLibraryViewModel.setState(gameLibraryState);
-        this.gameLibraryViewModel.firePropertyChanged("search");
+        this.gameLibraryViewModel.firePropertyChanged("gameSelect");
     }
 
     @Override

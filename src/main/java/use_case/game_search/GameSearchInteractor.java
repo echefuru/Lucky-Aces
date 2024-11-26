@@ -26,7 +26,7 @@ public class GameSearchInteractor implements GameSearchInputBoundary {
             availableGamesVisible[i] = availableGames[i].toLowerCase().contains(selectedGame.toLowerCase());
         }
 
-        final GameSearchOutputData outputData = new GameSearchOutputData(availableGamesVisible);
+        final GameSearchOutputData outputData = new GameSearchOutputData(availableGamesVisible, selectedGame);
         gameSearchPresenter.prepareSuccessView(outputData);
     }
 }

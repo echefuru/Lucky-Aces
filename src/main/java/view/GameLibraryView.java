@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 import interface_adapter.game_library_select.GameFilterController;
 import interface_adapter.game_library_select.GameLibraryController;
@@ -39,6 +40,7 @@ public class GameLibraryView extends JPanel implements ActionListener, PropertyC
 
     private final String filterText = "Filter";
     private final JButton filter = new JButton("Filter");
+    private JLabel selectLabel = new JLabel("<html>Search is not activated.<br>Filter is not activated.<html>");
 
     private final JLabel errorField = new JLabel();
 
@@ -99,6 +101,10 @@ public class GameLibraryView extends JPanel implements ActionListener, PropertyC
         searchPanel.setMaximumSize(new Dimension(ViewConstants.WINDOW_WIDTH, ViewConstants.LINE_HEIGHT));
         this.add(searchPanel);
 
+        selectLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        selectLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        this.add(selectLabel);
+
         errorField.setAlignmentX(Component.CENTER_ALIGNMENT);
         this.add(errorField);
 
@@ -123,10 +129,12 @@ public class GameLibraryView extends JPanel implements ActionListener, PropertyC
             // TODO: Update this.
             errorField.setText(gameLibraryViewModel.getState().getSelectGameError());
         }
-        else if (evt.getPropertyName().equals("search")) {
+        else if (evt.getPropertyName().equals("gameSelect")) {
             final GameLibraryState state = gameLibraryViewModel.getState();
             final boolean[] availableGamesVisible = state.getAvailableGamesVisible();
             setGameVisible(availableGamesVisible);
+            selectLabel.setText(state.getFilterMessage());
+            searchInputField.setText("");
 
             // Clears the error field
             state.setSelectGameError(null);

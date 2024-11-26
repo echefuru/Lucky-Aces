@@ -12,6 +12,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import data_type.GameInfo;
+import data_type.GameInfoBuilder;
 import use_case.GameInfoDataAccessInterface;
 
 /**
@@ -29,18 +30,19 @@ public class GameInfoDataAccessObject implements GameInfoDataAccessInterface {
             games = new HashMap<String, GameInfo>(data.length());
             for (int i = 0; i < data.length(); i++) {
                 final JSONObject game = data.getJSONObject(i);
-                final String name = game.getString("name");
-                final String description = game.getString("description");
-                final String rules = game.getString("rules");
-                final int maxPlayers = game.getInt("max_players");
-                final int minPlayers = game.getInt("min_players");
-                final boolean isAvailable = game.getBoolean("is_available");
-                final JSONArray type = game.getJSONArray("type");
 
-                final GameInfo gameInfo = new GameInfo(name, description, rules, maxPlayers, minPlayers, isAvailable,
-                        type);
+                // Using a builder pattern here to avoid having too many parameters in the GameInfo constructor
+                final GameInfoBuilder gameInfoBuilder = new GameInfoBuilder();
+                gameInfoBuilder.setName(game.getString("name"))
+                               .setDescription(game.getString("description"))
+                               .setRules(game.getString("rules"))
+                               .setMaxPlayers(game.getInt("max_players"))
+                               .setMinPlayers(game.getInt("min_players"))
+                               .setIsAvailable(game.getBoolean("is_available"))
+                               .setType(game.getJSONArray("type"))
+                               .setDefaultConfig(game.getJSONObject("default_config"));
 
-                games.put(name, gameInfo);
+                games.put(game.getString("game"), gameInfoBuilder.createGameInfo());
             }
 
             availableGames = games.keySet().toArray(new String[0]);

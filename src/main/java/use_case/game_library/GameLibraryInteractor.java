@@ -26,9 +26,14 @@ public class GameLibraryInteractor implements GameLibraryInputBoundary {
     public void execute() {
         final String[] availableGames = gameInfoDataAccessObject.getAvailableGames();
 
-        // setting the game type
+        // setting the game type and name
         final List<String> types = new ArrayList<>();
+        final String[] gameNames = new String[availableGames.length];
+
+        int i = 0;
         for (String game : availableGames) {
+            gameNames[i] = gameInfoDataAccessObject.getName(game);
+            i++;
             final JSONArray type = gameInfoDataAccessObject.getType(game);
             for (int j = 0; j < type.length(); j++) {
                 if (!(types.contains(type.getString(j)))) {
@@ -36,6 +41,7 @@ public class GameLibraryInteractor implements GameLibraryInputBoundary {
                 }
             }
         }
+
         final String[] gameTypes = types.toArray(new String[types.size()]);
         Arrays.sort(gameTypes);
 
@@ -45,7 +51,7 @@ public class GameLibraryInteractor implements GameLibraryInputBoundary {
         }
         else {
             final GameLibraryOutputData outputData = new GameLibraryOutputData(
-                    gameInfoDataAccessObject.getAvailableGames(), gameTypes);
+                    gameInfoDataAccessObject.getAvailableGames(), gameTypes, gameNames);
             gameLibraryPresenter.prepareSuccessView(outputData);
         }
     }

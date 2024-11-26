@@ -21,11 +21,13 @@ public class Main {
                                             // Views
                                             .addGameLibraryView()
                                             .addGameSetupView()
+                                            .addBlackjackView()
                                             // Use Cases
                                             .addGameLibraryUseCase()
                                             .addGameSelectUseCase()
                                             .addGameSetupUseCase()
                                             .addGameSearchUseCase()
+                                            .addBlackjackUseCase()
                                             // Build
                                             .build();
 

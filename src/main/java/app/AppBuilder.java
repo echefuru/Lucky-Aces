@@ -10,6 +10,8 @@ import data_access.GameInfoDataAccessObject;
 import entity.player.CommonPlayerFactory;
 import entity.player.PlayerFactory;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.blackjack.BlackjackController;
+import interface_adapter.blackjack.BlackjackPresenter;
 import interface_adapter.blackjack.BlackjackViewModel;
 import interface_adapter.game_library_select.GameLibraryController;
 import interface_adapter.game_library_select.GameLibraryPresenter;
@@ -21,6 +23,9 @@ import interface_adapter.game_library_select.GameSelectPresenter;
 import interface_adapter.game_setup.GameSetupController;
 import interface_adapter.game_setup.GameSetupPresenter;
 import interface_adapter.game_setup.GameSetupViewModel;
+import use_case.blackjack.BlackjackInputBoundary;
+import use_case.blackjack.BlackjackInteractor;
+import use_case.blackjack.BlackjackOutputBoundary;
 import use_case.game_library.GameLibraryInputBoundary;
 import use_case.game_library.GameLibraryInteractor;
 import use_case.game_library.GameLibraryOutputBoundary;
@@ -61,6 +66,8 @@ public class AppBuilder {
     private GameLibraryViewModel gameLibraryViewModel;
     private GameSetupView gameSetupView;
     private GameSetupViewModel gameSetupViewModel;
+    private BlackjackView blackjackView;
+    private BlackjackViewModel blackjackViewModel;
 
     public AppBuilder() {
         mainPanel.setLayout(mainLayout);
@@ -85,6 +92,17 @@ public class AppBuilder {
         gameSetupViewModel = new GameSetupViewModel();
         gameSetupView = new GameSetupView(gameSetupViewModel);
         mainPanel.add(gameSetupView, gameSetupView.getViewName());
+        return this;
+    }
+
+    /**
+     * Adds the Blackjack View to the application.
+     * @return this builder
+     */
+    public AppBuilder addBlackjackView() {
+        blackjackViewModel = new BlackjackViewModel();
+        blackjackView = new BlackjackView(blackjackViewModel);
+        mainPanel.add(blackjackView, blackjackView.getViewName());
         return this;
     }
 
@@ -152,6 +170,21 @@ public class AppBuilder {
     }
 
     /**
+     * Adds the Blackjack Use Case to the application.
+     * @return this builder
+     */
+    public AppBuilder addBlackjackUseCase() {
+        final BlackjackOutputBoundary blackjackPresenter = new BlackjackPresenter(viewManagerModel, blackjackViewModel,
+                gameLibraryViewModel);
+        final BlackjackInputBoundary blackjackInteractor = new BlackjackInteractor(blackjackPresenter);
+        final BlackjackController blackjackController = new BlackjackController(blackjackInteractor);
+
+        blackjackView.setBlackjackController(blackjackController);
+
+        return this;
+    }
+
+    /**
      * Creates the JFrame for the application and initially sets the SignupView to be displayed.
      * @return the application
      */
@@ -167,9 +200,19 @@ public class AppBuilder {
 //        gameLibraryViewModel.firePropertyChanged("build");
 
         // Quick add blackjack view
-        final BlackjackViewModel blackjackViewModel = new BlackjackViewModel();
-        final BlackjackView blackjackView = new BlackjackView(blackjackViewModel);
-        mainPanel.add(blackjackView, blackjackView.getViewName());
+
+//        final BlackjackViewModel blackjackViewModel = new BlackjackViewModel();
+//        final BlackjackView blackjackView = new BlackjackView(blackjackViewModel);
+//        mainPanel.add(blackjackView, blackjackView.getViewName());
+//
+//        // Quick add blackjack use cases
+//        final BlackjackOutputBoundary blackjackPresenter = new BlackjackPresenter(viewManagerModel, blackjackViewModel,
+//                gameLibraryViewModel);
+//        final BlackjackInputBoundary blackjackInteractor = new BlackjackInteractor(blackjackPresenter);
+//        final BlackjackController blackjackController = new BlackjackController(blackjackInteractor);
+//        blackjackView.setBlackjackController(blackjackController);
+
+        // Quick startup
         viewManagerModel.setState(blackjackView.getViewName());
         viewManagerModel.firePropertyChanged();
 

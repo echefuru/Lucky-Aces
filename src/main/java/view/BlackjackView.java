@@ -1,19 +1,23 @@
 package view;
 
 import interface_adapter.blackjack.BlackjackViewModel;
+import interface_adapter.blackjack.BlackjackController;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.beans.PropertyChangeListener;
 
 /**
  * The View for all the Blackjack Use Cases.
  */
-public class BlackjackView extends JPanel {
+public class BlackjackView extends JPanel implements ActionListener {
 
     private static final int GENERAL_HEIGHT = 50;
     private static final int CARDS_HEIGHT = 290;
 
-    private final String viewName = "blackjack_view";
+    private final String viewName;
 
     private final BlackjackViewModel blackjackViewModel;
 
@@ -23,15 +27,71 @@ public class BlackjackView extends JPanel {
     private final JLabel playerLabel = new JLabel("PLAYER | Wins: -");
 
     private final JPanel buttons = new JPanel();
-    private final JButton hit;
-    private final JButton hold;
-    private final JButton dd;
-    private final JButton exit;
+    private final JButton hit = new JButton("HIT!");
+    private final JButton hold = new JButton("HOLD");
+    private final JButton dd = new JButton("DOUBLE!!");
+    private final JButton exit = new JButton("EXIT");
+
+    private BlackjackController blackjackController;
 
     public BlackjackView(BlackjackViewModel blackjackViewModel) {
         // Inject the viewModel
         this.blackjackViewModel = blackjackViewModel;
+        // this.blackjackViewModel.addPropertyChangeListener(this);
+        this.viewName = blackjackViewModel.getViewName();
 
+        // UI work in private function.
+        paintUi();
+
+        // Action listeners
+        hit.addActionListener(this);
+
+        hold.addActionListener(this);
+
+        dd.addActionListener(this);
+
+        exit.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        blackjackController.switchToGameLibraryView();
+                    }
+                }
+        );
+    }
+
+//    @Override
+//    public void propertyChange(PropertyChangeEvent evt) {
+//        final BlackjackState state = (BlackjackState) evt.getNewValue();
+//        if (state.getUsernameError() != null) {
+//            JOptionPane.showMessageDialog(this, state.getUsernameError());
+//        }
+//    }
+
+    /**
+     * React to a button
+     * click that results in evt.
+     * @param evt the ActionEvent to react to
+     */
+    @Override
+    public void actionPerformed(ActionEvent evt) {
+        System.out.println("Click " + evt.getActionCommand());
+    }
+
+    // TODO: Impl for changing what is drawn here, or how?
+    @Override
+    protected void paintComponent(Graphics graphics) {
+        super.paintComponent(graphics);
+    }
+
+    public void setBlackjackController(BlackjackController blackjackController) {
+        this.blackjackController = blackjackController;
+    }
+
+    public String getViewName() {
+        return viewName;
+    }
+
+    private void paintUi() {
         // Layout for outermost panel and preferred sizes to force BoxLayout of fill.
         this.setSize(ViewConstants.WINDOW_WIDTH, ViewConstants.WINDOW_HEIGHT);
         this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
@@ -57,29 +117,15 @@ public class BlackjackView extends JPanel {
         this.add(playerPanel);
         this.add(playerLabel);
 
-        // Initialize credits and all buttons and their panel.
+        // Initialize buttons and their panel.
         buttons.setLayout(new FlowLayout());
         buttons.setPreferredSize(new Dimension(ViewConstants.WINDOW_WIDTH, GENERAL_HEIGHT));
 
-        hit = new JButton(blackjackViewModel.HIT_LABEL);
-        hold = new JButton(blackjackViewModel.HOLD_LABEL);
-        dd = new JButton(blackjackViewModel.DOUBLE_LABEL);
-        exit = new JButton(blackjackViewModel.EXIT_LABEL);
         buttons.add(hit);
         buttons.add(hold);
         buttons.add(dd);
         buttons.add(exit);
 
         this.add(buttons);
-    }
-
-    // TODO: Impl for changing what is drawn here, or how?
-    @Override
-    protected void paintComponent(Graphics graphics) {
-        super.paintComponent(graphics);
-    }
-
-    public String getViewName() {
-        return viewName;
     }
 }

@@ -33,10 +33,7 @@ import use_case.game_select.GameSelectOutputBoundary;
 import use_case.game_setup.GameSetupInputBoundary;
 import use_case.game_setup.GameSetupInteractor;
 import use_case.game_setup.GameSetupOutputBoundary;
-import view.BlackjackView;
-import view.GameLibraryView;
-import view.GameSetupView;
-import view.ViewManager;
+import view.*;
 
 /**
  * The AppBuilder class is responsible for putting together the pieces of

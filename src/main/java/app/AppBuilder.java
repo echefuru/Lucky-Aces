@@ -10,6 +10,7 @@ import data_access.GameInfoDataAccessObject;
 import entity.player.CommonPlayerFactory;
 import entity.player.PlayerFactory;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.blackjack.BlackjackViewModel;
 import interface_adapter.game_library_select.GameLibraryController;
 import interface_adapter.game_library_select.GameLibraryPresenter;
 import interface_adapter.game_library_select.GameLibraryViewModel;
@@ -32,6 +33,7 @@ import use_case.game_select.GameSelectOutputBoundary;
 import use_case.game_setup.GameSetupInputBoundary;
 import use_case.game_setup.GameSetupInteractor;
 import use_case.game_setup.GameSetupOutputBoundary;
+import view.BlackjackView;
 import view.GameLibraryView;
 import view.GameSetupView;
 import view.ViewManager;
@@ -163,9 +165,16 @@ public class AppBuilder {
 
         application.add(mainPanel);
 
-        viewManagerModel.setState(gameLibraryView.getViewName());
+//        viewManagerModel.setState(gameLibraryView.getViewName());
+//        viewManagerModel.firePropertyChanged();
+//        gameLibraryViewModel.firePropertyChanged("build");
+
+        // Quick add blackjack view
+        final BlackjackViewModel blackjackViewModel = new BlackjackViewModel();
+        final BlackjackView blackjackView = new BlackjackView(blackjackViewModel);
+        mainPanel.add(blackjackView, blackjackView.getViewName());
+        viewManagerModel.setState(blackjackView.getViewName());
         viewManagerModel.firePropertyChanged();
-        gameLibraryViewModel.firePropertyChanged("build");
 
         return application;
     }

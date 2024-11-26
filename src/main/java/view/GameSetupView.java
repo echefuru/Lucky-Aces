@@ -9,6 +9,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import interface_adapter.game_setup.GameSetupController;
@@ -23,6 +24,9 @@ public class GameSetupView extends JPanel implements PropertyChangeListener {
     private final String viewName;
     private final GameSetupViewModel gameSetupViewModel;
     private GameSetupController gameSetupController;
+
+    private String selectedGame;
+    private String rules;
 
     private final JLabel gameName;
     private final JLabel gameDescription;
@@ -74,6 +78,16 @@ public class GameSetupView extends JPanel implements PropertyChangeListener {
                 }
         );
 
+        gameRules.addActionListener(
+                evt -> {
+                    if (evt.getSource().equals(gameRules)) {
+                        // Show the game rules through a pop-up window.
+                        JOptionPane.showMessageDialog(null, rules, gameName.getText() + " Rules",
+                                JOptionPane.PLAIN_MESSAGE);
+                    }
+                }
+        );
+
         addContents(options, actions);
     }
 
@@ -98,6 +112,8 @@ public class GameSetupView extends JPanel implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("state")) {
             final GameSetupState state = (GameSetupState) evt.getNewValue();
+            selectedGame = state.getSelectedGame();
+            rules = state.getGameRules();
             gameName.setText(state.getGameName());
             gameDescription.setText("<html>" + state.getGameDescription() + "</html>");
         }

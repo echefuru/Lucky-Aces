@@ -2,17 +2,17 @@ package use_case.game_filter;
 
 import org.json.JSONArray;
 
-import use_case.GameLibraryGameInfoDataAccessInterface;
+import use_case.GameInfoDataAccessInterface;
 
 /**
  * The game filter Interactor.
  */
 public class GameFilterInteractor implements GameFilterInputBoundary {
     private final GameFilterOutputBoundary gameFilterPresenter;
-    private final GameLibraryGameInfoDataAccessInterface gameInfoDataAccessObject;
+    private final GameInfoDataAccessInterface gameInfoDataAccessObject;
 
     public GameFilterInteractor(GameFilterOutputBoundary gameFilterPresenter,
-                                GameLibraryGameInfoDataAccessInterface gameInfoDataAccessObject) {
+                                GameInfoDataAccessInterface gameInfoDataAccessObject) {
         this.gameFilterPresenter = gameFilterPresenter;
         this.gameInfoDataAccessObject = gameInfoDataAccessObject;
     }

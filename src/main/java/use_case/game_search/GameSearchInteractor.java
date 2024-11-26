@@ -1,6 +1,6 @@
 package use_case.game_search;
 
-import use_case.GameLibraryGameInfoDataAccessInterface;
+import use_case.GameInfoDataAccessInterface;
 
 /**
  * The game search Interactor.
@@ -8,10 +8,10 @@ import use_case.GameLibraryGameInfoDataAccessInterface;
 public class GameSearchInteractor implements GameSearchInputBoundary {
 
     private final GameSearchOutputBoundary gameSearchPresenter;
-    private final GameLibraryGameInfoDataAccessInterface gameInfoDataAccessObject;
+    private final GameInfoDataAccessInterface gameInfoDataAccessObject;
 
     public GameSearchInteractor(GameSearchOutputBoundary gameSearchPresenter,
-                                GameLibraryGameInfoDataAccessInterface gameInfoDataAccessObject) {
+                                GameInfoDataAccessInterface gameInfoDataAccessObject) {
         this.gameSearchPresenter = gameSearchPresenter;
         this.gameInfoDataAccessObject = gameInfoDataAccessObject;
     }

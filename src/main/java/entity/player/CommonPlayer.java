@@ -11,23 +11,16 @@ import entity.Card;
 public class CommonPlayer implements Player {
 
     private final String playerID;
-    private final String password;
     private List<Card> cards;
 
     public CommonPlayer(String playerID, String password) {
         this.playerID = playerID;
-        this.password = password;
         this.cards = new ArrayList<Card>();
     }
 
     @Override
     public String getPlayerID() {
         return playerID;
-    }
-
-    @Override
-    public String getPassword() {
-        return password;
     }
 
     public List<Card> getCards() {

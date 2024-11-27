@@ -26,11 +26,6 @@ public class ComputerPlayer implements Player {
     }
 
     @Override
-    public String getPassword() {
-        return "";
-    }
-
-    @Override
     public List<Card> getCards() {
         return cards;
     }

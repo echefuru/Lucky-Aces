@@ -143,8 +143,8 @@ public class GameLibraryView extends JPanel implements ActionListener, PropertyC
         else if (evt.getPropertyName().equals("build")) {
             // Initialization Use Case which runs before any user action; on start-up action fired from the AppBuilder.
             gameLibraryController.execute();
-            final String[] availableGames = gameLibraryViewModel.getState().getAvailableGames();
-            setGameSelection(availableGames);
+            final GameLibraryState state = gameLibraryViewModel.getState();
+            setGameSelection(state.getAvailableGames(), state.getAvailableGameNames());
         }
     }
 
@@ -168,24 +168,26 @@ public class GameLibraryView extends JPanel implements ActionListener, PropertyC
         return viewName;
     }
 
-    private void setGameSelection(String[] availableGames) {
+    private void setGameSelection(String[] availableGames, String[] availableGamesNames) {
         this.gameSelection.removeAll();
         this.gameSelection.revalidate();
         this.gameSelection.repaint();
 
         games = new JButton[availableGames.length];
         for (int i = 0; i < availableGames.length; i++) {
-            games[i] = new JButton(availableGames[i]);
-            games[i].setAlignmentX(Component.CENTER_ALIGNMENT);
-            gameSelection.add(games[i]);
-        }
+            final JButton gameButton = new JButton(availableGamesNames[i]);
+            final String game = availableGames[i];
 
-        // TODO: These actions are next steps in program.
-        for (JButton game : games) {
-            game.addActionListener(
+            gameButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+            gameSelection.add(gameButton);
+            games[i] = gameButton;
+
+            // TODO: These actions are next steps in program.
+
+            gameButton.addActionListener(
                     evt -> {
-                        if (evt.getSource().equals(game)) {
-                            gameSelectController.execute(game.getText());
+                        if (evt.getSource().equals(gameButton)) {
+                            gameSelectController.execute(game);
                         }
                     }
             );

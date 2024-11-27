@@ -30,6 +30,7 @@ public class GameSelectPresenter implements GameSelectOutputBoundary {
         gameSetupState.setGameName(outputData.getGameName());
         gameSetupState.setGameDescription(outputData.getGameDescription());
         gameSetupState.setGameRules(outputData.getGameRules());
+        gameSetupState.setGameConfig(outputData.getGameDefaultConfig());
         this.gameSetupViewModel.setState(gameSetupState);
         this.gameSetupViewModel.firePropertyChanged();
 

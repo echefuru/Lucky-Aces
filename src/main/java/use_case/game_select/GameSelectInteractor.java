@@ -1,5 +1,7 @@
 package use_case.game_select;
 
+import org.json.JSONObject;
+
 import use_case.GameInfoDataAccessInterface;
 
 /**
@@ -24,8 +26,9 @@ public class GameSelectInteractor implements GameSelectInputBoundary {
             final String gameName = gameInfoDataAccessObject.getName(selectedGame);
             final String gameDescription = gameInfoDataAccessObject.getDescription(selectedGame);
             final String gameRules = gameInfoDataAccessObject.getRules(selectedGame);
+            final JSONObject gameDefaultConfig = gameInfoDataAccessObject.getDefaultConfig(selectedGame);
             final GameSelectOutputData gameSelectOutputData = new GameSelectOutputData(selectedGame,
-                    gameName, gameDescription, gameRules);
+                    gameName, gameDescription, gameRules, gameDefaultConfig);
             gameSelectPresenter.prepareSuccessView(gameSelectOutputData);
         }
         else {

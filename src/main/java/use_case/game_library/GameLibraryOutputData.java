@@ -7,10 +7,12 @@ public class GameLibraryOutputData {
 
     private final String[] games;
     private final String[] gameTypes;
+    private final String[] gameNames;
 
-    public GameLibraryOutputData(String[] games, String[] gameTypes) {
+    public GameLibraryOutputData(String[] games, String[] gameTypes, String[] gameNames) {
         this.games = games;
         this.gameTypes = gameTypes;
+        this.gameNames = gameNames;
     }
 
     public String[] getGames() {
@@ -19,5 +21,9 @@ public class GameLibraryOutputData {
 
     public String[] getGameTypes() {
         return gameTypes;
+    }
+
+    public String[] getGameNames() {
+        return gameNames;
     }
 }

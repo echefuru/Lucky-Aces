@@ -37,6 +37,10 @@ public class ComputerPlayer implements Player {
         return this.bankroll;
     }
 
+    public void setBankroll(int newBankroll) {
+        this.bankroll = newBankroll;
+    }
+
     public int getDifficulty() {
         return difficulty;
     }

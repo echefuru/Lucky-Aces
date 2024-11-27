@@ -34,4 +34,11 @@ public class CommonPlayer implements Player {
         return 0;
     }
 
+    public void setBankroll(int newBankroll) {
+        this.bankroll = newBankroll;
+    }
+
+    private void setCards(List<Card> cards) {
+        this.cards = cards;
+    }
 }

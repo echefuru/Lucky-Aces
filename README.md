@@ -26,15 +26,18 @@ The user of the program can:
 - Look at the description and the rules of the game;
 - Set the config of the game;
 - Play the game!
-  
+* * *
 ## Installation
-Fork this repository, clone it to your Java IDE, and then run the Main.java class!
-
+1. Fork this repository.
+2. Have an IDE supporting Java on your device such as IntelliJ. (To download IntelliJ: [click here](#https://lp.jetbrains.com/intellij-idea-promo/?source=google&medium=cpc&campaign=AMER_en_CA_IDEA_Branded&term=intellij&content=693349187730&gad_source=1&gclid=Cj0KCQiAo5u6BhDJARIsAAVoDWsAhoQVNoxj6LAKjHbgIZxUr9uMpekHwcGG5XBbK1UbpsFxBS_7UGkaAjsLEALw_wcB))
+3. clone it to your Java IDE, and then run the Main.java class!
+* * *
 ## Usage
-
+* * *
 ## License
-
+* * *
 ## Feedback
-
+* * *
 ## Contributions
 
+* * *

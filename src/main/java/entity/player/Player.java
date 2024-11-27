@@ -16,12 +16,6 @@ public interface Player {
     String getPlayerID();
 
     /**
-     * Returns the password of the player.
-     * @return the password of the player.
-     */
-    String getPassword();
-
-    /**
      * Returns the cards the player holds.
      * @return the list of Cards of the player.
      */

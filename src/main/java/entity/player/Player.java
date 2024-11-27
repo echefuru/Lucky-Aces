@@ -21,4 +21,9 @@ public interface Player {
      */
     List<Card> getCards();
 
+    /**
+     * Returns the bankroll of the player.
+     * @return the bankroll of the player.
+     */
+    int getBankroll();
 }

@@ -13,11 +13,13 @@ public class ComputerPlayer implements Player {
     private final String playerID;
     private List<Card> cards;
     private int difficulty;
+    private int bankroll;
 
     public ComputerPlayer(String playerID) {
         this.playerID = playerID;
         this.difficulty = 1;
         this.cards = new ArrayList<Card>();
+        this.bankroll = PlayerConstants.INITIAL_BANKROLL;
     }
 
     @Override
@@ -28,6 +30,11 @@ public class ComputerPlayer implements Player {
     @Override
     public List<Card> getCards() {
         return cards;
+    }
+
+    @Override
+    public int getBankroll() {
+        return this.bankroll;
     }
 
     public int getDifficulty() {

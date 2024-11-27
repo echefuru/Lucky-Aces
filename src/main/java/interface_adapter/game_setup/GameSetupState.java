@@ -1,5 +1,7 @@
 package interface_adapter.game_setup;
 
+import org.json.JSONObject;
+
 /**
  * The state for the game setup view model.
  */
@@ -8,6 +10,7 @@ public class GameSetupState {
     private String gameName;
     private String gameDescription;
     private String gameRules;
+    private JSONObject gameConfig;
 
     public void setSelectedGame(String selectedGame) {
         this.selectedGame = selectedGame;
@@ -21,12 +24,16 @@ public class GameSetupState {
         this.gameDescription = gameDescription;
     }
 
-    public String getSelectedGame() {
-        return selectedGame;
-    }
-
     public void setGameRules(String gameRules) {
         this.gameRules = gameRules;
+    }
+
+    public void setGameConfig(JSONObject gameConfig) {
+        this.gameConfig = gameConfig;
+    }
+
+    public String getSelectedGame() {
+        return selectedGame;
     }
 
     public String getGameName() {
@@ -39,6 +46,10 @@ public class GameSetupState {
 
     public String getGameRules() {
         return gameRules;
+    }
+
+    public JSONObject getGameConfig() {
+        return gameConfig;
     }
 
 }

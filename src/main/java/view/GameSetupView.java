@@ -4,6 +4,8 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -11,10 +13,16 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSlider;
 
-import interface_adapter.game_setup.GameSetupController;
+import org.json.JSONObject;
+
+import interface_adapter.ViewManagerModel;
+import interface_adapter.game_library_select.GameLibraryViewModel;
+import interface_adapter.game_setup.GameSetConfigController;
 import interface_adapter.game_setup.GameSetupState;
 import interface_adapter.game_setup.GameSetupViewModel;
+import interface_adapter.game_setup.GameStartController;
 
 /**
  * The View for when the user is setting up a game.
@@ -22,8 +30,11 @@ import interface_adapter.game_setup.GameSetupViewModel;
 public class GameSetupView extends JPanel implements PropertyChangeListener {
 
     private final String viewName;
+    private final String parentViewName;
     private final GameSetupViewModel gameSetupViewModel;
-    private GameSetupController gameSetupController;
+    private final ViewManagerModel viewManagerModel;
+    private GameStartController gameStartController;
+    private GameSetConfigController gameSetConfigController;
 
     private String selectedGame;
     private String rules;
@@ -38,10 +49,15 @@ public class GameSetupView extends JPanel implements PropertyChangeListener {
 
     private final JButton exit;
 
-    public GameSetupView(GameSetupViewModel gameSetupViewModel) {
+    public GameSetupView(GameSetupViewModel gameSetupViewModel, GameLibraryViewModel gameLibraryViewModel,
+                         ViewManagerModel viewManagerModel) {
         this.gameSetupViewModel = gameSetupViewModel;
         this.gameSetupViewModel.addPropertyChangeListener(this);
+
+        this.viewManagerModel = viewManagerModel;
+
         this.viewName = gameSetupViewModel.getViewName();
+        this.parentViewName = gameLibraryViewModel.getViewName();
 
         gameName = new JLabel();
         gameName.setFont(gameName.getFont().deriveFont(ViewConstants.TITLE_FONT_SIZE));
@@ -73,7 +89,8 @@ public class GameSetupView extends JPanel implements PropertyChangeListener {
         exit.addActionListener(
                 evt -> {
                     if (evt.getSource().equals(exit)) {
-                        gameSetupController.switchToGameLibraryView();
+                        viewManagerModel.setState(parentViewName);
+                        viewManagerModel.firePropertyChanged();
                     }
                 }
         );
@@ -88,7 +105,58 @@ public class GameSetupView extends JPanel implements PropertyChangeListener {
                 }
         );
 
+        config.addActionListener(
+                evt -> {
+                    if (evt.getSource().equals(config)) {
+                        final GameSetupState state = gameSetupViewModel.getState();
+                        final JSONObject gameConfig = state.getGameConfig();
+
+                        // Show the config screen through a pop-up window.
+                        showConfigPanel(gameConfig);
+                        gameSetConfigController.execute(gameConfig);
+                    }
+                }
+        );
+
         addContents(options, actions);
+    }
+
+    private void showConfigPanel(JSONObject gameConfig) {
+        final CenterAlignedPanel configPanel = new CenterAlignedPanel(ViewConstants.PADDING,
+                ViewConstants.LINE_HEIGHT);
+        final Map<String, JSlider> sliders = new HashMap<>(gameConfig.length());
+
+        for (String param : gameConfig.keySet()) {
+            final JSONObject paramObj = gameConfig.getJSONObject(param);
+            final String paramName = paramObj.getString("name");
+            final int maxValue = paramObj.getInt("max_value");
+            final int minValue = paramObj.getInt("min_value");
+            final int currValue = paramObj.getInt("curr_value");
+
+            final JLabel label = new JLabel(paramName);
+            final JSlider slider = new JSlider(JSlider.HORIZONTAL, minValue, maxValue, currValue);
+
+            slider.setMajorTickSpacing(paramObj.getInt("interval"));
+            slider.setMinorTickSpacing(paramObj.getInt("interval") / ViewConstants.NUM_MINOR_TICKS_PER_MAJOR);
+            slider.setPaintTicks(true);
+            slider.setPaintLabels(true);
+            slider.setSnapToTicks(true);
+            slider.setFont(slider.getFont().deriveFont(ViewConstants.SLIDER_FONT_SIZE));
+
+            sliders.put(param, slider);
+            configPanel.addNewLine(label, slider);
+        }
+        final int result = JOptionPane.showConfirmDialog(null, configPanel, gameName.getText() + "Config",
+                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+
+        if (result == JOptionPane.OK_OPTION) {
+            for (String param : gameConfig.keySet()) {
+                final JSONObject paramObj = gameConfig.getJSONObject(param);
+                paramObj.put("curr_value", sliders.get(param).getValue());
+            }
+
+            gameSetConfigController.execute(gameConfig);
+        }
     }
 
     private void addContents(JPanel options, JPanel actions) {
@@ -123,7 +191,11 @@ public class GameSetupView extends JPanel implements PropertyChangeListener {
         return viewName;
     }
 
-    public void setGameSetupController(GameSetupController gameSetupController) {
-        this.gameSetupController = gameSetupController;
+    public void setGameStartController(GameStartController gameStartController) {
+        this.gameStartController = gameStartController;
+    }
+
+    public void setGameSetConfigController(GameSetConfigController gameSetConfigController) {
+        this.gameSetConfigController = gameSetConfigController;
     }
 }

@@ -9,9 +9,27 @@
     "is_available": true,
     "type": ["Luck-Based Games", "Comparing Card Games"],
     "default_config": {
-      "minimum_bet": 5,
-      "num_computer_players": 0,
-      "starting_bank_roll": 100
+      "min_bet": {
+        "name": "Minimum Bet",
+        "max_value": 25,
+        "min_value": 5,
+        "curr_value": 10,
+        "interval": 5
+      },
+      "num_comp_players": {
+        "name": "# of Computer Players",
+        "max_value": 3,
+        "min_value": 0,
+        "curr_value": 0,
+        "interval": 1
+      },
+      "bankroll": {
+        "name": "Starting bankroll",
+        "max_value": 1000,
+        "min_value": 100,
+        "curr_value": 200,
+        "interval": 250
+      }
     }
   },
   {

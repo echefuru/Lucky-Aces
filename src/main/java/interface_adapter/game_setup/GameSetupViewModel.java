@@ -7,7 +7,7 @@ import interface_adapter.ViewModel;
  */
 public class GameSetupViewModel extends ViewModel<GameSetupState> {
 
-    private static final String VIEW_NAME = "game_setup";
+    private static final String VIEW_NAME = "game_start";
 
     public GameSetupViewModel() {
         super(VIEW_NAME);

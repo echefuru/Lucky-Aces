@@ -1,9 +1,9 @@
-package use_case.game_setup;
+package use_case.game_start;
 
 /**
  * Output boundary for game setup.
  */
-public interface GameSetupOutputBoundary {
+public interface GameStartOutputBoundary {
     /**
      * Prepares the success view for the select game use case.
      */
@@ -13,9 +13,4 @@ public interface GameSetupOutputBoundary {
      * Prepares the failure view for the select game use case.
      */
     void prepareFailView();
-
-    /**
-     * Switch to the game library view.
-     */
-    void switchToGameLibraryView();
 }

@@ -92,4 +92,9 @@ public class GameInfoDataAccessObject implements GameInfoDataAccessInterface {
     public int getMinPlayer(String game) {
         return games.get(game).getMinPlayers();
     }
+
+    @Override
+    public JSONObject getDefaultConfig(String game) {
+        return games.get(game).getDefaultConfig();
+    }
 }

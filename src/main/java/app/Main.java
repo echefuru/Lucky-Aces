@@ -24,7 +24,8 @@ public class Main {
                                             // Use Cases
                                             .addGameLibraryUseCase()
                                             .addGameSelectUseCase()
-                                            .addGameSetupUseCase()
+                                            .addGameStartUseCase()
+                                            .addGameSetConfigUseCase()
                                             .addGameSearchUseCase()
                                             .addGameFilterUseCase()
                                             // Build

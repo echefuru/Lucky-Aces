@@ -7,8 +7,16 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import javax.swing.*;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
+import interface_adapter.game_library_select.GameFilterController;
 import interface_adapter.game_library_select.GameLibraryController;
 import interface_adapter.game_library_select.GameLibraryState;
 import interface_adapter.game_library_select.GameLibraryViewModel;
@@ -25,9 +33,14 @@ public class GameLibraryView extends JPanel implements ActionListener, PropertyC
     private GameLibraryController gameLibraryController;
     private GameSelectController gameSelectController;
     private GameSearchController gameSearchController;
+    private GameFilterController gameFilterController;
 
     private final JButton search = new JButton("Search");
     private final JTextField searchInputField = new JTextField(15);
+
+    private final String filterText = "Filter";
+    private final JButton filter = new JButton("Filter");
+    private JLabel selectLabel = new JLabel("<html>Search is not activated.<br>Filter is not activated.<html>");
 
     private final JLabel errorField = new JLabel();
 
@@ -49,6 +62,7 @@ public class GameLibraryView extends JPanel implements ActionListener, PropertyC
         final JPanel searchPanel = new JPanel();
         searchPanel.add(searchInputField);
         searchPanel.add(search);
+        searchPanel.add(filter);
 
         search.addActionListener(
                  // This creates an anonymous subclass of ActionListener and instantiates it.
@@ -58,6 +72,17 @@ public class GameLibraryView extends JPanel implements ActionListener, PropertyC
                         gameSearchController.execute(searchInput);
                     }
                  }
+        );
+
+        filter.addActionListener(
+                // This creates an anonymous subclass of ActionListener and instantiates it.
+                evt -> {
+                    if (evt.getSource().equals(filter)) {
+                        final GameLibraryState state = gameLibraryViewModel.getState();
+                        final String[] options = state.getGameTypes();
+                        executeFilter(options);
+                    }
+                }
         );
 
         addContent(title, searchPanel, titleLogo);
@@ -75,6 +100,10 @@ public class GameLibraryView extends JPanel implements ActionListener, PropertyC
 
         searchPanel.setMaximumSize(new Dimension(ViewConstants.WINDOW_WIDTH, ViewConstants.LINE_HEIGHT));
         this.add(searchPanel);
+
+        selectLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        selectLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        this.add(selectLabel);
 
         errorField.setAlignmentX(Component.CENTER_ALIGNMENT);
         this.add(errorField);
@@ -100,10 +129,12 @@ public class GameLibraryView extends JPanel implements ActionListener, PropertyC
             // TODO: Update this.
             errorField.setText(gameLibraryViewModel.getState().getSelectGameError());
         }
-        else if (evt.getPropertyName().equals("search")) {
+        else if (evt.getPropertyName().equals("gameSelect")) {
             final GameLibraryState state = gameLibraryViewModel.getState();
             final boolean[] availableGamesVisible = state.getAvailableGamesVisible();
             setGameVisible(availableGamesVisible);
+            selectLabel.setText(state.getFilterMessage());
+            searchInputField.setText("");
 
             // Clears the error field
             state.setSelectGameError(null);
@@ -127,6 +158,10 @@ public class GameLibraryView extends JPanel implements ActionListener, PropertyC
 
     public void setGameSearchController(GameSearchController gameSearchController) {
         this.gameSearchController = gameSearchController;
+    }
+
+    public void setGameFilterController(GameFilterController gameFilterController) {
+        this.gameFilterController = gameFilterController;
     }
 
     public String getViewName() {
@@ -160,6 +195,53 @@ public class GameLibraryView extends JPanel implements ActionListener, PropertyC
     private void setGameVisible(boolean[] availableGamesVisible) {
         for (int i = 0; i < games.length; i++) {
             games[i].setVisible(availableGamesVisible[i]);
+        }
+    }
+
+    private void executeFilter(String[] options) {
+        final int typeInput = JOptionPane.showOptionDialog(
+                null,
+                "<html>Please select the type you want to play:<br>"
+                        + "(If you don't want to limit the type of games, you can just close the window.)</html>",
+                filterText, JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+        final String type;
+        if (typeInput == -1) {
+            type = "";
+        }
+        else {
+            type = options[typeInput];
+        }
+
+        while (true) {
+            final String playerInput = JOptionPane.showInputDialog(
+                    null,
+                    "<html>Please enter the specific number of players you want:<br>"
+                            + "(If you don't want to limit the number of players, "
+                            + "you can just close or cancel the window.)</html>",
+                    filterText, JOptionPane.QUESTION_MESSAGE
+            );
+
+            if (playerInput == null) {
+                gameFilterController.execute(type, -1);
+                break;
+            }
+            try {
+                final int playerCount = Integer.parseInt(playerInput);
+                if (playerCount >= 0) {
+                    gameFilterController.execute(type, playerCount);
+                    break;
+                }
+                else {
+                    JOptionPane.showMessageDialog(
+                            null, "Please enter a number greater or equal to 0!",
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+            catch (NumberFormatException exception) {
+                JOptionPane.showMessageDialog(
+                        null, "Invalid input, please enter an integer!",
+                        "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
 }

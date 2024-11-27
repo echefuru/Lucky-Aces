@@ -1,5 +1,7 @@
 package data_type;
 
+import org.json.JSONArray;
+
 /**
  * The representation of a type of card game. Stores all descriptions, rules, etc. of the game.
  */
@@ -10,15 +12,17 @@ public class GameInfo {
     private final int maxPlayers;
     private final int minPlayers;
     private final boolean isAvailable;
+    private final JSONArray type;
 
     public GameInfo(String name, String description, String rules, int maxPlayers, int minPlayers,
-                    boolean isAvailable) {
+                    boolean isAvailable, JSONArray type) {
         this.name = name;
         this.description = description;
         this.rules = rules;
         this.maxPlayers = maxPlayers;
         this.minPlayers = minPlayers;
         this.isAvailable = isAvailable;
+        this.type = type;
     }
 
     /**
@@ -47,5 +51,29 @@ public class GameInfo {
      */
     public boolean isAvailable() {
         return isAvailable;
+    }
+
+    /**
+     * Return the type of the game.
+     * @return the type of the game.
+     */
+    public JSONArray getType() {
+        return type;
+    }
+
+    /**
+     * Return the maxPlayers of the game.
+     * @return the maxPlayers of the game
+     */
+    public int getMaxPlayers() {
+        return maxPlayers;
+    }
+
+    /**
+     * Return the minPlayers of the game.
+     * @return the minPlayers of the game
+     */
+    public int getMinPlayers() {
+        return minPlayers;
     }
 }

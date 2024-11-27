@@ -23,6 +23,8 @@ public class GameLibraryPresenter implements GameLibraryOutputBoundary {
         // On success, display GameLibraryView with available games.
         final GameLibraryState gameLibraryState = gameLibraryViewModel.getState();
         gameLibraryState.setAvailableGames(outputData.getGames());
+        final String[] gameTypes = outputData.getGameTypes();
+        gameLibraryState.setGameTypes(gameTypes);
         gameLibraryViewModel.setState(gameLibraryState);
         gameLibraryViewModel.firePropertyChanged();
 

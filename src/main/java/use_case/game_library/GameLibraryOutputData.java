@@ -6,12 +6,18 @@ package use_case.game_library;
 public class GameLibraryOutputData {
 
     private final String[] games;
+    private final String[] gameTypes;
 
-    public GameLibraryOutputData(String[] games) {
+    public GameLibraryOutputData(String[] games, String[] gameTypes) {
         this.games = games;
+        this.gameTypes = gameTypes;
     }
 
     public String[] getGames() {
         return games;
+    }
+
+    public String[] getGameTypes() {
+        return gameTypes;
     }
 }

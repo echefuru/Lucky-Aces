@@ -28,18 +28,13 @@ public class BlackjackRoom implements Room {
     }
 
     @Override
-    public String getStatus() {
-        return this.status;
+    public String getCurTurnPlayer() {
+        return this.curTurnPlayer;
     }
 
     @Override
     public List<Player> getPlayers() {
         return this.curPlayers;
-    }
-
-    @Override
-    public String getName() {
-        return this.roomName;
     }
 
     public void setDeck(Deck deck) {

@@ -9,10 +9,10 @@ import entity.player.Player;
  */
 public interface Room {
     /**
-     * Returns the status of the room: "Initializing", "In Progress", or "Over".
-     * @return the status of the room.
+     * Returns playerID of the current player to take action.
+     * @return the playerID of the current turn player.
      */
-    String getStatus();
+    String getCurTurnPlayer();
 
     /**
      * Returns the list of current players in the room.
@@ -20,9 +20,4 @@ public interface Room {
      */
     List<Player> getPlayers();
 
-    /**
-     * Returns the name of the room.
-     * @return the name of the room
-     */
-    String getName();
 }

@@ -18,6 +18,7 @@ public class BlackjackPresenter implements BlackjackOutputBoundary {
         this.gameLibraryViewModel = gameLibraryViewModel;
     }
 
+    // TODO: This might have to reset the blackjackViewModel and the DAO?
     @Override
     public void switchToGameLibraryView() {
         viewManagerModel.setState(gameLibraryViewModel.getViewName());

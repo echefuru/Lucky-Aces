@@ -7,7 +7,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.PropertyChangeListener;
 
 /**
  * The View for all the Blackjack Use Cases.
@@ -15,21 +14,22 @@ import java.beans.PropertyChangeListener;
 public class BlackjackView extends JPanel implements ActionListener {
 
     private static final int GENERAL_HEIGHT = 50;
-    private static final int CARDS_HEIGHT = 290;
+    private static final int CARDS_HEIGHT = 270;
 
     private final String viewName;
 
     private final BlackjackViewModel blackjackViewModel;
 
-    private final JLabel dealerLabel = new JLabel("DEALER | Wins: -");
+    private JLabel dealerLabel = new JLabel("DEALER | Wins: -");
     private final JPanel dealerPanel = new JPanel();
+    private JLabel statusLabel = new JLabel("Press PLAY to start the round");
     private final JPanel playerPanel = new JPanel();
     private final JLabel playerLabel = new JLabel("PLAYER | Wins: -");
 
     private final JPanel buttons = new JPanel();
+    private final JButton play = new JButton("PLAY");
     private final JButton hit = new JButton("HIT!");
     private final JButton hold = new JButton("HOLD");
-    private final JButton dd = new JButton("DOUBLE!!");
     private final JButton exit = new JButton("EXIT");
 
     private BlackjackController blackjackController;
@@ -40,15 +40,40 @@ public class BlackjackView extends JPanel implements ActionListener {
         // this.blackjackViewModel.addPropertyChangeListener(this);
         this.viewName = blackjackViewModel.getViewName();
 
-        // UI work in private function.
-        paintUi();
+        // UI initialization work in private function.
+        initUi();
 
         // Action listeners
-        hit.addActionListener(this);
+        play.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        // TODO: Maybe do all of this after processing property change, in case of immediate 21?
+                        statusLabel.setText("");
+                        buttons.remove(play);
+                        buttons.revalidate();
+                        buttons.add(hit);
+                        buttons.add(hold);
+                        buttons.add(exit);
+                        blackjackController.play();
+                    }
+                }
+        );
 
-        hold.addActionListener(this);
+        hit.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        blackjackController.hit();
+                    }
+                }
+        );
 
-        dd.addActionListener(this);
+        hold.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        blackjackController.hold();
+                    }
+                }
+        );
 
         exit.addActionListener(
                 new ActionListener() {
@@ -91,7 +116,7 @@ public class BlackjackView extends JPanel implements ActionListener {
         return viewName;
     }
 
-    private void paintUi() {
+    private void initUi() {
         // Layout for outermost panel and preferred sizes to force BoxLayout of fill.
         this.setSize(ViewConstants.WINDOW_WIDTH, ViewConstants.WINDOW_HEIGHT);
         this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
@@ -109,6 +134,10 @@ public class BlackjackView extends JPanel implements ActionListener {
         dealerCardLabel1.setAlignmentX(Component.CENTER_ALIGNMENT);
         dealerPanel.add(dealerCardLabel1);
 
+        statusLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        statusLabel.setPreferredSize(new Dimension(ViewConstants.WINDOW_WIDTH, GENERAL_HEIGHT));
+        this.add(statusLabel);
+
         // Player panel is initially empty.
         playerPanel.setPreferredSize(new Dimension(ViewConstants.WINDOW_WIDTH, CARDS_HEIGHT));
         playerLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -117,14 +146,19 @@ public class BlackjackView extends JPanel implements ActionListener {
         this.add(playerPanel);
         this.add(playerLabel);
 
+        final JLabel playerCardLabel1 = new JLabel(ViewConstants.CARD_BACK);
+        dealerCardLabel1.setAlignmentX(Component.CENTER_ALIGNMENT);
+        playerPanel.add(playerCardLabel1);
+
         // Initialize buttons and their panel.
         buttons.setLayout(new FlowLayout());
         buttons.setPreferredSize(new Dimension(ViewConstants.WINDOW_WIDTH, GENERAL_HEIGHT));
 
-        buttons.add(hit);
-        buttons.add(hold);
-        buttons.add(dd);
+        // TODO: Move the other buttons down to other private method.
+        buttons.add(play);
         buttons.add(exit);
+        // buttons.add(hit);
+        // buttons.add(hold);
 
         this.add(buttons);
     }

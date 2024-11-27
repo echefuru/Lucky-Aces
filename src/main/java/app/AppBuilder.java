@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
+import data_access.ApiDataAccessObject;
 import data_access.GameInfoDataAccessObject;
 import entity.player.CommonPlayerFactory;
 import entity.player.PlayerFactory;
@@ -61,6 +62,7 @@ public class AppBuilder {
 
     // thought question: is the hard dependency below a problem?
     private final GameInfoDataAccessObject gameInfoDataAccessObject = new GameInfoDataAccessObject("game_info.json");
+    private final ApiDataAccessObject apiDataAccessObject = new ApiDataAccessObject();
 
     private GameLibraryView gameLibraryView;
     private GameLibraryViewModel gameLibraryViewModel;
@@ -176,7 +178,7 @@ public class AppBuilder {
     public AppBuilder addBlackjackUseCase() {
         final BlackjackOutputBoundary blackjackPresenter = new BlackjackPresenter(viewManagerModel, blackjackViewModel,
                 gameLibraryViewModel);
-        final BlackjackInputBoundary blackjackInteractor = new BlackjackInteractor(blackjackPresenter);
+        final BlackjackInputBoundary blackjackInteractor = new BlackjackInteractor(apiDataAccessObject, blackjackPresenter);
         final BlackjackController blackjackController = new BlackjackController(blackjackInteractor);
 
         blackjackView.setBlackjackController(blackjackController);

@@ -16,7 +16,7 @@ public interface ApiDataAccessInterface {
      * @return a Deck composed of the standard 52 cards.
      * @throws IOException if there is an error in attempting to call API.
      */
-    Deck createDeck() throws IOException;
+    Deck createDeck();
 
     /**
      * A method that returns a new Deck.
@@ -24,15 +24,15 @@ public interface ApiDataAccessInterface {
      * @return a Deck composed of the specified number of decks.
      * @throws IOException if there is an error in attempting to call API.
      */
-    Deck createDeck(int numDecks) throws IOException;
+    Deck createDeck(int numDecks);
 
-    /**
-     * A method that returns a Card from the Deck.
-     * @param deck is the Deck from where the Card will be drawn.
-     * @return a Card from deck.
-     * @throws IOException if there is an error in attempting to call API.
-     */
-    Card draw(Deck deck) throws IOException;
+//    /**
+//     * A method that returns a Card from the Deck.
+//     * @param deck is the Deck from where the Card will be drawn.
+//     * @return a Card from deck.
+//     * @throws IOException if there is an error in attempting to call API.
+//     */
+//    Card draw(Deck deck);
 
     /**
      * A method that returns several Cards from the Deck.
@@ -41,12 +41,12 @@ public interface ApiDataAccessInterface {
      * @return a List of Cards from deck.
      * @throws IOException if there is an error in attempting to call API.
      */
-    List<Card> draw(Deck deck, int numCards) throws IOException;
+    List<Card> draw(Deck deck, int numCards);
 
     /**
      * A method that adds back all discarded cards to the given Deck and shuffles it.
      * @param deck is the Deck to be reset and shuffled.
      * @throws IOException if there is an error in attempting to call API.
      */
-    void shuffle(Deck deck) throws IOException;
+    void shuffle(Deck deck);
 }

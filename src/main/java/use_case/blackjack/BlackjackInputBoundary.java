@@ -5,11 +5,20 @@ package use_case.blackjack;
  */
 public interface BlackjackInputBoundary {
 
-//    /**
-//     * Executes the signup use case.
-//     * @param signupInputData the input data
-//     */
-//    void execute(SignupInputData signupInputData);
+    /**
+     * Executes the Play use case.
+     */
+    void play();
+
+    /**
+     * Executes the Hit use case.
+     */
+    void hit();
+
+    /**
+     * Executes the Hold use case.
+     */
+    void hold();
 
     /**
      * Executes the switch to GameLibraryView use case.

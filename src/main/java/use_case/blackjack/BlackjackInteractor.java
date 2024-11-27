@@ -1,34 +1,67 @@
 package use_case.blackjack;
 
+import entity.Card;
+import entity.Deck;
+import use_case.ApiDataAccessInterface;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * The Blackjack Interactor.
  */
 public class BlackjackInteractor implements BlackjackInputBoundary {
-    // private final SignupUserDataAccessInterface userDataAccessObject;
-    private final BlackjackOutputBoundary blackjackPresenter;
 
-    public BlackjackInteractor(// SignupUserDataAccessInterface signupDataAccessInterface,
+    private static final int NUM_DECKS = 6;
+
+    private final ApiDataAccessInterface apiDataAccessObject;
+    private final BlackjackOutputBoundary blackjackPresenter;
+    private Deck deck;
+    private List<Card> playerCards;
+    private List<Card> dealerCards;
+    private int playerTotal;
+    private String stage;
+
+    public BlackjackInteractor(ApiDataAccessInterface apiDataAccessObject,
                                BlackjackOutputBoundary blackjackOutputBoundary) {
-        // this.userDataAccessObject = signupDataAccessInterface;
+        this.apiDataAccessObject = apiDataAccessObject;
         this.blackjackPresenter = blackjackOutputBoundary;
     }
 
-//    @Override
-//    public void execute(SignupInputData signupInputData) {
-//        if (userDataAccessObject.existsByName(signupInputData.getUsername())) {
-//            userPresenter.prepareFailView("User already exists.");
-//        }
-//        else if (!signupInputData.getPassword().equals(signupInputData.getRepeatPassword())) {
-//            userPresenter.prepareFailView("Passwords don't match.");
-//        }
-//        else {
-//            final User user = userFactory.create(signupInputData.getUsername(), signupInputData.getPassword());
-//            userDataAccessObject.save(user);
-//
-//            final SignupOutputData signupOutputData = new SignupOutputData(user.getName(), false);
-//            userPresenter.prepareSuccessView(signupOutputData);
-//        }
-//    }
+    @Override
+    public void play() {
+        deck = apiDataAccessObject.createDeck(NUM_DECKS);
+        playerCards = apiDataAccessObject.draw(deck, 2);
+        dealerCards = apiDataAccessObject.draw(deck, 1);
+
+        for (Card card : playerCards) {
+            playerTotal += card.getRank().getRankValue();
+        }
+
+        // TODO: Check for instant win, check for double aces.
+
+        final List<String> playerCardStrings = new ArrayList<String>(playerCards.size());
+        for (Card card : playerCards) {
+            playerCardStrings.add(card.toString());
+        }
+
+        final List<String> dealerCardStrings = new ArrayList<String>(dealerCards.size());
+        for (Card card : dealerCards) {
+            dealerCardStrings.add(card.toString());
+        }
+
+        // final BlackjackOutputData response = new BlackjackOutputData();
+    }
+
+    @Override
+    public void hit() {
+
+    }
+
+    @Override
+    public void hold() {
+
+    }
 
     @Override
     public void switchToGameLibraryView() {

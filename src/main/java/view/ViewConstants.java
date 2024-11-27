@@ -39,7 +39,7 @@ public class ViewConstants {
     static final ImageIcon CARD_7H = createImageIcon("card_images/7H.png");
     static final ImageIcon CARD_8H = createImageIcon("card_images/8H.png");
     static final ImageIcon CARD_9H = createImageIcon("card_images/9H.png");
-    static final ImageIcon CARD_10H = createImageIcon("card_images/10H.png");
+    static final ImageIcon CARD_0H = createImageIcon("card_images/0H.png");
     static final ImageIcon CARD_JH = createImageIcon("card_images/JH.png");
     static final ImageIcon CARD_QH = createImageIcon("card_images/QH.png");
     static final ImageIcon CARD_KH = createImageIcon("card_images/KH.png");
@@ -53,7 +53,7 @@ public class ViewConstants {
     static final ImageIcon CARD_7D = createImageIcon("card_images/7D.png");
     static final ImageIcon CARD_8D = createImageIcon("card_images/8D.png");
     static final ImageIcon CARD_9D = createImageIcon("card_images/9D.png");
-    static final ImageIcon CARD_10D = createImageIcon("card_images/10D.png");
+    static final ImageIcon CARD_0D = createImageIcon("card_images/0D.png");
     static final ImageIcon CARD_JD = createImageIcon("card_images/JD.png");
     static final ImageIcon CARD_QD = createImageIcon("card_images/QD.png");
     static final ImageIcon CARD_KD = createImageIcon("card_images/KD.png");
@@ -67,7 +67,7 @@ public class ViewConstants {
     static final ImageIcon CARD_7C = createImageIcon("card_images/7C.png");
     static final ImageIcon CARD_8C = createImageIcon("card_images/8C.png");
     static final ImageIcon CARD_9C = createImageIcon("card_images/9C.png");
-    static final ImageIcon CARD_10C = createImageIcon("card_images/10C.png");
+    static final ImageIcon CARD_0C = createImageIcon("card_images/0C.png");
     static final ImageIcon CARD_JC = createImageIcon("card_images/JC.png");
     static final ImageIcon CARD_QC = createImageIcon("card_images/QC.png");
     static final ImageIcon CARD_KC = createImageIcon("card_images/KC.png");
@@ -81,7 +81,7 @@ public class ViewConstants {
     static final ImageIcon CARD_7S = createImageIcon("card_images/7S.png");
     static final ImageIcon CARD_8S = createImageIcon("card_images/8S.png");
     static final ImageIcon CARD_9S = createImageIcon("card_images/9S.png");
-    static final ImageIcon CARD_10S = createImageIcon("card_images/10S.png");
+    static final ImageIcon CARD_0S = createImageIcon("card_images/0S.png");
     static final ImageIcon CARD_JS = createImageIcon("card_images/JS.png");
     static final ImageIcon CARD_QS = createImageIcon("card_images/QS.png");
     static final ImageIcon CARD_KS = createImageIcon("card_images/KS.png");

@@ -14,6 +14,27 @@ public class BlackjackController {
     }
 
     /**
+     * Executes the Play Use Case.
+     */
+    public void play() {
+        blackjackInteractor.play();
+    }
+
+    /**
+     * Executes the Hit Use Case.
+     */
+    public void hit() {
+        blackjackInteractor.hit();
+    }
+
+    /**
+     * Executes the Hold Use Case.
+     */
+    public void hold() {
+        blackjackInteractor.hold();
+    }
+
+    /**
      * Executes the Exit Use Case which sends viewManager back to GameLibraryView.
      */
     public void switchToGameLibraryView() {

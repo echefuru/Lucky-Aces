@@ -6,11 +6,13 @@ package use_case.game_start;
 public interface GameStartOutputBoundary {
     /**
      * Prepares the success view for the select game use case.
+     * @param gameStartOutputData the output data of the use case
      */
-    void prepareSuccessView();
+    void prepareSuccessView(GameStartOutputData gameStartOutputData);
 
     /**
      * Prepares the failure view for the select game use case.
+     * @param errorMessage the error message for the failed use case
      */
-    void prepareFailView();
+    void prepareFailView(String errorMessage);
 }

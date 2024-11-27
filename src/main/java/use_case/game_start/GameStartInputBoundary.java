@@ -5,7 +5,8 @@ package use_case.game_start;
  */
 public interface GameStartInputBoundary {
     /**
-     * Executes the select game use case.
+     * Executes the Game Start Use Case.
+     * @param gameStartInputData the input data for this use case
      */
-    void execute();
+    void execute(GameStartInputData gameStartInputData);
 }

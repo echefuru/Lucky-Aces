@@ -36,9 +36,6 @@ public class GameSetupView extends JPanel implements PropertyChangeListener {
     private GameStartController gameStartController;
     private GameSetConfigController gameSetConfigController;
 
-    private String selectedGame;
-    private String rules;
-
     private final JLabel gameName;
     private final JLabel gameDescription;
 
@@ -98,6 +95,9 @@ public class GameSetupView extends JPanel implements PropertyChangeListener {
         gameRules.addActionListener(
                 evt -> {
                     if (evt.getSource().equals(gameRules)) {
+                        final GameSetupState state = gameSetupViewModel.getState();
+                        final String rules = state.getGameRules();
+
                         // Show the game rules through a pop-up window.
                         JOptionPane.showMessageDialog(null, rules, gameName.getText() + " Rules",
                                 JOptionPane.PLAIN_MESSAGE);
@@ -114,6 +114,18 @@ public class GameSetupView extends JPanel implements PropertyChangeListener {
                         // Show the config screen through a pop-up window.
                         showConfigPanel(gameConfig);
                         gameSetConfigController.execute(gameConfig);
+                    }
+                }
+        );
+
+        play.addActionListener(
+                evt -> {
+                    if (evt.getSource().equals(play)) {
+                        final GameSetupState state = gameSetupViewModel.getState();
+                        final String selectedGame = state.getSelectedGame();
+                        final JSONObject gameConfig = state.getGameConfig();
+
+                        gameStartController.execute(selectedGame, gameConfig);
                     }
                 }
         );
@@ -180,8 +192,6 @@ public class GameSetupView extends JPanel implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("state")) {
             final GameSetupState state = (GameSetupState) evt.getNewValue();
-            selectedGame = state.getSelectedGame();
-            rules = state.getGameRules();
             gameName.setText(state.getGameName());
             gameDescription.setText("<html>" + state.getGameDescription() + "</html>");
         }

@@ -22,7 +22,7 @@ public class GameSetConfigPresenter implements GameSetConfigOutputBoundary {
 
     @Override
     public void prepareFailView(String errorMessage) {
-        // It shouldn't be possible for this Use Case to fail at this point
+        // It shouldn't be possible for this Use Case to fail
         System.out.println(errorMessage);
     }
 }

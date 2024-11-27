@@ -24,6 +24,7 @@ import interface_adapter.game_setup.GameSetConfigPresenter;
 import interface_adapter.game_setup.GameSetupViewModel;
 import interface_adapter.game_setup.GameStartController;
 import interface_adapter.game_setup.GameStartPresenter;
+import interface_adapter.game_view.BlackjackViewModel;
 import use_case.game_filter.GameFilterInputBoundary;
 import use_case.game_filter.GameFilterInteractor;
 import use_case.game_filter.GameFilterOutputBoundary;
@@ -72,6 +73,7 @@ public class AppBuilder {
     private GameLibraryViewModel gameLibraryViewModel;
     private GameSetupView gameSetupView;
     private GameSetupViewModel gameSetupViewModel;
+    private BlackjackViewModel blackjackViewModel;
 
     public AppBuilder() {
         mainPanel.setLayout(mainLayout);
@@ -167,7 +169,7 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addGameStartUseCase() {
-        final GameStartOutputBoundary gameSetupPresenter = new GameStartPresenter();
+        final GameStartOutputBoundary gameSetupPresenter = new GameStartPresenter(viewManagerModel, blackjackViewModel);
         final GameStartInputBoundary gameSetupInteractor = new GameStartInteractor(gameSetupPresenter);
         final GameStartController gameStartController = new GameStartController(gameSetupInteractor);
 

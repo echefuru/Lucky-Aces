@@ -11,12 +11,11 @@ import entity.player.Player;
 public interface RoomFactory {
     /**
      * Creates a new game room.
-     * @param roomName the name of the room
-     * @param gameName the name of the game of the room
+     * @param type the type of the game of the room
      * @param curPlayers the current Players in the room
      * @return the new room
      * @throws IOException for failed call to the method
      */
-    Room createRoom(String roomName, String gameName, List<Player> curPlayers) throws IOException;
+    Room createRoom(String type, List<Player> curPlayers) throws IOException;
 
 }

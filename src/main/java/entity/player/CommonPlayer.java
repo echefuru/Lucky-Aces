@@ -16,7 +16,7 @@ public class CommonPlayer implements Player {
 
     public CommonPlayer(String playerID) {
         this.playerID = playerID;
-        this.cards = new ArrayList<Card>();
+        this.cards = new ArrayList<>();
         this.bankroll = PlayerConstants.INITIAL_BANKROLL;
     }
 

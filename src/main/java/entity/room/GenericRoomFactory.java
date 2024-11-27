@@ -11,10 +11,10 @@ import entity.player.Player;
 public class GenericRoomFactory implements RoomFactory {
 
     @Override
-    public Room createRoom(String roomName, String gameName, List<Player> curPlayers) throws IOException {
-        switch (gameName) {
+    public Room createRoom(String type, List<Player> curPlayers) throws IOException {
+        switch (type) {
             case "blackjack":
-                return new BlackjackRoom(roomName, gameName, curPlayers);
+                return new BlackjackRoom(curPlayers);
             default:
                 throw new IllegalArgumentException("Invalid game name, try again!");
         }

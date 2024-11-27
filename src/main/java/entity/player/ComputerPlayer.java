@@ -18,7 +18,7 @@ public class ComputerPlayer implements Player {
     public ComputerPlayer(String playerID) {
         this.playerID = playerID;
         this.difficulty = 1;
-        this.cards = new ArrayList<Card>();
+        this.cards = new ArrayList<>();
         this.bankroll = PlayerConstants.INITIAL_BANKROLL;
     }
 

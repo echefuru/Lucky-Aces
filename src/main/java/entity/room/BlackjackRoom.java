@@ -11,19 +11,13 @@ import entity.player.Player;
  */
 public class BlackjackRoom implements Room {
 
-    private final String roomName;
-    private final String gameName;
     private List<Player> curPlayers;
     private String curTurnPlayer;
-    // private String status;
     private Deck deck;
 
-    public BlackjackRoom(String roomName, String gameName, List<Player> curPlayers) throws IOException {
-        this.roomName = roomName;
-        this.gameName = gameName;
+    public BlackjackRoom(List<Player> curPlayers) throws IOException {
         this.curPlayers = curPlayers;
         this.curTurnPlayer = curPlayers.get(0).getPlayerID();
-        // this.status = "Initializing";
     }
 
     @Override

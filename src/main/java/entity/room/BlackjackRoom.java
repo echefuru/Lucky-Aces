@@ -3,10 +3,8 @@ package entity.room;
 import java.io.IOException;
 import java.util.List;
 
-import data_access.ApiDataAccess;
 import entity.Deck;
 import entity.player.Player;
-import use_case.ApiDataAccessInterface;
 
 /**
  * A Blackjack-implementation of the Room interface.
@@ -27,8 +25,6 @@ public class BlackjackRoom implements Room {
         this.curPlayers = curPlayers;
         this.curTurnPlayer = curPlayers.get(0).getPlayerID();
         this.status = "Initializing";
-        final ApiDataAccessInterface apiDataAccessInterface = new ApiDataAccess();
-        this.deck = apiDataAccessInterface.createDeck();
     }
 
     @Override
@@ -44,6 +40,10 @@ public class BlackjackRoom implements Room {
     @Override
     public String getName() {
         return this.roomName;
+    }
+
+    public void setDeck(Deck deck) {
+        this.deck = deck;
     }
 
     // TODO: need to get Bankroll to make a bet each round. Fix this.

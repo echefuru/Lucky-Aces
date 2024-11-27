@@ -13,7 +13,7 @@ public class CommonPlayer implements Player {
     private final String playerID;
     private List<Card> cards;
 
-    public CommonPlayer(String playerID, String password) {
+    public CommonPlayer(String playerID) {
         this.playerID = playerID;
         this.cards = new ArrayList<Card>();
     }

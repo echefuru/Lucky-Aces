@@ -6,7 +6,7 @@ import java.util.List;
 import entity.player.Player;
 
 /**
- * Factory for creating Blackjack rooms.
+ * Factory for creating game rooms based on the gameName given.
  */
 public class GenericRoomFactory implements RoomFactory {
 

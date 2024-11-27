@@ -12,11 +12,11 @@ public class ComputerPlayer implements Player {
 
     private final String playerID;
     private List<Card> cards;
-    private String difficulty;
+    private int difficulty;
 
     public ComputerPlayer(String playerID) {
         this.playerID = playerID;
-        this.difficulty = "Easy";
+        this.difficulty = 1;
         this.cards = new ArrayList<Card>();
     }
 
@@ -30,7 +30,7 @@ public class ComputerPlayer implements Player {
         return cards;
     }
 
-    public String getDifficulty() {
+    public int getDifficulty() {
         return difficulty;
     }
 
@@ -38,7 +38,7 @@ public class ComputerPlayer implements Player {
         this.cards = cards;
     }
 
-    public void setDifficulty(String difficulty) {
+    public void setDifficulty(int difficulty) {
         this.difficulty = difficulty;
     }
 }

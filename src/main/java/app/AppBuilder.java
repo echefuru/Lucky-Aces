@@ -19,9 +19,12 @@ import interface_adapter.game_library_select.GameSearchController;
 import interface_adapter.game_library_select.GameSearchPresenter;
 import interface_adapter.game_library_select.GameSelectController;
 import interface_adapter.game_library_select.GameSelectPresenter;
-import interface_adapter.game_setup.GameSetupController;
-import interface_adapter.game_setup.GameSetupPresenter;
+import interface_adapter.game_setup.GameSetConfigController;
+import interface_adapter.game_setup.GameSetConfigPresenter;
 import interface_adapter.game_setup.GameSetupViewModel;
+import interface_adapter.game_setup.GameStartController;
+import interface_adapter.game_setup.GameStartPresenter;
+import interface_adapter.game_view.BlackjackViewModel;
 import use_case.game_filter.GameFilterInputBoundary;
 import use_case.game_filter.GameFilterInteractor;
 import use_case.game_filter.GameFilterOutputBoundary;
@@ -34,9 +37,12 @@ import use_case.game_search.GameSearchOutputBoundary;
 import use_case.game_select.GameSelectInputBoundary;
 import use_case.game_select.GameSelectInteractor;
 import use_case.game_select.GameSelectOutputBoundary;
-import use_case.game_setup.GameSetupInputBoundary;
-import use_case.game_setup.GameSetupInteractor;
-import use_case.game_setup.GameSetupOutputBoundary;
+import use_case.game_set_config.GameSetConfigInputBoundary;
+import use_case.game_set_config.GameSetConfigInteractor;
+import use_case.game_set_config.GameSetConfigOutputBoundary;
+import use_case.game_start.GameStartInputBoundary;
+import use_case.game_start.GameStartInteractor;
+import use_case.game_start.GameStartOutputBoundary;
 import view.GameLibraryView;
 import view.GameSetupView;
 import view.ViewManager;
@@ -67,6 +73,7 @@ public class AppBuilder {
     private GameLibraryViewModel gameLibraryViewModel;
     private GameSetupView gameSetupView;
     private GameSetupViewModel gameSetupViewModel;
+    private BlackjackViewModel blackjackViewModel;
 
     public AppBuilder() {
         mainPanel.setLayout(mainLayout);
@@ -89,7 +96,7 @@ public class AppBuilder {
      */
     public AppBuilder addGameSetupView() {
         gameSetupViewModel = new GameSetupViewModel();
-        gameSetupView = new GameSetupView(gameSetupViewModel);
+        gameSetupView = new GameSetupView(gameSetupViewModel, gameLibraryViewModel, viewManagerModel);
         mainPanel.add(gameSetupView, gameSetupView.getViewName());
         return this;
     }
@@ -158,16 +165,29 @@ public class AppBuilder {
     }
 
     /**
-     * Adds the Game Setup Use Case to the application.
+     * Adds the Game Start Use Case to the application.
      * @return this builder
      */
-    public AppBuilder addGameSetupUseCase() {
-        final GameSetupOutputBoundary gameSetupPresenter = new GameSetupPresenter(viewManagerModel,
-                gameLibraryViewModel);
-        final GameSetupInputBoundary gameSetupInteractor = new GameSetupInteractor(gameSetupPresenter);
-        final GameSetupController gameSetupController = new GameSetupController(gameSetupInteractor);
+    public AppBuilder addGameStartUseCase() {
+        final GameStartOutputBoundary gameSetupPresenter = new GameStartPresenter(viewManagerModel, blackjackViewModel);
+        final GameStartInputBoundary gameSetupInteractor = new GameStartInteractor(gameSetupPresenter);
+        final GameStartController gameStartController = new GameStartController(gameSetupInteractor);
 
-        gameSetupView.setGameSetupController(gameSetupController);
+        gameSetupView.setGameStartController(gameStartController);
+
+        return this;
+    }
+
+    /**
+     * Adds tue Set Config Use Case to the application.
+     * @return this builder
+     */
+    public AppBuilder addGameSetConfigUseCase() {
+        final GameSetConfigOutputBoundary gameSetConfigPresenter = new GameSetConfigPresenter(gameSetupViewModel);
+        final GameSetConfigInputBoundary gameSetConfigInteractor = new GameSetConfigInteractor(gameSetConfigPresenter);
+        final GameSetConfigController gameSetConfigController = new GameSetConfigController(gameSetConfigInteractor);
+
+        gameSetupView.setGameSetConfigController(gameSetConfigController);
 
         return this;
     }

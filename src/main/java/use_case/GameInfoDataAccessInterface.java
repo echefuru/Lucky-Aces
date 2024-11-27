@@ -1,6 +1,7 @@
 package use_case;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  * Data access for the game library use case.
@@ -61,4 +62,11 @@ public interface GameInfoDataAccessInterface {
      * @return the min_players of the given game in the program.
      */
     int getMinPlayer(String game);
+
+    /**
+     * Return the default configs of the given game in the program.
+     * @param game id of the game
+     * @return the default configs of the given game in the program.
+     */
+    JSONObject getDefaultConfig(String game);
 }

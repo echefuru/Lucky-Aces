@@ -17,6 +17,8 @@ public class RoomDataAccessObject implements SetDifficultyDataAccessInterface {
         if (room.getName().equals(roomName)) {
             return room.getPlayers();
         }
-        return null;
+        else {
+            throw new IllegalArgumentException("Room does not exist, try another room name!");
+        }
     }
 }

@@ -55,5 +55,17 @@ After submitting your feedback, we will review the feedback as soon as we can. I
 We hope you understand that we highly appreciate all feedback even if we do not reach out to you, thank you.
 * * *
 ## Contributions
-Feel free to contribute by submitting pull requests!
-* * *
+Feel free to contribute by submitting pull requests!<br><br>
+To contribute to the project, you can make a fork of the project by clicking on the `Fork` button beside the project title, then you can choose whether to only copy the `main` branch, then click `Create fork`. You will be guided to your own fork of the project.<br>
+Now, create your branch. You can make any modifications to your branch as you like.<br>
+Now, commit and push your changes (Make sure to write good commit messages).<br>
+To merge your changes back into our project, open a pull request! A good pull request should have clear and accurate descriptions.<br>
+Please include:<br>
+- A clear and concise title summarizing the purpose of the pull request;
+- A brief explanation of why the change is needed (what the problem is and why it needs to be addressed);
+- A enough-detailed (the reviewer needs to understand your code!) description of what changes were made;
+- And anything else you feel necessary (references, potential follow-ups, etc.)
+<br>
+We will review the pull requests as soon as we can. We highly value all contributions so we will review all pull requests seriously and rigorously. We will only approve the pull requests if our current tests all pass and the new feature or correction is necessary.<br><br>
+Please keep in mind that if there's any code we do not understand in the pull request, we might comment on the file and request changes.
+

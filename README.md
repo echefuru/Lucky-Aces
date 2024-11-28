@@ -29,14 +29,17 @@ The user of the program can:
 * * *
 ## Installation
 1. Fork this repository.
-2. Have an IDE supporting Java on your device such as IntelliJ. (To download IntelliJ: [click here](https://lp.jetbrains.com/intellij-idea-promo/?source=google&medium=cpc&campaign=AMER_en_CA_IDEA_Branded&term=intellij&content=693349187730&gad_source=1&gclid=Cj0KCQiAo5u6BhDJARIsAAVoDWsAhoQVNoxj6LAKjHbgIZxUr9uMpekHwcGG5XBbK1UbpsFxBS_7UGkaAjsLEALw_wcB))
-3. clone it to your Java IDE, and then run the Main.java class!
+2. Have an IDE supporting Java on your device such as IntelliJ. (To download IntelliJ: [click here](https://lp.jetbrains.com/intellij-idea-promo/?source=google&medium=cpc&campaign=AMER_en_CA_IDEA_Branded&term=intellij&content=693349187730&gad_source=1&gclid=Cj0KCQiAo5u6BhDJARIsAAVoDWsAhoQVNoxj6LAKjHbgIZxUr9uMpekHwcGG5XBbK1UbpsFxBS_7UGkaAjsLEALw_wcB) To get started with IntelliJ: [click here](https://www.jetbrains.com/help/idea/getting-started.html))
+3. Have an up-to-date Java running on your device. (Any version 22,23 Find your operating system [here](https://www.java.com/en/download/manual.jsp), and select one to download.
+4. Clone the repository to your Java IDE.
+5. Run the Main.java class!
 * * *
 ## Usage
 * * *
 ## License
 * * *
 ## Feedback
+Feedback is always welcomed! You can give us a feed back [here](https://forms.gle/j6YgxbqzXkKH9xN17)
 * * *
 ## Contributions
 

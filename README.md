@@ -1,5 +1,6 @@
-# Group 147 (Lucky-Aces)——Card Game (Blackjack)
 <a id="readme-top"></a>
+# Group 147 (Lucky-Aces)——Card Game (Blackjack)
+
 ## Group Members (Authors)
 
 - **Amber Mantong Liu: [AmberMLiu](https://github.com/AmberMLiu)**

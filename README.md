@@ -28,26 +28,36 @@ The user of the program can:
 - Play the game!
 * * *
 ## Installation
-1. Fork this repository.
-2. Have a cross-platform IDE supporting Java on your device such as IntelliJ.<br>
+1. Fork this repository (For detailed instructions on forking a directory, see the [Contributions](#Contributions) part.
+2. Have a cross-platform IDE supporting Java on your device such as IntelliJ (The latest version would be the best choice).<br>
 - - To download IntelliJ: [click here for all operating systems](https://www.jetbrains.com/idea/download/?section=windows) <br>
+- - Guide:
+  -  ![image](https://github.com/user-attachments/assets/513b2a3e-3ae6-41e2-b994-70775d388379)
 - - To get started with IntelliJ: [click here](https://www.jetbrains.com/help/idea/getting-started.html)
 3. Have an up-to-date Java (Java 22 or 23 as of 2024/11/27) running on your device.
-- - Find your operating system [here](https://www.java.com/en/download/manual.jsp), and select one to download.
+- - [Click here for all operating systems](https://www.java.com/en/download/manual.jsp).
+  - If you have any questions about downloading Java, look at the information provided (![image](https://github.com/user-attachments/assets/e36046ff-b927-4b93-8ff7-6b907c5a84d6)) on the Java website.
 4. Clone the repository to your Java IDE.
-- - Take IntelliJ for example, copy the URL by clicking on the green `Code` button above the files in GitHub. Then open IntelliJ, select `Clone Repository`, past the URL, and click `Clone`.
-5. You can now run `Main.main()` under `src`->`main`->`java`->`app`->`Main.java`.
+- - Take IntelliJ for example, copy the URL by clicking on the green `Code` button (![image](https://github.com/user-attachments/assets/15d7a118-012b-4488-bd03-86d07bd5a933)) above the files in GitHub. Then open IntelliJ, select `Clone Repository`, past the URL, and click `Clone`.
+  - Guide:
+  - ![image](https://github.com/user-attachments/assets/93a52c9c-1175-4e9a-a7e2-f09fcb73ef2c)
+5. Open `Main.main()` under `src`->`main`->`java`->`app`->`Main.java`.
+6. Import any packages popping up on the right corners.
+7. You can now run `Main.main()` by clicking on the green triangle ![image](https://github.com/user-attachments/assets/5632a8a1-a170-425b-b881-ea45d24e36ef).
 
-Common problems encountered when trying to run `Main.main()`:
+### Common problems encountered when trying to run `Main.main()`:
 - You need to use `maven` to load the project:
 - - `Lucky-Aces`->`pom.xml` right click-> `Add as Maven Project` or `Maven`->`Reload project`
 - You need to mark the `java` folder as the Sources root:
 - - `src`->`main`->`java` right click->`Mark Directory as`->`Sources Root`
+  - After you have successfully marked `java` as the Sources root, the folder icon will turn blue like this.
+  - ![image](https://github.com/user-attachments/assets/5d4f8c7c-6152-42dd-9121-48488765ab0f)
+
 * * *
 ## Usage
 * * *
 ## License
-This project is licensed under the CC0-1.0 license.
+This project is licensed under the CC0-1.0 license.<br>
 See the [LICENSE](./LICENSE) file for more details.
 * * *
 ## Feedback
@@ -68,15 +78,19 @@ We hope you understand that we highly appreciate all feedback even if we do not 
 * * *
 ## Contributions
 Feel free to contribute by submitting pull requests!<br><br>
-To contribute to the project, you can make a fork of the project by clicking on the `Fork` button beside the project title, then you can choose whether to only copy the `main` branch, then click `Create fork`. You will be guided to your fork of the project.<br>
-Now, create your branch, where you can modify it as you like.<br>
-Now, commit and push your changes (Make sure to write good commit messages).<br>
-To merge your changes back into our project, open a pull request! A good pull request should have clear and accurate descriptions.<br>
-Please include:<br>
-- A clear and concise title summarizing the purpose of the pull request;
-- A brief explanation of why the change is needed (what the problem is and why it needs to be addressed);
-- A enough-detailed (the reviewer needs to understand your code!) description of what changes were made;
-- And anything else you feel necessary (references, potential follow-ups, etc.)
+- To contribute to the project, you can make a fork of the project by clicking on the `Fork` button beside the project title on GitHub.
+- - Guide:
+- - ![image](https://github.com/user-attachments/assets/fb3b93fa-ed60-46ff-bc61-add4a7c899ea) <br>
+- You can choose whether to only copy the `main` branch, then click `Create fork`. You will be guided to your fork of the project.<br>
+- Now, create your branch, where you can modify it as you like.<br>
+- Now, commit and push your changes (Make sure to write good commit messages).<br>
+- To merge your changes back into our project, open a pull request!<br><br>
+A good pull request should have clear and accurate descriptions.<br>
+- Please include:<br>
+- - A clear and concise title summarizing the purpose of the pull request;
+- - A brief explanation of why the change is needed (what the problem is and why it needs to be addressed);
+- - A enough-detailed (the reviewer needs to understand your code!) description of what changes were made;
+- - And anything else you feel necessary (references, potential follow-ups, etc.)
 <br>
 We will review the pull requests as soon as we can. We highly value all contributions, thus we will review all pull requests seriously and rigorously. We will only approve the pull requests if our current tests all pass and the new feature or correction is necessary.<br><br>
 Please keep in mind that if there's any code we do not understand in the pull request, we might comment on the file and request changes.

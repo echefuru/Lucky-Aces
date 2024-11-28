@@ -1,5 +1,6 @@
 package entity.room;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import entity.Card;
@@ -18,10 +19,12 @@ public class BlackjackRoom extends AbstractRoom {
         this.setDeck(deck);
     }
 
+    @Override
     public int getPlayerTotal() {
         return handValue(getPlayerCards());
     }
 
+    @Override
     public int getDealerTotal() {
         return handValue(getDealerCards());
     }

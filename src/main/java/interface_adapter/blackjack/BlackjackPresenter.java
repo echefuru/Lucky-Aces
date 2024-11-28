@@ -31,6 +31,17 @@ public class BlackjackPresenter implements BlackjackOutputBoundary {
     }
 
     @Override
+    public void prepare21View(BlackjackOutputData blackjackOutputData) {
+        final BlackjackState state = blackjackViewModel.getState();
+        state.setPlayerCards(blackjackOutputData.getPlayerCards());
+        state.setPlayerTotal(blackjackOutputData.getPlayerTotal());
+        state.setDealerCards(blackjackOutputData.getDealerCards());
+        state.setStage("21");
+        this.blackjackViewModel.setState(state);
+        blackjackViewModel.firePropertyChanged();
+    }
+
+    @Override
     public void prepareWinView(BlackjackOutputData blackjackOutputData) {
         final BlackjackState state = blackjackViewModel.getState();
         state.setPlayerCards(blackjackOutputData.getPlayerCards());
@@ -84,7 +95,7 @@ public class BlackjackPresenter implements BlackjackOutputBoundary {
         blackjackViewModel.firePropertyChanged();
     }
 
-    // TODO: This might have to reset the blackjackViewModel and the DAO?
+    // TODO: Interactor reset the Room in DAO, this resets the blackjackViewModel, we need an INIT STAGE.
     @Override
     public void switchToGameLibraryView() {
         viewManagerModel.setState(gameLibraryViewModel.getViewName());

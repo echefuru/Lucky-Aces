@@ -19,6 +19,7 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
 
     private static final int GENERAL_HEIGHT = 50;
     private static final int CARDS_HEIGHT = 270;
+    private static final int TWENTY_ONE = 21;
 
     private final String viewName;
 
@@ -101,6 +102,11 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
             case "play":
                 clearCardUi();
                 paintPlayUi(state.getPlayerCards(), state.getPlayerTotal(), state.getDealerCards());
+                break;
+            case "21":
+                clearCardUi();
+                paintPlayUi(state.getPlayerCards(), state.getPlayerTotal(), state.getDealerCards());
+                blackjackController.hold();
                 break;
             case "win":
             case "draw":
@@ -185,12 +191,14 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
             playerPanel.add(playerCard);
         }
 
-        buttons.removeAll();
-        buttons.revalidate();
-        buttons.repaint();
-        buttons.add(hit);
-        buttons.add(hold);
-        buttons.add(exit);
+        if (playerTotal < TWENTY_ONE) {
+            buttons.removeAll();
+            buttons.revalidate();
+            buttons.repaint();
+            buttons.add(hit);
+            buttons.add(hold);
+            buttons.add(exit);
+        }
     }
 
     private void paintEndUi(List<String> playerCards, List<String> dealerCards, int wins, int losses, String stage) {

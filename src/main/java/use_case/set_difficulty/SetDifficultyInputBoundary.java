@@ -5,10 +5,10 @@ package use_case.set_difficulty;
  */
 public interface SetDifficultyInputBoundary {
 
-    /**
-     * Executes the set difficulty use case.
-     * @param setDifficultyInputData the input data.
-     */
-    void execute(SetDifficultyInputData setDifficultyInputData);
+//    /**
+//     * Executes the set difficulty use case.
+//     * @param setDifficultyInputData the input data.
+//     */
+//    void execute(SetDifficultyInputData setDifficultyInputData);
 
 }

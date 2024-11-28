@@ -7,9 +7,8 @@ import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
 import data_access.ApiDataAccessObject;
+import data_access.BlackjackRoomDataAccessObject;
 import data_access.GameInfoDataAccessObject;
-import entity.player.GenericPlayerFactory;
-import entity.player.PlayerFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.game_library_select.GameFilterController;
 import interface_adapter.game_library_select.GameFilterPresenter;
@@ -69,13 +68,14 @@ public class AppBuilder {
     private final JPanel mainPanel = new JPanel();
     private final CardLayout mainLayout = new CardLayout();
     // thought question: is the hard dependency below a problem?
-    private final PlayerFactory playerFactory = new GenericPlayerFactory();
+    // private final PlayerFactory playerFactory = new GenericPlayerFactory();
     private final ViewManagerModel viewManagerModel = new ViewManagerModel();
     private final ViewManager viewManager = new ViewManager(mainPanel, mainLayout, viewManagerModel);
 
     // thought question: is the hard dependency below a problem?
     private final GameInfoDataAccessObject gameInfoDataAccessObject = new GameInfoDataAccessObject("game_info.json");
     private final ApiDataAccessObject apiDataAccessObject = new ApiDataAccessObject();
+    private final BlackjackRoomDataAccessObject blackjackRoomDataAccessObject = new BlackjackRoomDataAccessObject();
 
     private GameLibraryView gameLibraryView;
     private GameLibraryViewModel gameLibraryViewModel;
@@ -219,7 +219,8 @@ public class AppBuilder {
     public AppBuilder addBlackjackUseCase() {
         final BlackjackOutputBoundary blackjackPresenter = new BlackjackPresenter(viewManagerModel, blackjackViewModel,
                 gameLibraryViewModel);
-        final BlackjackInputBoundary blackjackInteractor = new BlackjackInteractor(apiDataAccessObject, blackjackPresenter);
+        final BlackjackInputBoundary blackjackInteractor = new BlackjackInteractor(apiDataAccessObject,
+                blackjackRoomDataAccessObject, blackjackPresenter);
         final BlackjackController blackjackController = new BlackjackController(blackjackInteractor);
 
         blackjackView.setBlackjackController(blackjackController);

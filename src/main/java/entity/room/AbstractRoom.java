@@ -12,8 +12,8 @@ import java.util.List;
 abstract class AbstractRoom {
 
     private Deck deck;
-    private List<Card> playerCards;
-    private List<Card> dealerCards;
+    private List<Card> playerCards = new ArrayList<Card>();
+    private List<Card> dealerCards = new ArrayList<Card>();
 
     public void playerDraw(List<Card> cards) {
         playerCards.addAll(cards);
@@ -62,4 +62,16 @@ abstract class AbstractRoom {
     public void setDealerCards(List<Card> dealerCards) {
         this.dealerCards = dealerCards;
     }
+
+    /**
+     * The total value of the player's cards.
+     * @return total value of player's cards.
+     */
+    abstract int getPlayerTotal();
+
+    /**
+     * The total value of the dealer's cards.
+     * @return total value of dealer's cards.
+     */
+    abstract int getDealerTotal();
 }

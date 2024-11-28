@@ -4,6 +4,7 @@ import entity.Card;
 import entity.Deck;
 import entity.Rank;
 import use_case.ApiDataAccessInterface;
+import use_case.BlackjackRoomDataAccessInterface;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,46 +15,44 @@ import java.util.List;
 public class BlackjackInteractor implements BlackjackInputBoundary {
 
     private static final int NUM_DECKS = 6;
+    private static final int TWENTY_ONE = 21;
+    private static final int DEALER_THRESHOLD = 17;
 
-    private final ApiDataAccessInterface apiDataAccessObject;
+    private final ApiDataAccessInterface apiDao;
+    private final BlackjackRoomDataAccessInterface blackjackRoomDao;
     private final BlackjackOutputBoundary blackjackPresenter;
-    private Deck deck;
-    private List<Card> playerCards;
-    private List<Card> dealerCards;
-    private int playerTotal;
-    private int dealerTotal;
 
     public BlackjackInteractor(ApiDataAccessInterface apiDataAccessObject,
+                               BlackjackRoomDataAccessInterface blackjackRoomDataAccessObject,
                                BlackjackOutputBoundary blackjackOutputBoundary) {
-        this.apiDataAccessObject = apiDataAccessObject;
+        this.apiDao = apiDataAccessObject;
+        this.blackjackRoomDao = blackjackRoomDataAccessObject;
         this.blackjackPresenter = blackjackOutputBoundary;
     }
 
     @Override
     public void play() {
-        deck = apiDataAccessObject.createDeck(NUM_DECKS);
-        playerCards = apiDataAccessObject.draw(deck, 2);
-        dealerCards = apiDataAccessObject.draw(deck, 1);
+        // TODO: Entity and DAO impl below
+        // Create the new BlackjackRoom
+        blackjackRoomDao.createRoom(apiDao.createDeck(NUM_DECKS));
 
-        // TODO: Check for instant 21 and check aces behind that.
-        playerTotal = handValue(playerCards);
+        // Draw the initial 2 player and 1 dealer cards.
+        blackjackRoomDao.getRoom().playerDraw(apiDao.draw(blackjackRoomDao.getRoom().getDeck(), 2));
+        blackjackRoomDao.getRoom().dealerDraw(apiDao.draw(blackjackRoomDao.getRoom().getDeck(), 1));
 
         // Cards to Strings for output.
-        final List<String> playerCardStrings = new ArrayList<String>(playerCards.size());
-        for (Card card : playerCards) {
-            playerCardStrings.add(card.toString());
-        }
-        final List<String> dealerCardStrings = new ArrayList<String>(dealerCards.size());
-        for (Card card : dealerCards) {
-            dealerCardStrings.add(card.toString());
-        }
-        final BlackjackOutputData blackjackOutputData = new BlackjackOutputData(playerCardStrings, playerTotal,
-                dealerCardStrings);
+        final List<String> playerStrings = blackjackRoomDao.getRoom().playerStrings();
+        final List<String> dealerStrings = blackjackRoomDao.getRoom().dealerStrings();
+        final int playerTotal = blackjackRoomDao.getRoom().getPlayerTotal();
+        final BlackjackOutputData blackjackOutputData = new BlackjackOutputData(playerStrings, playerTotal,
+                dealerStrings);
 
         // Stage set based on immediate 21 or not.
-        if (playerTotal == 21) {
+        if (playerTotal == TWENTY_ONE) {
             // If player has 21 immediately, they hold by definition.
-            hold();
+            blackjackPresenter.prepare21View(blackjackOutputData);
+            // TODO: Remove after testing.
+            System.out.println("Instant 21.");
         }
         else {
             // If player has less than 21, they get chance to hit.
@@ -63,53 +62,48 @@ public class BlackjackInteractor implements BlackjackInputBoundary {
 
     @Override
     public void hit() {
-        playerCards.add(apiDataAccessObject.draw(deck, 1).get(0));
+        // TODO: Entity and DAO impl below!
+        // Player draws card.
+        blackjackRoomDao.getRoom().playerDraw(apiDao.draw(blackjackRoomDao.getRoom().getDeck(), 1));
 
-        playerTotal = handValue(playerCards);
+        // Cards to Strings for output.
+        final List<String> playerStrings = blackjackRoomDao.getRoom().playerStrings();
+        final List<String> dealerStrings = blackjackRoomDao.getRoom().dealerStrings();
+        final int playerTotal = blackjackRoomDao.getRoom().getPlayerTotal();
+        final BlackjackOutputData blackjackOutputData = new BlackjackOutputData(playerStrings, playerTotal,
+                dealerStrings);
 
-        final List<String> playerCardStrings = new ArrayList<String>(playerCards.size());
-        for (Card card : playerCards) {
-            playerCardStrings.add(card.toString());
+        // Stage set based on player hand value.
+        if (playerTotal == TWENTY_ONE) {
+            blackjackPresenter.prepare21View(blackjackOutputData);
         }
-        final List<String> dealerCardStrings = new ArrayList<String>(dealerCards.size());
-        for (Card card : dealerCards) {
-            dealerCardStrings.add(card.toString());
-        }
-        final BlackjackOutputData blackjackOutputData = new BlackjackOutputData(playerCardStrings, playerTotal,
-                dealerCardStrings);
-
-        if (playerTotal == 21) {
-            hold();
-        }
-        else if (playerTotal < 21) {
-            // If player has less than 21, they get chance to hit.
+        else if (playerTotal < TWENTY_ONE) {
+            // If player has less than 21, they get chance to hit again.
             blackjackPresenter.preparePlayView(blackjackOutputData);
         }
         else {
-            // If player has more than 21, they lose.
+            // If player has more than 21, they bust.
             blackjackPresenter.prepareBustView(blackjackOutputData);
         }
     }
 
     @Override
     public void hold() {
+        // TODO: Entity and DAO impl below!
+        // Dealer draws cards.
         do {
-            dealerCards.add(apiDataAccessObject.draw(deck, 1).get(0));
-            dealerTotal = handValue(dealerCards);
-        } while (dealerTotal < 17);
+            blackjackRoomDao.getRoom().dealerDraw(apiDao.draw(blackjackRoomDao.getRoom().getDeck(), 1));
+        } while (blackjackRoomDao.getRoom().getDealerTotal() < DEALER_THRESHOLD);
 
-        final List<String> playerCardStrings = new ArrayList<String>(playerCards.size());
-        for (Card card : playerCards) {
-            playerCardStrings.add(card.toString());
-        }
-        final List<String> dealerCardStrings = new ArrayList<String>(dealerCards.size());
-        for (Card card : dealerCards) {
-            dealerCardStrings.add(card.toString());
-        }
-        final BlackjackOutputData blackjackOutputData = new BlackjackOutputData(playerCardStrings, playerTotal,
-                dealerCardStrings);
+        // Cards to Strings for output.
+        final List<String> playerStrings = blackjackRoomDao.getRoom().playerStrings();
+        final List<String> dealerStrings = blackjackRoomDao.getRoom().dealerStrings();
+        final int playerTotal = blackjackRoomDao.getRoom().getPlayerTotal();
+        final int dealerTotal = blackjackRoomDao.getRoom().getDealerTotal();
+        final BlackjackOutputData blackjackOutputData = new BlackjackOutputData(playerStrings,
+                playerTotal, dealerStrings);
 
-        if (dealerTotal > 21 || dealerTotal < playerTotal) {
+        if (dealerTotal > TWENTY_ONE || dealerTotal < playerTotal) {
             // If dealer busts or has less than player, you win.
             blackjackPresenter.prepareWinView(blackjackOutputData);
         }
@@ -123,41 +117,14 @@ public class BlackjackInteractor implements BlackjackInputBoundary {
 
     @Override
     public void playAgain() {
-        // TODO: nullifying objects will move to entities.
-        deck = null;
-        playerCards = null;
-        dealerCards = null;
-        playerTotal = 0;
-
+        // TODO: nullifying objects moved to entity.
+        blackjackRoomDao.resetRoom();
         blackjackPresenter.preparePlayAgainView();
     }
 
     @Override
     public void switchToGameLibraryView() {
+        blackjackRoomDao.resetRoom();
         blackjackPresenter.switchToGameLibraryView();
-    }
-
-    // TODO: Private helpers, move these to some Entity.
-    private int handValue(List<Card> cards) {
-        int value = 0;
-        for (Card card : cards) {
-            value += card.getRank().getRankValue();
-        }
-        if (hasAce(cards) && value < 12) {
-            value += 10;
-        }
-        return value;
-    }
-
-    // TODO: Private helpers, move these to some Entity.
-    private boolean hasAce(List<Card> cards) {
-        boolean hasAce = false;
-        for (Card card : cards) {
-            if (card.getRank() == Rank.ACE) {
-                hasAce = true;
-                break;
-            }
-        }
-        return hasAce;
     }
 }

@@ -22,6 +22,6 @@ public class SetDifficultyController {
     public void execute(String newDifficulty, String playerID, String roomName) {
         final SetDifficultyInputData setDifficultyInputData = new SetDifficultyInputData(newDifficulty, playerID,
                 roomName);
-        setDifficultyUseCaseInteractor.execute(setDifficultyInputData);
+        // setDifficultyUseCaseInteractor.execute(setDifficultyInputData);
     }
 }

@@ -12,6 +12,12 @@ public interface BlackjackOutputBoundary {
     void preparePlayView(BlackjackOutputData blackjackOutputData);
 
     /**
+     * Updates the BlackjackViewModel to reflect the 21 stage of a round.
+     * @param blackjackOutputData is the output data for the use case passed from Interactor.
+     */
+    void prepare21View(BlackjackOutputData blackjackOutputData);
+
+    /**
      * Updates the BlackjackViewModel to reflect the Win stage of a round.
      * @param blackjackOutputData is the output data for the use case passed from Interactor.
      */

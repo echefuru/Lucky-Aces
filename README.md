@@ -45,5 +45,5 @@ Valid feedback has to be either compliments or suggestions.
 A suggestion has to include two parts: the problem and your thoughts on improving the problem. Please be specific!
 * * *
 ## Contributions
-
+Feel free to contribute by submitting pull requests!
 * * *

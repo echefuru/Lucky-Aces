@@ -5,7 +5,7 @@
 - **Amber Mantong Liu: [AmberMLiu](https://github.com/AmberMLiu)**
 - **Artour Gassanov: [artourguoft](https://github.com/artourguoft)**
 - **Jiakun Chen: [echefuru](https://github.com/echefuru)**
-- **Xiaoyi "Estelle" Wang: [EstelleWang-UofT](https://github.com/EstelleWang-UofT)**
+- **Xiaoyi Wang (Estelle): [EstelleWang-UofT](https://github.com/EstelleWang-UofT)**
 
 This group project was created for CSC207: Software Design at the University of Toronto. The domain is card games. We focused on implementing a functional Blackjack game. You can play Blackjack with our program.
 * * *

@@ -6,16 +6,18 @@ import java.util.List;
 import entity.Card;
 
 /**
- * A simple implementation of the Player interface.
+ * Computer player version of the player interface.
  */
-public class CommonPlayer implements Player {
+public class ComputerPlayer implements Player {
 
     private final String playerID;
     private List<Card> cards;
+    private int difficulty;
     private int bankroll;
 
-    public CommonPlayer(String playerID) {
+    public ComputerPlayer(String playerID) {
         this.playerID = playerID;
+        this.difficulty = 1;
         this.cards = new ArrayList<>();
         this.bankroll = PlayerConstants.INITIAL_BANKROLL;
     }
@@ -25,20 +27,29 @@ public class CommonPlayer implements Player {
         return playerID;
     }
 
+    @Override
     public List<Card> getCards() {
         return cards;
     }
 
     @Override
     public int getBankroll() {
-        return 0;
+        return this.bankroll;
     }
 
     public void setBankroll(int newBankroll) {
         this.bankroll = newBankroll;
     }
 
+    public int getDifficulty() {
+        return difficulty;
+    }
+
     private void setCards(List<Card> cards) {
         this.cards = cards;
+    }
+
+    public void setDifficulty(int difficulty) {
+        this.difficulty = difficulty;
     }
 }

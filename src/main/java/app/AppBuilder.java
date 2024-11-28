@@ -7,7 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
 import data_access.GameInfoDataAccessObject;
-import entity.player.CommonPlayerFactory;
+import entity.player.GenericPlayerFactory;
 import entity.player.PlayerFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.game_library_select.GameFilterController;
@@ -62,7 +62,7 @@ public class AppBuilder {
     private final JPanel mainPanel = new JPanel();
     private final CardLayout mainLayout = new CardLayout();
     // thought question: is the hard dependency below a problem?
-    private final PlayerFactory playerFactory = new CommonPlayerFactory();
+    private final PlayerFactory playerFactory = new GenericPlayerFactory();
     private final ViewManagerModel viewManagerModel = new ViewManagerModel();
     private final ViewManager viewManager = new ViewManager(mainPanel, mainLayout, viewManagerModel);
 

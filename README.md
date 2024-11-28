@@ -39,7 +39,7 @@ The user of the program can:
 ## License
 * * *
 ## Feedback
-Feedback is always welcomed! You can give us a feed back [here](https://forms.gle/j6YgxbqzXkKH9xN17)
+Feedback is always welcomed! You can give us a feed back here via this [Google form](https://forms.gle/j6YgxbqzXkKH9xN17).
 * * *
 ## Contributions
 

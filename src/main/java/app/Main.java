@@ -21,6 +21,7 @@ public class Main {
                                             // Views
                                             .addGameLibraryView()
                                             .addGameSetupView()
+                                            .addBlackjackView()
                                             // Use Cases
                                             .addGameLibraryUseCase()
                                             .addGameSelectUseCase()
@@ -28,6 +29,7 @@ public class Main {
                                             .addGameSetConfigUseCase()
                                             .addGameSearchUseCase()
                                             .addGameFilterUseCase()
+                                            .addBlackjackUseCase()
                                             // Build
                                             .build();
 

@@ -7,10 +7,12 @@ public class Card implements Comparable<Card> {
 
     private final Rank rank;
     private final Suit suit;
+    private final String string;
 
-    public Card(Rank rank, Suit suit) {
+    public Card(Rank rank, Suit suit, String string) {
         this.rank = rank;
         this.suit = suit;
+        this.string = string;
     }
 
     public Suit getSuit() {
@@ -19,6 +21,11 @@ public class Card implements Comparable<Card> {
 
     public Rank getRank() {
         return rank;
+    }
+
+    @Override
+    public String toString() {
+        return string;
     }
 
     /**

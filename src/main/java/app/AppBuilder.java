@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
+import data_access.ApiDataAccessObject;
 import data_access.GameInfoDataAccessObject;
 import entity.player.GenericPlayerFactory;
 import entity.player.PlayerFactory;
@@ -22,6 +23,9 @@ import interface_adapter.game_library_select.GameSelectPresenter;
 import interface_adapter.game_setup.GameSetConfigController;
 import interface_adapter.game_setup.GameSetConfigPresenter;
 import interface_adapter.game_setup.GameSetupViewModel;
+import interface_adapter.blackjack.BlackjackController;
+import interface_adapter.blackjack.BlackjackPresenter;
+import interface_adapter.blackjack.BlackjackViewModel;
 import interface_adapter.game_setup.GameStartController;
 import interface_adapter.game_setup.GameStartPresenter;
 import interface_adapter.game_view.BlackjackViewModel;
@@ -37,14 +41,21 @@ import use_case.game_search.GameSearchOutputBoundary;
 import use_case.game_select.GameSelectInputBoundary;
 import use_case.game_select.GameSelectInteractor;
 import use_case.game_select.GameSelectOutputBoundary;
+import use_case.game_setup.GameSetupInputBoundary;
+import use_case.game_setup.GameSetupInteractor;
+import use_case.game_setup.GameSetupOutputBoundary;
 import use_case.game_set_config.GameSetConfigInputBoundary;
 import use_case.game_set_config.GameSetConfigInteractor;
 import use_case.game_set_config.GameSetConfigOutputBoundary;
 import use_case.game_start.GameStartInputBoundary;
 import use_case.game_start.GameStartInteractor;
 import use_case.game_start.GameStartOutputBoundary;
+import use_case.blackjack.BlackjackInputBoundary;
+import use_case.blackjack.BlackjackInteractor;
+import use_case.blackjack.BlackjackOutputBoundary;
 import view.GameLibraryView;
 import view.GameSetupView;
+import view.BlackjackView;
 import view.ViewManager;
 
 /**
@@ -68,11 +79,13 @@ public class AppBuilder {
 
     // thought question: is the hard dependency below a problem?
     private final GameInfoDataAccessObject gameInfoDataAccessObject = new GameInfoDataAccessObject("game_info.json");
+    private final ApiDataAccessObject apiDataAccessObject = new ApiDataAccessObject();
 
     private GameLibraryView gameLibraryView;
     private GameLibraryViewModel gameLibraryViewModel;
     private GameSetupView gameSetupView;
     private GameSetupViewModel gameSetupViewModel;
+    private BlackjackView blackjackView;
     private BlackjackViewModel blackjackViewModel;
 
     public AppBuilder() {
@@ -98,6 +111,17 @@ public class AppBuilder {
         gameSetupViewModel = new GameSetupViewModel();
         gameSetupView = new GameSetupView(gameSetupViewModel, gameLibraryViewModel, viewManagerModel);
         mainPanel.add(gameSetupView, gameSetupView.getViewName());
+        return this;
+    }
+
+    /**
+     * Adds the Blackjack View to the application.
+     * @return this builder
+     */
+    public AppBuilder addBlackjackView() {
+        blackjackViewModel = new BlackjackViewModel();
+        blackjackView = new BlackjackView(blackjackViewModel);
+        mainPanel.add(blackjackView, blackjackView.getViewName());
         return this;
     }
 
@@ -193,6 +217,21 @@ public class AppBuilder {
     }
 
     /**
+     * Adds the Blackjack Use Case to the application.
+     * @return this builder
+     */
+    public AppBuilder addBlackjackUseCase() {
+        final BlackjackOutputBoundary blackjackPresenter = new BlackjackPresenter(viewManagerModel, blackjackViewModel,
+                gameLibraryViewModel);
+        final BlackjackInputBoundary blackjackInteractor = new BlackjackInteractor(apiDataAccessObject, blackjackPresenter);
+        final BlackjackController blackjackController = new BlackjackController(blackjackInteractor);
+
+        blackjackView.setBlackjackController(blackjackController);
+
+        return this;
+    }
+
+    /**
      * Creates the JFrame for the application and initially sets the SignupView to be displayed.
      * @return the application
      */
@@ -206,6 +245,10 @@ public class AppBuilder {
         viewManagerModel.setState(gameLibraryView.getViewName());
         viewManagerModel.firePropertyChanged();
         gameLibraryViewModel.firePropertyChanged("build");
+
+        // Quick startup to BlackjackView
+        // viewManagerModel.setState(blackjackView.getViewName());
+        // viewManagerModel.firePropertyChanged();
 
         return application;
     }

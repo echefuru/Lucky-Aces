@@ -28,7 +28,6 @@ import interface_adapter.blackjack.BlackjackPresenter;
 import interface_adapter.blackjack.BlackjackViewModel;
 import interface_adapter.game_setup.GameStartController;
 import interface_adapter.game_setup.GameStartPresenter;
-import interface_adapter.game_view.BlackjackViewModel;
 import use_case.game_filter.GameFilterInputBoundary;
 import use_case.game_filter.GameFilterInteractor;
 import use_case.game_filter.GameFilterOutputBoundary;
@@ -41,9 +40,6 @@ import use_case.game_search.GameSearchOutputBoundary;
 import use_case.game_select.GameSelectInputBoundary;
 import use_case.game_select.GameSelectInteractor;
 import use_case.game_select.GameSelectOutputBoundary;
-import use_case.game_setup.GameSetupInputBoundary;
-import use_case.game_setup.GameSetupInteractor;
-import use_case.game_setup.GameSetupOutputBoundary;
 import use_case.game_set_config.GameSetConfigInputBoundary;
 import use_case.game_set_config.GameSetConfigInteractor;
 import use_case.game_set_config.GameSetConfigOutputBoundary;
@@ -246,7 +242,7 @@ public class AppBuilder {
         viewManagerModel.firePropertyChanged();
         gameLibraryViewModel.firePropertyChanged("build");
 
-        // Quick startup to BlackjackView
+        // TODO: Remove quick startup to BlackjackView
         // viewManagerModel.setState(blackjackView.getViewName());
         // viewManagerModel.firePropertyChanged();
 

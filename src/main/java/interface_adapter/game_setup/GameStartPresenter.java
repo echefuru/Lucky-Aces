@@ -1,7 +1,7 @@
 package interface_adapter.game_setup;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.game_view.BlackjackViewModel;
+import interface_adapter.blackjack.BlackjackViewModel;
 import use_case.game_start.GameStartOutputBoundary;
 import use_case.game_start.GameStartOutputData;
 

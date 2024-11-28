@@ -138,25 +138,25 @@ public class ApiDataAccessObject implements ApiDataAccessInterface {
     }
 
     // TODO: Get rid of this main; was used for dev testing of this class.
-    public static void main(String[] args) {
-        ApiDataAccessInterface dao = new ApiDataAccessObject();
-
-        Deck deck = dao.createDeck();
-        Card card = dao.draw(deck, 1).get(0);
-        System.out.println(card.getRank() + ", " + card.getSuit() + ", " + card);
-        System.out.println("Drew 1 card, " + deck.getRemaining() + " remaining.");
-
-        List<Card> cards = dao.draw(deck, 51);
-        for (Card c : cards) {
-            System.out.println(c.getRank() + ", " + c.getSuit() + ", " + c);
-        }
-        System.out.println("Drew 51 cards, " + deck.getRemaining() + " remaining.");
-
-        dao.shuffle(deck);
-        System.out.println("Shuffling deck, back to " + deck.getRemaining() + " remaining.");
-
-        System.out.println("Drawing 1 card again.");
-        Card card1 = dao.draw(deck, 1).get(0);
-        System.out.println(card1.getRank() + ", " + card1.getSuit());
-    }
+//    public static void main(String[] args) {
+//        ApiDataAccessInterface dao = new ApiDataAccessObject();
+//
+//        Deck deck = dao.createDeck();
+//        Card card = dao.draw(deck, 1).get(0);
+//        System.out.println(card.getRank() + ", " + card.getSuit() + ", " + card);
+//        System.out.println("Drew 1 card, " + deck.getRemaining() + " remaining.");
+//
+//        List<Card> cards = dao.draw(deck, 51);
+//        for (Card c : cards) {
+//            System.out.println(c.getRank() + ", " + c.getSuit() + ", " + c);
+//        }
+//        System.out.println("Drew 51 cards, " + deck.getRemaining() + " remaining.");
+//
+//        dao.shuffle(deck);
+//        System.out.println("Shuffling deck, back to " + deck.getRemaining() + " remaining.");
+//
+//        System.out.println("Drawing 1 card again.");
+//        Card card1 = dao.draw(deck, 1).get(0);
+//        System.out.println(card1.getRank() + ", " + card1.getSuit());
+//    }
 }

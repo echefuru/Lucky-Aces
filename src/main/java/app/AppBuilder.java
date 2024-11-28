@@ -197,26 +197,13 @@ public class AppBuilder {
 
         application.add(mainPanel);
 
-//        viewManagerModel.setState(gameLibraryView.getViewName());
-//        viewManagerModel.firePropertyChanged();
-//        gameLibraryViewModel.firePropertyChanged("build");
-
-        // Quick add blackjack view
-
-//        final BlackjackViewModel blackjackViewModel = new BlackjackViewModel();
-//        final BlackjackView blackjackView = new BlackjackView(blackjackViewModel);
-//        mainPanel.add(blackjackView, blackjackView.getViewName());
-//
-//        // Quick add blackjack use cases
-//        final BlackjackOutputBoundary blackjackPresenter = new BlackjackPresenter(viewManagerModel, blackjackViewModel,
-//                gameLibraryViewModel);
-//        final BlackjackInputBoundary blackjackInteractor = new BlackjackInteractor(blackjackPresenter);
-//        final BlackjackController blackjackController = new BlackjackController(blackjackInteractor);
-//        blackjackView.setBlackjackController(blackjackController);
-
-        // Quick startup
-        viewManagerModel.setState(blackjackView.getViewName());
+        viewManagerModel.setState(gameLibraryView.getViewName());
         viewManagerModel.firePropertyChanged();
+        gameLibraryViewModel.firePropertyChanged("build");
+
+        // Quick startup to BlackjackView
+        // viewManagerModel.setState(blackjackView.getViewName());
+        // viewManagerModel.firePropertyChanged();
 
         return application;
     }

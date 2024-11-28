@@ -47,6 +47,8 @@ Common problems encountered when trying to run `Main.main()`:
 ## Usage
 * * *
 ## License
+This project is licensed under the CC0-1.0 license.
+See the [LICENSE](./LICENSE) file for more details.
 * * *
 ## Feedback
 Feedback is always welcomed! You can give us feedback via this [Google form](https://forms.gle/j6YgxbqzXkKH9xN17).<be>

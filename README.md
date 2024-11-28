@@ -39,10 +39,20 @@ The user of the program can:
 ## License
 * * *
 ## Feedback
-Feedback is always welcomed! You can give us feedback via this [Google form](https://forms.gle/j6YgxbqzXkKH9xN17).
-__However, we only accept valid feedback!__
-Valid feedback has to be either compliments or suggestions.
-A suggestion has to include two parts: the problem and your thoughts on improving the problem. Please be specific!
+Feedback is always welcomed! You can give us feedback via this [Google form](https://forms.gle/j6YgxbqzXkKH9xN17).<be>
+
+__However, we only accept valid feedback!__<br>
+Valid feedback has to be one of the following: bug reports, feature requests, general suggestions, or questions.<be>
+
+__Please be specific!__<br>
+If you report a bug, please indicate the situation (Eg. what input was given, what steps did you take to produce the bug, what error did you receive, etc.)<br>
+If you request a feature, explain in detail what the feature would be like.<br>
+If you give us a general suggestion, tell us how did you come up with the suggestion. Is there any specific way you want us to improve the program?<br>
+If you have any questions, please tell us which part of the program is your question about and please describe your question as detailed as you can.<br>
+
+After submitting your feedback, we will review the feedback as soon as we can. If we find your feedback helpful in improving the program, we might reach out to you.<be>
+
+We hope you understand that we highly appreciate all feedback even if we do not reach out to you, thank you.
 * * *
 ## Contributions
 Feel free to contribute by submitting pull requests!

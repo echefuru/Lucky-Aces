@@ -18,7 +18,7 @@ public enum Rank {
     JACK(10),
     QUEEN(10),
     KING(10),
-    ACE(11);
+    ACE(1);
 
     private final int rankValue;
 

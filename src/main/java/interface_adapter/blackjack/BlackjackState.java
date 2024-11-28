@@ -11,6 +11,8 @@ public class BlackjackState {
     private int playerTotal;
     private List<String> dealerCards;
     private String stage;
+    private int wins;
+    private int losses;
 
     public List<String> getPlayerCards() {
         return playerCards;
@@ -22,6 +24,18 @@ public class BlackjackState {
 
     public int getPlayerTotal() {
         return playerTotal;
+    }
+
+    public String getStage() {
+        return stage;
+    }
+
+    public int getWins() {
+        return wins;
+    }
+
+    public int getLosses() {
+        return losses;
     }
 
     public void setPlayerTotal(int playerTotal) {
@@ -36,35 +50,25 @@ public class BlackjackState {
         this.dealerCards = dealerCards;
     }
 
-    public String getStage() {
-        return stage;
+    /**
+     * Sets the stage variable to string.
+     * @param string the new stage.
+     */
+    public void setStage(String string) {
+        this.stage = string;
     }
 
     /**
-     * Sets the stage variable to "pre_round".
+     * Increments player wins by 1.
      */
-    public void setStagePreRound() {
-        this.stage = "pre_round";
+    public void incrementWins() {
+        this.wins += 1;
     }
 
     /**
-     * Sets the stage variable to "player_turn".
+     * Increments dealer wins by 1.
      */
-    public void setStagePlayerTurn() {
-        this.stage = "player_turn";
-    }
-
-    /**
-     * Sets the stage variable to "dealer_turn".
-     */
-    public void setStageDealerTurn() {
-        this.stage = "dealer_turn";
-    }
-
-    /**
-     * Sets the stage variable to "post_round".
-     */
-    public void setStagePostRound() {
-        this.stage = "post_round";
+    public void incrementLosses() {
+        this.losses += 1;
     }
 }

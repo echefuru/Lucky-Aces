@@ -21,6 +21,13 @@ public class BlackjackController {
     }
 
     /**
+     * Executes the Play Again Use Case.
+     */
+    public void playAgain() {
+        blackjackInteractor.playAgain();
+    }
+
+    /**
      * Executes the Hit Use Case.
      */
     public void hit() {

@@ -1,5 +1,6 @@
 package view;
 
+import interface_adapter.blackjack.BlackjackState;
 import interface_adapter.blackjack.BlackjackViewModel;
 import interface_adapter.blackjack.BlackjackController;
 
@@ -7,11 +8,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.List;
 
 /**
  * The View for all the Blackjack Use Cases.
  */
-public class BlackjackView extends JPanel implements ActionListener {
+public class BlackjackView extends JPanel implements PropertyChangeListener {
 
     private static final int GENERAL_HEIGHT = 50;
     private static final int CARDS_HEIGHT = 270;
@@ -20,9 +24,9 @@ public class BlackjackView extends JPanel implements ActionListener {
 
     private final BlackjackViewModel blackjackViewModel;
 
-    private JLabel dealerLabel = new JLabel("DEALER | Wins: -");
+    private final JLabel dealerLabel = new JLabel("DEALER | Wins: -");
     private final JPanel dealerPanel = new JPanel();
-    private JLabel statusLabel = new JLabel("Press PLAY to start the round");
+    private final JLabel statusLabel = new JLabel("Press PLAY to start the round");
     private final JPanel playerPanel = new JPanel();
     private final JLabel playerLabel = new JLabel("PLAYER | Wins: -");
 
@@ -30,15 +34,19 @@ public class BlackjackView extends JPanel implements ActionListener {
     private final JButton play = new JButton("PLAY");
     private final JButton hit = new JButton("HIT!");
     private final JButton hold = new JButton("HOLD");
+    private final JButton playAgain = new JButton("PLAY");
     private final JButton exit = new JButton("EXIT");
+
+    private final JLabel cardBack = new JLabel(ViewConstants.STRING_IMAGEICON_MAP.get("BACK"));
 
     private BlackjackController blackjackController;
 
     public BlackjackView(BlackjackViewModel blackjackViewModel) {
         // Inject the viewModel
         this.blackjackViewModel = blackjackViewModel;
-        // this.blackjackViewModel.addPropertyChangeListener(this);
+        this.blackjackViewModel.addPropertyChangeListener(this);
         this.viewName = blackjackViewModel.getViewName();
+        this.cardBack.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         // UI initialization work in private function.
         initUi();
@@ -47,13 +55,6 @@ public class BlackjackView extends JPanel implements ActionListener {
         play.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
-                        // TODO: Maybe do all of this after processing property change, in case of immediate 21?
-                        statusLabel.setText("");
-                        buttons.remove(play);
-                        buttons.revalidate();
-                        buttons.add(hit);
-                        buttons.add(hold);
-                        buttons.add(exit);
                         blackjackController.play();
                     }
                 }
@@ -75,6 +76,15 @@ public class BlackjackView extends JPanel implements ActionListener {
                 }
         );
 
+        playAgain.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        blackjackController.playAgain();
+                    }
+                }
+        );
+
+        // TODO: There has to be a lot of clean-up behind the scenes for this case.
         exit.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
@@ -84,28 +94,31 @@ public class BlackjackView extends JPanel implements ActionListener {
         );
     }
 
-//    @Override
-//    public void propertyChange(PropertyChangeEvent evt) {
-//        final BlackjackState state = (BlackjackState) evt.getNewValue();
-//        if (state.getUsernameError() != null) {
-//            JOptionPane.showMessageDialog(this, state.getUsernameError());
-//        }
-//    }
-
-    /**
-     * React to a button
-     * click that results in evt.
-     * @param evt the ActionEvent to react to
-     */
     @Override
-    public void actionPerformed(ActionEvent evt) {
-        System.out.println("Click " + evt.getActionCommand());
-    }
-
-    // TODO: Impl for changing what is drawn here, or how?
-    @Override
-    protected void paintComponent(Graphics graphics) {
-        super.paintComponent(graphics);
+    public void propertyChange(PropertyChangeEvent evt) {
+        final BlackjackState state = (BlackjackState) evt.getNewValue();
+        switch (state.getStage()) {
+            case "play":
+                clearCardUi();
+                paintPlayUi(state.getPlayerCards(), state.getPlayerTotal(), state.getDealerCards());
+                break;
+            case "win":
+            case "draw":
+            case "loss":
+                clearCardUi();
+                paintEndUi(state.getPlayerCards(), state.getDealerCards(), state.getWins(), state.getLosses(),
+                        state.getStage());
+                break;
+            case "bust":
+                paintBustUi(state.getPlayerCards(), state.getLosses());
+                break;
+            case "play-again":
+                clearCardUi();
+                blackjackController.play();
+                break;
+            default:
+                throw new RuntimeException("Stage mismatched: " + state.getStage());
+        }
     }
 
     public void setBlackjackController(BlackjackController blackjackController) {
@@ -130,9 +143,7 @@ public class BlackjackView extends JPanel implements ActionListener {
         this.add(dealerLabel);
         this.add(dealerPanel);
 
-        final JLabel dealerCardLabel1 = new JLabel(ViewConstants.CARD_BACK);
-        dealerCardLabel1.setAlignmentX(Component.CENTER_ALIGNMENT);
-        dealerPanel.add(dealerCardLabel1);
+        dealerPanel.add(cardBack);
 
         statusLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         statusLabel.setPreferredSize(new Dimension(ViewConstants.WINDOW_WIDTH, GENERAL_HEIGHT));
@@ -146,20 +157,112 @@ public class BlackjackView extends JPanel implements ActionListener {
         this.add(playerPanel);
         this.add(playerLabel);
 
-        final JLabel playerCardLabel1 = new JLabel(ViewConstants.CARD_BACK);
-        dealerCardLabel1.setAlignmentX(Component.CENTER_ALIGNMENT);
-        playerPanel.add(playerCardLabel1);
-
         // Initialize buttons and their panel.
         buttons.setLayout(new FlowLayout());
         buttons.setPreferredSize(new Dimension(ViewConstants.WINDOW_WIDTH, GENERAL_HEIGHT));
 
-        // TODO: Move the other buttons down to other private method.
         buttons.add(play);
         buttons.add(exit);
-        // buttons.add(hit);
-        // buttons.add(hold);
 
         this.add(buttons);
+    }
+
+    private void paintPlayUi(List<String> playerCards, int playerTotal, List<String> dealerCards) {
+        // Paint dealer card.
+        dealerPanel.add(cardBack);
+        final JLabel dealerCard = new JLabel(ViewConstants.STRING_IMAGEICON_MAP.get(dealerCards.get(0)));
+        dealerCard.setAlignmentX(Component.CENTER_ALIGNMENT);
+        dealerPanel.add(dealerCard);
+
+        // Show player total.
+        statusLabel.setForeground(Color.BLACK);
+        statusLabel.setText("You have " + playerTotal);
+
+        // Paint player cards.
+        for (String card : playerCards) {
+            final JLabel playerCard = new JLabel(ViewConstants.STRING_IMAGEICON_MAP.get(card));
+            playerCard.setAlignmentX(Component.CENTER_ALIGNMENT);
+            playerPanel.add(playerCard);
+        }
+
+        buttons.removeAll();
+        buttons.revalidate();
+        buttons.repaint();
+        buttons.add(hit);
+        buttons.add(hold);
+        buttons.add(exit);
+    }
+
+    private void paintEndUi(List<String> playerCards, List<String> dealerCards, int wins, int losses, String stage) {
+        // Paint dealer cards.
+        for (String card : dealerCards) {
+            final JLabel dealerCard = new JLabel(ViewConstants.STRING_IMAGEICON_MAP.get(card));
+            dealerCard.setAlignmentX(Component.CENTER_ALIGNMENT);
+            dealerPanel.add(dealerCard);
+        }
+
+        // Show outcome of round.
+        if ("win".equals(stage)) {
+            statusLabel.setForeground(Color.GREEN);
+            statusLabel.setText("YOU WIN!");
+
+            // Increment player wins.
+            playerLabel.setText("PLAYER | Wins: " + wins);
+        }
+        else if ("draw".equals(stage)) {
+            statusLabel.setForeground(Color.ORANGE);
+            statusLabel.setText("DRAW");
+        }
+        else {
+            statusLabel.setForeground(Color.RED);
+            statusLabel.setText("YOU LOSE!");
+
+            // Increment dealer wins.
+            dealerLabel.setText("DEALER | Wins: " + losses);
+        }
+
+        // Paint player cards.
+        for (String card : playerCards) {
+            final JLabel playerCard = new JLabel(ViewConstants.STRING_IMAGEICON_MAP.get(card));
+            playerCard.setAlignmentX(Component.CENTER_ALIGNMENT);
+            playerPanel.add(playerCard);
+        }
+
+        buttons.removeAll();
+        buttons.revalidate();
+        buttons.repaint();
+        buttons.add(playAgain);
+        buttons.add(exit);
+    }
+
+    private void paintBustUi(List<String> playerCards, int losses) {
+        // Increment dealer wins.
+        dealerLabel.setText("DEALER | Wins: " + losses);
+
+        // Show outcome of round.
+        statusLabel.setForeground(Color.RED);
+        statusLabel.setText("BUST!");
+
+        // Paint additional player card.
+        final JLabel playerCard = new JLabel(ViewConstants.STRING_IMAGEICON_MAP.get(playerCards
+                .get(playerCards.size() - 1)));
+        playerCard.setAlignmentX(Component.CENTER_ALIGNMENT);
+        playerPanel.add(playerCard);
+
+        buttons.removeAll();
+        buttons.revalidate();
+        buttons.repaint();
+        buttons.add(playAgain);
+        buttons.add(exit);
+    }
+
+    private void clearCardUi() {
+        dealerPanel.removeAll();
+        dealerPanel.revalidate();
+        dealerPanel.repaint();
+
+        playerPanel.removeAll();
+        playerPanel.revalidate();
+        playerPanel.repaint();
     }
 }

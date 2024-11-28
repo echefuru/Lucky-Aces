@@ -11,6 +11,11 @@ public interface BlackjackInputBoundary {
     void play();
 
     /**
+     * Executes the Play Again use case.
+     */
+    void playAgain();
+
+    /**
      * Executes the Hit use case.
      */
     void hit();

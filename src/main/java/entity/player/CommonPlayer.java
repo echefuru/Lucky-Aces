@@ -1,16 +1,23 @@
 package entity.player;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import entity.Card;
+
 /**
- * A simple implementation of the User interface.
+ * A simple implementation of the Player interface.
  */
 public class CommonPlayer implements Player {
 
     private final String playerID;
-    private final String password;
+    private List<Card> cards;
+    private int bankroll;
 
-    public CommonPlayer(String playerID, String password) {
+    public CommonPlayer(String playerID) {
         this.playerID = playerID;
-        this.password = password;
+        this.cards = new ArrayList<>();
+        this.bankroll = PlayerConstants.INITIAL_BANKROLL;
     }
 
     @Override
@@ -18,9 +25,20 @@ public class CommonPlayer implements Player {
         return playerID;
     }
 
-    @Override
-    public String getPassword() {
-        return password;
+    public List<Card> getCards() {
+        return cards;
     }
 
+    @Override
+    public int getBankroll() {
+        return 0;
+    }
+
+    public void setBankroll(int newBankroll) {
+        this.bankroll = newBankroll;
+    }
+
+    private void setCards(List<Card> cards) {
+        this.cards = cards;
+    }
 }

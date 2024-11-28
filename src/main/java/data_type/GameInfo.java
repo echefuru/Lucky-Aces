@@ -1,44 +1,61 @@
 package data_type;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 /**
  * The representation of a type of card game. Stores all descriptions, rules, etc. of the game.
  */
 public class GameInfo {
     private final String name;
     private final String description;
+    private final String rules;
     private final int maxPlayers;
     private final int minPlayers;
     private final boolean isAvailable;
+    private final JSONArray type;
+    private final JSONObject defaultConfig;
 
-    public GameInfo(String name, String description, int maxPlayers, int minPlayers, boolean isAvailable) {
-        this.name = name;
-        this.description = description;
-        this.maxPlayers = maxPlayers;
-        this.minPlayers = minPlayers;
-        this.isAvailable = isAvailable;
+    public GameInfo(GameInfoBuilder builder) {
+        this.name = builder.getName();
+        this.description = builder.getDescription();
+        this.rules = builder.getRules();
+        this.maxPlayers = builder.getMaxPlayers();
+        this.minPlayers = builder.getMinPlayers();
+        this.isAvailable = builder.isAvailable();
+        this.type = builder.getType();
+        this.defaultConfig = builder.getDefaultConfig();
     }
 
-    /**
-     * Return the name of the game.
-     * @return the name of the game
-     */
     public String getName() {
         return name;
     }
 
-    /**
-     * Return the description of the game.
-     * @return the description of the game
-     */
     public String getDescription() {
         return description;
     }
 
-    /**
-     * Return whether the game is available.
-     * @return true if and only if the game is ready to be played.
-     */
+    public String getRules() {
+        return rules;
+    }
+
     public boolean isAvailable() {
         return isAvailable;
+    }
+
+    public JSONArray getType() {
+        return type;
+    }
+
+    public int getMaxPlayers() {
+        return maxPlayers;
+    }
+
+    public int getMinPlayers() {
+        return minPlayers;
+    }
+
+    public JSONObject getDefaultConfig() {
+        return defaultConfig;
     }
 }

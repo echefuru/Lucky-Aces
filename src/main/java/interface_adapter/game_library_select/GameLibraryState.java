@@ -6,15 +6,27 @@ package interface_adapter.game_library_select;
 public class GameLibraryState {
 
     private String[] availableGames;
+    private String[] availableGameNames;
     private boolean[] availableGamesVisible;
     private String selectGameError;
+    private String filterMessage;
+
+    private String[] gameTypes = {};
 
     public String[] getAvailableGames() {
         return this.availableGames;
     }
 
+    public String[] getAvailableGameNames() {
+        return this.availableGameNames;
+    }
+
     public void setAvailableGames(String[] availableGames) {
         this.availableGames = availableGames;
+    }
+
+    public void setAvailableGameNames(String[] availableGameNames) {
+        this.availableGameNames = availableGameNames;
     }
 
     public void setAvailableGamesVisible(boolean[] availableGamesVisible) {
@@ -31,5 +43,21 @@ public class GameLibraryState {
 
     public void setSelectGameError(String selectGameError) {
         this.selectGameError = selectGameError;
+    }
+
+    public void setGameTypes(String[] gameTypes) {
+        this.gameTypes = gameTypes;
+    }
+
+    public String[] getGameTypes() {
+        return this.gameTypes;
+    }
+
+    public String getFilterMessage() {
+        return filterMessage;
+    }
+
+    public void setFilterMessage(String filterMessage) {
+        this.filterMessage = filterMessage;
     }
 }

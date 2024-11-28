@@ -22,8 +22,12 @@ public class GameSearchPresenter implements GameSearchOutputBoundary {
         final boolean[] gamesVisible = gameSearchOutputData.getGameVisible();
 
         gameLibraryState.setAvailableGamesVisible(gamesVisible);
+        final String message = String.format(
+                "<html>Search is activated.<br>Search input: %s<br>Filter is not activated.<html>",
+                gameSearchOutputData.getSearchText());
+        gameLibraryState.setFilterMessage(message);
         this.gameLibraryViewModel.setState(gameLibraryState);
-        this.gameLibraryViewModel.firePropertyChanged("search");
+        this.gameLibraryViewModel.firePropertyChanged("gameSelect");
     }
 
     @Override

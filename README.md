@@ -39,7 +39,10 @@ The user of the program can:
 ## License
 * * *
 ## Feedback
-Feedback is always welcomed! You can give us a feed back here via this [Google form](https://forms.gle/j6YgxbqzXkKH9xN17).
+Feedback is always welcomed! You can give us feedback via this [Google form](https://forms.gle/j6YgxbqzXkKH9xN17).
+__However, we only accept valid feedback!__
+Valid feedback has to be either compliments or suggestions.
+A suggestion has to include two parts: the problem and your thoughts on improving the problem. Please be specific!
 * * *
 ## Contributions
 

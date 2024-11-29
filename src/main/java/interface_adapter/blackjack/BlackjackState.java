@@ -1,5 +1,6 @@
 package interface_adapter.blackjack;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -58,6 +59,14 @@ public class BlackjackState {
         this.stage = string;
     }
 
+    public void setWins(int wins) {
+        this.wins = wins;
+    }
+
+    public void setLosses(int losses) {
+        this.losses = losses;
+    }
+
     /**
      * Increments player wins by 1.
      */
@@ -70,5 +79,16 @@ public class BlackjackState {
      */
     public void incrementLosses() {
         this.losses += 1;
+    }
+
+    /**
+     * Resets the object's fields, except stage which must be set back to "init" explicitly.
+     */
+    public void reset() {
+        playerCards = null;
+        playerTotal = 0;
+        dealerCards = null;
+        wins = 0;
+        losses = 0;
     }
 }

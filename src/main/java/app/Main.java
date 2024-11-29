@@ -28,7 +28,7 @@ public class Main {
                                             .addGameSetConfigUseCase()
                                             .addGameSearchUseCase()
                                             .addGameFilterUseCase()
-                                            .addBlackjackUseCase()
+                                            .addBlackjackUseCases()
                                             // Build
                                             .build();
 

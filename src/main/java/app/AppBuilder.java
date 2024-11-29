@@ -10,6 +10,7 @@ import data_access.ApiDataAccessObject;
 import data_access.BlackjackRoomDataAccessObject;
 import data_access.GameInfoDataAccessObject;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.blackjack.*;
 import interface_adapter.game_library_select.GameFilterController;
 import interface_adapter.game_library_select.GameFilterPresenter;
 import interface_adapter.game_library_select.GameLibraryController;
@@ -22,11 +23,23 @@ import interface_adapter.game_library_select.GameSelectPresenter;
 import interface_adapter.game_setup.GameSetConfigController;
 import interface_adapter.game_setup.GameSetConfigPresenter;
 import interface_adapter.game_setup.GameSetupViewModel;
-import interface_adapter.blackjack.BlackjackController;
-import interface_adapter.blackjack.BlackjackPresenter;
-import interface_adapter.blackjack.BlackjackViewModel;
 import interface_adapter.game_setup.GameStartController;
 import interface_adapter.game_setup.GameStartPresenter;
+import use_case.blackjack.again.AgainInputBoundary;
+import use_case.blackjack.again.AgainInteractor;
+import use_case.blackjack.again.AgainOutputBoundary;
+import use_case.blackjack.exit.ExitInputBoundary;
+import use_case.blackjack.exit.ExitInteractor;
+import use_case.blackjack.exit.ExitOutputBoundary;
+import use_case.blackjack.hit.HitInputBoundary;
+import use_case.blackjack.hit.HitInteractor;
+import use_case.blackjack.hit.HitOutputBoundary;
+import use_case.blackjack.hold.HoldInputBoundary;
+import use_case.blackjack.hold.HoldInteractor;
+import use_case.blackjack.hold.HoldOutputBoundary;
+import use_case.blackjack.play.PlayInputBoundary;
+import use_case.blackjack.play.PlayInteractor;
+import use_case.blackjack.play.PlayOutputBoundary;
 import use_case.game_filter.GameFilterInputBoundary;
 import use_case.game_filter.GameFilterInteractor;
 import use_case.game_filter.GameFilterOutputBoundary;
@@ -45,9 +58,6 @@ import use_case.game_set_config.GameSetConfigOutputBoundary;
 import use_case.game_start.GameStartInputBoundary;
 import use_case.game_start.GameStartInteractor;
 import use_case.game_start.GameStartOutputBoundary;
-import use_case.blackjack.BlackjackInputBoundary;
-import use_case.blackjack.BlackjackInteractor;
-import use_case.blackjack.BlackjackOutputBoundary;
 import view.GameLibraryView;
 import view.GameSetupView;
 import view.BlackjackView;
@@ -68,7 +78,6 @@ public class AppBuilder {
     private final JPanel mainPanel = new JPanel();
     private final CardLayout mainLayout = new CardLayout();
     // thought question: is the hard dependency below a problem?
-    // private final PlayerFactory playerFactory = new GenericPlayerFactory();
     private final ViewManagerModel viewManagerModel = new ViewManagerModel();
     private final ViewManager viewManager = new ViewManager(mainPanel, mainLayout, viewManagerModel);
 
@@ -213,17 +222,48 @@ public class AppBuilder {
     }
 
     /**
-     * Adds the Blackjack Use Case to the application.
+     * Adds the Blackjack Use Cases to the application.
      * @return this builder
      */
-    public AppBuilder addBlackjackUseCase() {
-        final BlackjackOutputBoundary blackjackPresenter = new BlackjackPresenter(viewManagerModel, blackjackViewModel,
-                gameLibraryViewModel);
-        final BlackjackInputBoundary blackjackInteractor = new BlackjackInteractor(apiDataAccessObject,
-                blackjackRoomDataAccessObject, blackjackPresenter);
-        final BlackjackController blackjackController = new BlackjackController(blackjackInteractor);
+    public AppBuilder addBlackjackUseCases() {
+        // Play Use Case
+        final PlayOutputBoundary playPresenter = new PlayPresenter(blackjackViewModel);
+        final PlayInputBoundary playInteractor = new PlayInteractor(apiDataAccessObject, blackjackRoomDataAccessObject,
+                playPresenter);
+        final PlayController playController = new PlayController(playInteractor);
 
-        blackjackView.setBlackjackController(blackjackController);
+        blackjackView.setPlayController(playController);
+
+        // Hit Use Case
+        final HitOutputBoundary hitPresenter = new HitPresenter(blackjackViewModel);
+        final HitInputBoundary hitInteractor = new HitInteractor(apiDataAccessObject, blackjackRoomDataAccessObject,
+                hitPresenter);
+        final HitController hitController = new HitController(hitInteractor);
+
+        blackjackView.setHitController(hitController);
+
+        // Hold Use Case
+        final HoldOutputBoundary holdPresenter = new HoldPresenter(blackjackViewModel);
+        final HoldInputBoundary holdInteractor = new HoldInteractor(apiDataAccessObject, blackjackRoomDataAccessObject,
+                holdPresenter);
+        final HoldController holdController = new HoldController(holdInteractor);
+
+        blackjackView.setHoldController(holdController);
+
+        // Again Use Case
+        final AgainOutputBoundary againPresenter = new AgainPresenter(blackjackViewModel);
+        final AgainInputBoundary againInteractor = new AgainInteractor(blackjackRoomDataAccessObject, againPresenter);
+        final AgainController againController = new AgainController(againInteractor);
+
+        blackjackView.setAgainController(againController);
+
+        // Exit Use Case
+        final ExitOutputBoundary exitPresenter = new ExitPresenter(viewManagerModel, blackjackViewModel,
+                gameLibraryViewModel);
+        final ExitInputBoundary exitInteractor = new ExitInteractor(blackjackRoomDataAccessObject, exitPresenter);
+        final ExitController exitController = new ExitController(exitInteractor);
+
+        blackjackView.setExitController(exitController);
 
         return this;
     }

@@ -1,8 +1,6 @@
 package view;
 
-import interface_adapter.blackjack.BlackjackState;
-import interface_adapter.blackjack.BlackjackViewModel;
-import interface_adapter.blackjack.BlackjackController;
+import interface_adapter.blackjack.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,11 +23,11 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
 
     private final BlackjackViewModel blackjackViewModel;
 
-    private final JLabel dealerLabel = new JLabel("DEALER | Wins: -");
+    private final JLabel dealerLabel = new JLabel("DEALER | Wins: 0");
     private final JPanel dealerPanel = new JPanel();
     private final JLabel statusLabel = new JLabel();
     private final JPanel playerPanel = new JPanel();
-    private final JLabel playerLabel = new JLabel("PLAYER | Wins: -");
+    private final JLabel playerLabel = new JLabel("PLAYER | Wins: 0");
 
     private final JPanel buttons = new JPanel();
     private final JButton play = new JButton("PLAY");
@@ -40,7 +38,11 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
 
     private final JLabel cardBack = new JLabel(ViewConstants.STRING_IMAGEICON_MAP.get("BACK"));
 
-    private BlackjackController blackjackController;
+    private PlayController playController;
+    private HitController hitController;
+    private HoldController holdController;
+    private AgainController againController;
+    private ExitController exitController;
 
     public BlackjackView(BlackjackViewModel blackjackViewModel) {
         // Inject the viewModel
@@ -48,9 +50,6 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
         this.blackjackViewModel.addPropertyChangeListener(this);
         this.viewName = blackjackViewModel.getViewName();
         this.cardBack.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        // TODO: Move UI initialization work in private function?
-        // initUi();
 
         // Layout for outermost panel and preferred sizes to force BoxLayout of fill.
         this.setSize(ViewConstants.WINDOW_WIDTH, ViewConstants.WINDOW_HEIGHT);
@@ -85,7 +84,7 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
         play.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
-                        blackjackController.play();
+                        playController.execute();
                     }
                 }
         );
@@ -93,7 +92,7 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
         hit.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
-                        blackjackController.hit();
+                        hitController.execute();
                     }
                 }
         );
@@ -101,7 +100,7 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
         hold.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
-                        blackjackController.hold();
+                        holdController.execute();
                     }
                 }
         );
@@ -109,16 +108,15 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
         playAgain.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
-                        blackjackController.playAgain();
+                        againController.execute();
                     }
                 }
         );
 
-        // TODO: There has to be a lot of clean-up behind the scenes for this case.
         exit.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
-                        blackjackController.switchToGameLibraryView();
+                        exitController.switchToGameLibraryView();
                     }
                 }
         );
@@ -139,7 +137,7 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
             case "21":
                 clearCardUi();
                 paintPlayUi(state.getPlayerCards(), state.getPlayerTotal(), state.getDealerCards());
-                blackjackController.hold();
+                holdController.execute();
                 break;
             case "win":
             case "draw":
@@ -151,17 +149,33 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
             case "bust":
                 paintBustUi(state.getPlayerCards(), state.getLosses());
                 break;
-            case "play-again":
+            case "again":
                 clearCardUi();
-                blackjackController.play();
+                playController.execute();
                 break;
             default:
                 throw new RuntimeException("Stage mismatched: " + state.getStage());
         }
     }
 
-    public void setBlackjackController(BlackjackController blackjackController) {
-        this.blackjackController = blackjackController;
+    public void setPlayController(PlayController playController) {
+        this.playController = playController;
+    }
+
+    public void setHitController(HitController hitController) {
+        this.hitController = hitController;
+    }
+
+    public void setHoldController(HoldController holdController) {
+        this.holdController = holdController;
+    }
+
+    public void setAgainController(AgainController againController) {
+        this.againController = againController;
+    }
+
+    public void setExitController(ExitController exitController) {
+        this.exitController = exitController;
     }
 
     public String getViewName() {
@@ -169,11 +183,15 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
     }
 
     private void initUi() {
+        dealerLabel.setText("DEALER | Wins: 0");
+
         // Dealer panel initially just shows back of card, to suggest a deck.
         dealerPanel.add(cardBack);
 
         statusLabel.setForeground(Color.BLACK);
         statusLabel.setText("Press PLAY to start the round");
+
+        playerLabel.setText("PLAYER | Wins: 0");
 
         buttons.removeAll();
         buttons.revalidate();

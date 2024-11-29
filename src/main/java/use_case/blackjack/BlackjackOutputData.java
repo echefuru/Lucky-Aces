@@ -10,7 +10,6 @@ public class BlackjackOutputData {
     private List<String> playerCards;
     private int playerTotal;
     private List<String> dealerCards;
-    private String stage;
 
     public BlackjackOutputData(List<String> playerCards, int playerTotal, List<String> dealerCards) {
         this.playerCards = playerCards;
@@ -28,9 +27,5 @@ public class BlackjackOutputData {
 
     public List<String> getDealerCards() {
         return dealerCards;
-    }
-
-    public String getStage() {
-        return stage;
     }
 }

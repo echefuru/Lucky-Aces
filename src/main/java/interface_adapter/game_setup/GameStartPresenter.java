@@ -23,7 +23,7 @@ public class GameStartPresenter implements GameStartOutputBoundary {
         final String selectedGame = gameStartOutputData.getSelectedGame();
 
         if ("blackjack".equals(selectedGame)) {
-            // TODO: Finish link to the Blackjack View
+            blackjackViewModel.firePropertyChanged();
             viewManagerModel.setState(blackjackViewModel.getViewName());
             viewManagerModel.firePropertyChanged();
         }

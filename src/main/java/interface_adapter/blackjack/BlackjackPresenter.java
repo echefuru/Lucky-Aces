@@ -98,6 +98,7 @@ public class BlackjackPresenter implements BlackjackOutputBoundary {
     // TODO: Interactor reset the Room in DAO, this resets the blackjackViewModel, we need an INIT STAGE.
     @Override
     public void switchToGameLibraryView() {
+        this.blackjackViewModel.getState().setStage("init");
         viewManagerModel.setState(gameLibraryViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }

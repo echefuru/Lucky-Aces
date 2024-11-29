@@ -27,7 +27,7 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
 
     private final JLabel dealerLabel = new JLabel("DEALER | Wins: -");
     private final JPanel dealerPanel = new JPanel();
-    private final JLabel statusLabel = new JLabel("Press PLAY to start the round");
+    private final JLabel statusLabel = new JLabel();
     private final JPanel playerPanel = new JPanel();
     private final JLabel playerLabel = new JLabel("PLAYER | Wins: -");
 
@@ -49,8 +49,37 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
         this.viewName = blackjackViewModel.getViewName();
         this.cardBack.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        // UI initialization work in private function.
-        initUi();
+        // TODO: Move UI initialization work in private function?
+        // initUi();
+
+        // Layout for outermost panel and preferred sizes to force BoxLayout of fill.
+        this.setSize(ViewConstants.WINDOW_WIDTH, ViewConstants.WINDOW_HEIGHT);
+        this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+        this.setVisible(true);
+
+        dealerLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        dealerLabel.setPreferredSize(new Dimension(ViewConstants.WINDOW_WIDTH, GENERAL_HEIGHT));
+        dealerPanel.setPreferredSize(new Dimension(ViewConstants.WINDOW_WIDTH, CARDS_HEIGHT));
+
+        this.add(dealerLabel);
+        this.add(dealerPanel);
+
+        statusLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        statusLabel.setPreferredSize(new Dimension(ViewConstants.WINDOW_WIDTH, GENERAL_HEIGHT));
+        this.add(statusLabel);
+
+        // Player panel is initially empty.
+        playerPanel.setPreferredSize(new Dimension(ViewConstants.WINDOW_WIDTH, CARDS_HEIGHT));
+        playerLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        playerLabel.setPreferredSize(new Dimension(ViewConstants.WINDOW_WIDTH, GENERAL_HEIGHT));
+
+        this.add(playerPanel);
+        this.add(playerLabel);
+
+        // Initialize buttons and their panel.
+        buttons.setLayout(new FlowLayout());
+        buttons.setPreferredSize(new Dimension(ViewConstants.WINDOW_WIDTH, GENERAL_HEIGHT));
+        this.add(buttons);
 
         // Action listeners
         play.addActionListener(
@@ -99,6 +128,10 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent evt) {
         final BlackjackState state = (BlackjackState) evt.getNewValue();
         switch (state.getStage()) {
+            case "init":
+                clearCardUi();
+                initUi();
+                break;
             case "play":
                 clearCardUi();
                 paintPlayUi(state.getPlayerCards(), state.getPlayerTotal(), state.getDealerCards());
@@ -136,41 +169,17 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
     }
 
     private void initUi() {
-        // Layout for outermost panel and preferred sizes to force BoxLayout of fill.
-        this.setSize(ViewConstants.WINDOW_WIDTH, ViewConstants.WINDOW_HEIGHT);
-        this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-        this.setVisible(true);
-
         // Dealer panel initially just shows back of card, to suggest a deck.
-        dealerLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        dealerLabel.setPreferredSize(new Dimension(ViewConstants.WINDOW_WIDTH, GENERAL_HEIGHT));
-        dealerPanel.setPreferredSize(new Dimension(ViewConstants.WINDOW_WIDTH, CARDS_HEIGHT));
-
-        this.add(dealerLabel);
-        this.add(dealerPanel);
-
         dealerPanel.add(cardBack);
 
-        statusLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        statusLabel.setPreferredSize(new Dimension(ViewConstants.WINDOW_WIDTH, GENERAL_HEIGHT));
-        this.add(statusLabel);
+        statusLabel.setForeground(Color.BLACK);
+        statusLabel.setText("Press PLAY to start the round");
 
-        // Player panel is initially empty.
-        playerPanel.setPreferredSize(new Dimension(ViewConstants.WINDOW_WIDTH, CARDS_HEIGHT));
-        playerLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        playerLabel.setPreferredSize(new Dimension(ViewConstants.WINDOW_WIDTH, GENERAL_HEIGHT));
-
-        this.add(playerPanel);
-        this.add(playerLabel);
-
-        // Initialize buttons and their panel.
-        buttons.setLayout(new FlowLayout());
-        buttons.setPreferredSize(new Dimension(ViewConstants.WINDOW_WIDTH, GENERAL_HEIGHT));
-
+        buttons.removeAll();
+        buttons.revalidate();
+        buttons.repaint();
         buttons.add(play);
         buttons.add(exit);
-
-        this.add(buttons);
     }
 
     private void paintPlayUi(List<String> playerCards, int playerTotal, List<String> dealerCards) {

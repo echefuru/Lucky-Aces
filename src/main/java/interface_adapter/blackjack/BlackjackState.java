@@ -10,7 +10,7 @@ public class BlackjackState {
     private List<String> playerCards;
     private int playerTotal;
     private List<String> dealerCards;
-    private String stage;
+    private String stage = "init";
     private int wins;
     private int losses;
 

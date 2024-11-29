@@ -16,11 +16,11 @@ public class Main {
         final AppBuilder appBuilder = new AppBuilder();
         final int width = 1280;
         final int height = 720;
-        // add the Logout Use Case to the app using the appBuilder
         final JFrame application = appBuilder
                                             // Views
                                             .addGameLibraryView()
                                             .addGameSetupView()
+                                            .addBlackjackView()
                                             // Use Cases
                                             .addGameLibraryUseCase()
                                             .addGameSelectUseCase()
@@ -28,6 +28,7 @@ public class Main {
                                             .addGameSetConfigUseCase()
                                             .addGameSearchUseCase()
                                             .addGameFilterUseCase()
+                                            .addBlackjackUseCases()
                                             // Build
                                             .build();
 

@@ -1,15 +1,14 @@
 package view;
 
-import interface_adapter.blackjack.*;
-
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
+import javax.swing.*;
 
+import interface_adapter.blackjack.*;
 /**
  * The View for all the Blackjack Use Cases.
  */

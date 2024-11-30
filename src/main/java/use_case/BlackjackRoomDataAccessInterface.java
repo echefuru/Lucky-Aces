@@ -1,5 +1,6 @@
 package use_case;
 
+import entity.BlackjackPlayerRecord;
 import entity.Deck;
 import entity.room.BlackjackRoom;
 
@@ -24,4 +25,27 @@ public interface BlackjackRoomDataAccessInterface {
      * Reset the BlackjackRoom in context to a new room.
      */
     void resetRoom();
+
+    /**
+     * Create a new BlackjackPlayerRecord.
+     */
+    void createBlackjackPlayerRecord();
+
+    /**
+     * Get the current BlackjackPlayerRecord.
+     * @return BlackjackPlayerRecord object
+     */
+    BlackjackPlayerRecord getBlackjackPlayerRecord();
+
+    /**
+     * Update BlackjackPlayerRecord: its totalWins, totalRounds.
+     * @param won if won this round.
+     */
+    void recordGame(boolean won);
+
+    /**
+     * Update BlackjackPlayerRecord's handValueRecord.
+     * @param curHandValue current hand value to be documented.
+     */
+    void updateHandValueRecord(int curHandValue);
 }

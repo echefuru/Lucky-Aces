@@ -1,5 +1,6 @@
 package data_access;
 
+import entity.BlackjackPlayerRecord;
 import entity.Deck;
 import entity.room.BlackjackRoom;
 import use_case.BlackjackRoomDataAccessInterface;
@@ -9,6 +10,7 @@ import use_case.BlackjackRoomDataAccessInterface;
  */
 public class BlackjackRoomDataAccessObject implements BlackjackRoomDataAccessInterface {
     private BlackjackRoom blackjackRoom;
+    private BlackjackPlayerRecord blackjackPlayerRecord;
 
     @Override
     public void createRoom(Deck deck) {
@@ -24,4 +26,25 @@ public class BlackjackRoomDataAccessObject implements BlackjackRoomDataAccessInt
     public void resetRoom() {
         blackjackRoom = null;
     }
+
+    @Override
+    public void createBlackjackPlayerRecord() {
+        blackjackPlayerRecord = new BlackjackPlayerRecord();
+    }
+
+    @Override
+    public BlackjackPlayerRecord getBlackjackPlayerRecord() {
+        return blackjackPlayerRecord;
+    }
+
+    @Override
+    public void recordGame(boolean won) {
+        blackjackPlayerRecord.recordGame(won);
+    }
+
+    @Override
+    public void updateHandValueRecord(int curHandValue) {
+        blackjackPlayerRecord.updateHandValueRecord(curHandValue);
+    }
+
 }

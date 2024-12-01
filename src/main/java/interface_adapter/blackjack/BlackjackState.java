@@ -13,6 +13,8 @@ public class BlackjackState {
     private String stage = "init";
     private int wins;
     private int losses;
+    private int playerBankroll;
+    private int currentBet;
 
     public List<String> getPlayerCards() {
         return playerCards;
@@ -36,6 +38,14 @@ public class BlackjackState {
 
     public int getLosses() {
         return losses;
+    }
+
+    public int getPlayerBankroll() {
+        return playerBankroll;
+    }
+
+    public int getCurrentBet() {
+        return currentBet;
     }
 
     public void setPlayerTotal(int playerTotal) {
@@ -66,28 +76,12 @@ public class BlackjackState {
         this.losses = losses;
     }
 
-    /**
-     * Increments player wins by 1.
-     */
-    public void incrementWins() {
-        this.wins += 1;
+    public void setPlayerBankroll(int playerBankroll) {
+        this.playerBankroll = playerBankroll;
     }
 
-    /**
-     * Increments dealer wins by 1.
-     */
-    public void incrementLosses() {
-        this.losses += 1;
+    public void setCurrentBet(int currentBet) {
+        this.currentBet = currentBet;
     }
 
-    /**
-     * Resets the object's fields, except stage which must be set back to "init" explicitly.
-     */
-    public void reset() {
-        playerCards = null;
-        playerTotal = 0;
-        dealerCards = null;
-        wins = 0;
-        losses = 0;
-    }
 }

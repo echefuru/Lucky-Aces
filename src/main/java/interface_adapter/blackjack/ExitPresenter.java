@@ -9,7 +9,6 @@ import use_case.blackjack.exit.ExitOutputBoundary;
  */
 public class ExitPresenter implements ExitOutputBoundary {
 
-    private final BlackjackViewModel blackjackViewModel;
     private final GameLibraryViewModel gameLibraryViewModel;
     private final ViewManagerModel viewManagerModel;
 
@@ -17,16 +16,11 @@ public class ExitPresenter implements ExitOutputBoundary {
                               BlackjackViewModel blackjackViewModel,
                               GameLibraryViewModel gameLibraryViewModel) {
         this.viewManagerModel = viewManagerModel;
-        this.blackjackViewModel = blackjackViewModel;
         this.gameLibraryViewModel = gameLibraryViewModel;
     }
 
     @Override
     public void switchToGameLibraryView() {
-        final BlackjackState state = blackjackViewModel.getState();
-        state.reset();
-        state.setStage("init");
-        this.blackjackViewModel.setState(state);
         viewManagerModel.setState(gameLibraryViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }

@@ -1,6 +1,5 @@
 package use_case;
 
-import java.io.IOException;
 import java.util.List;
 
 import entity.Card;

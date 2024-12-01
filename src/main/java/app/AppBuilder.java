@@ -209,7 +209,8 @@ public class AppBuilder {
      */
     public AppBuilder addGameStartUseCase() {
         final GameStartOutputBoundary gameSetupPresenter = new GameStartPresenter(viewManagerModel, blackjackViewModel);
-        final GameStartInputBoundary gameSetupInteractor = new GameStartInteractor(gameSetupPresenter);
+        final GameStartInputBoundary gameSetupInteractor = new GameStartInteractor(gameSetupPresenter,
+                blackjackRoomDataAccessObject, apiDataAccessObject);
         final GameStartController gameStartController = new GameStartController(gameSetupInteractor);
 
         gameSetupView.setGameStartController(gameStartController);

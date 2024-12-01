@@ -1,10 +1,10 @@
 package entity.room;
 
-import entity.Card;
-import entity.Deck;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import entity.Card;
+import entity.Deck;
 
 /**
  * The abstract representation of a game room in our program.

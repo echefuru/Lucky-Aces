@@ -1,7 +1,6 @@
 package interface_adapter.blackjack;
 
 import use_case.blackjack.BlackjackOutputData;
-import use_case.blackjack.hit.HitOutputBoundary;
 import use_case.blackjack.hold.HoldOutputBoundary;
 
 /**

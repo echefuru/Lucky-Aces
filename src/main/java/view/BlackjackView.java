@@ -23,6 +23,7 @@ import interface_adapter.blackjack.ExitController;
 import interface_adapter.blackjack.HitController;
 import interface_adapter.blackjack.HoldController;
 import interface_adapter.blackjack.PlayController;
+import interface_adapter.blackjack.PlayerRecordController;
 
 /**
  * The View for all the Blackjack Use Cases.
@@ -49,6 +50,7 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
     private final JButton hold = new JButton("HOLD");
     private final JButton playAgain = new JButton("PLAY");
     private final JButton exit = new JButton("EXIT");
+    private final JButton playerRecord = new JButton("CHECK RECORD");
 
     private final JLabel cardBack = new JLabel(ViewConstants.STRING_IMAGEICON_MAP.get("BACK"));
 
@@ -57,6 +59,7 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
     private HoldController holdController;
     private AgainController againController;
     private ExitController exitController;
+    private PlayerRecordController playerRecordController;
 
     public BlackjackView(BlackjackViewModel blackjackViewModel) {
         // Inject the viewModel
@@ -99,6 +102,7 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         playController.execute();
+                        playerRecordController.executeCreate();
                     }
                 }
         );
@@ -107,6 +111,7 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         hitController.execute();
+                        playerRecordController.executeUpdate();
                     }
                 }
         );
@@ -115,6 +120,7 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         holdController.execute();
+                        playerRecordController.executeUpdate();
                     }
                 }
         );
@@ -123,6 +129,7 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         againController.execute();
+                        playerRecordController.executeUpdate();
                     }
                 }
         );
@@ -140,6 +147,19 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
                         if (response == JOptionPane.YES_OPTION) {
                             exitController.switchToGameLibraryView();
                         }
+                    }
+                }
+        );
+
+        playerRecord.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        playerRecordController.executeCheck();
+                        final String message = blackjackViewModel.getState().getPlayerRecordMessage();
+
+                        // Show the message (player record) in a pop-up window.
+                        JOptionPane.showMessageDialog(null, message, "Player statistics",
+                                JOptionPane.INFORMATION_MESSAGE);
                     }
                 }
         );
@@ -165,14 +185,26 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
                 holdController.execute();
                 break;
             case "win":
-            case "draw":
-            case "loss":
                 clearCardUi();
                 paintEndUi(state.getPlayerCards(), state.getDealerCards(), state.getWins(), state.getLosses(),
                         state.getPlayerBankroll(), state.getStage());
+                playerRecordController.executeRound(1);
+                break;
+            case "draw":
+                clearCardUi();
+                paintEndUi(state.getPlayerCards(), state.getDealerCards(), state.getWins(), state.getLosses(),
+                        state.getPlayerBankroll(), state.getStage());
+                playerRecordController.executeRound(2);
+                break;
+            case "loss":
+                clearCardUi();
+                paintEndUi(state.getPlayerCards(), state.getDealerCards(), state.getWins(), state.getLosses(),
+                           state.getPlayerBankroll(), state.getStage());
+                playerRecordController.executeRound(0);
                 break;
             case "bust":
                 paintBustUi(state.getPlayerCards(), state.getLosses());
+                playerRecordController.executeRound(0);
                 break;
             case "again":
                 clearCardUi();
@@ -208,6 +240,10 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
 
     public void setExitController(ExitController exitController) {
         this.exitController = exitController;
+    }
+
+    public void setPlayerRecordController(PlayerRecordController playerRecordController) {
+        this.playerRecordController = playerRecordController;
     }
 
     public String getViewName() {
@@ -265,6 +301,7 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
             buttons.repaint();
             buttons.add(hit);
             buttons.add(hold);
+            buttons.add(playerRecord);
             buttons.add(exit);
         }
     }
@@ -310,6 +347,7 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
         buttons.repaint();
         buttons.add(playAgain);
         buttons.add(exit);
+        buttons.add(playerRecord);
     }
 
     private void paintBustUi(List<String> playerCards, int losses) {
@@ -331,6 +369,7 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
         buttons.repaint();
         buttons.add(playAgain);
         buttons.add(exit);
+        buttons.add(playerRecord);
     }
 
     private void clearCardUi() {

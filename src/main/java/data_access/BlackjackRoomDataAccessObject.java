@@ -11,8 +11,8 @@ public class BlackjackRoomDataAccessObject implements BlackjackRoomDataAccessInt
     private BlackjackRoom blackjackRoom;
 
     @Override
-    public void createRoom(Deck deck, int bankroll, int minimum_bet) {
-        blackjackRoom = new BlackjackRoom(deck, bankroll, minimum_bet);
+    public void createRoom(Deck deck, int bankroll, int minimumBet) {
+        blackjackRoom = new BlackjackRoom(deck, bankroll, minimumBet);
     }
 
     @Override
@@ -29,4 +29,5 @@ public class BlackjackRoomDataAccessObject implements BlackjackRoomDataAccessInt
     public void exitRoom() {
         blackjackRoom = null;
     }
+
 }

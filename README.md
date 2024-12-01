@@ -24,9 +24,12 @@ The user of the program can:
 - Search for a game using the game name;
 - Filter available games based on the game type and the number of players;
 - Select a game;
-- Look at the description and the rules of the game;
+- Read the description and the rules of the game;
 - Set the config of the game;
-- Play the game!
+- Play the game;
+- In the game: 
+  - Check your records
+- Exit the game and return to game library
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 * * *
@@ -60,6 +63,7 @@ The user of the program can:
 
 * * *
 ## Usage
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 * * *

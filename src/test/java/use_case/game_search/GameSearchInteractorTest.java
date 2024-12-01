@@ -12,15 +12,17 @@ public class GameSearchInteractorTest {
     public void blackjackTest() {
         String searchText = "blackjack";
         GameSearchInputData inputData = new GameSearchInputData(searchText);
-        GameInfoDataAccessInterface gameInfoDAO = new GameInfoDataAccessObject("game_info.json");
+        GameInfoDataAccessInterface gameInfoDAO = new GameInfoDataAccessObject("test.json");
 
         GameSearchOutputBoundary gameSearchPresenter = new GameSearchOutputBoundary() {
             @Override
             public void prepareSuccessView(GameSearchOutputData outputData) {
                 boolean[] gameVisible = outputData.getGameVisible();
+                assertEquals(4, gameVisible.length);
                 assertTrue(gameVisible[0]);
                 assertFalse(gameVisible[1]);
                 assertFalse(gameVisible[2]);
+                assertFalse(gameVisible[3]);
                 assertEquals(outputData.getSearchText(), searchText);
             }
 
@@ -35,18 +37,20 @@ public class GameSearchInteractorTest {
     }
 
     @Test
-    public void placeholderTest() {
-        String searchText = "placeholder";
+    public void testTest() {
+        String searchText = "test";
         GameSearchInputData inputData = new GameSearchInputData(searchText);
-        GameInfoDataAccessInterface gameInfoDAO = new GameInfoDataAccessObject("game_info.json");
+        GameInfoDataAccessInterface gameInfoDAO = new GameInfoDataAccessObject("test.json");
 
         GameSearchOutputBoundary gameSearchPresenter = new GameSearchOutputBoundary() {
             @Override
             public void prepareSuccessView(GameSearchOutputData outputData) {
                 boolean[] gameVisible = outputData.getGameVisible();
+                assertEquals(4, gameVisible.length);
                 assertFalse(gameVisible[0]);
-                assertTrue(gameVisible[1]);
+                assertFalse(gameVisible[1]);
                 assertTrue(gameVisible[2]);
+                assertTrue(gameVisible[3]);
                 assertEquals(outputData.getSearchText(), searchText);
             }
 
@@ -64,12 +68,13 @@ public class GameSearchInteractorTest {
     public void upperBlackjackTest() {
         String searchText = "BLACKJACK";
         GameSearchInputData inputData = new GameSearchInputData(searchText);
-        GameInfoDataAccessInterface gameInfoDAO = new GameInfoDataAccessObject("game_info.json");
+        GameInfoDataAccessInterface gameInfoDAO = new GameInfoDataAccessObject("test.json");
 
         GameSearchOutputBoundary gameSearchPresenter = new GameSearchOutputBoundary() {
             @Override
             public void prepareSuccessView(GameSearchOutputData outputData) {
                 boolean[] gameVisible = outputData.getGameVisible();
+                assertEquals(4, gameVisible.length);
                 assertTrue(gameVisible[0]);
                 assertFalse(gameVisible[1]);
                 assertFalse(gameVisible[2]);
@@ -90,15 +95,17 @@ public class GameSearchInteractorTest {
     public void digitTest() {
         String searchText = "1";
         GameSearchInputData inputData = new GameSearchInputData(searchText);
-        GameInfoDataAccessInterface gameInfoDAO = new GameInfoDataAccessObject("game_info.json");
+        GameInfoDataAccessInterface gameInfoDAO = new GameInfoDataAccessObject("test.json");
 
         GameSearchOutputBoundary gameSearchPresenter = new GameSearchOutputBoundary() {
             @Override
             public void prepareSuccessView(GameSearchOutputData outputData) {
                 boolean[] gameVisible = outputData.getGameVisible();
+                assertEquals(4, gameVisible.length);
                 assertFalse(gameVisible[0]);
-                assertTrue(gameVisible[1]);
-                assertFalse(gameVisible[2]);
+                assertFalse(gameVisible[1]);
+                assertTrue(gameVisible[2]);
+                assertFalse(gameVisible[3]);
                 assertEquals(outputData.getSearchText(), searchText);
             }
 
@@ -116,12 +123,13 @@ public class GameSearchInteractorTest {
     public void voidTest() {
         String searchText = "";
         GameSearchInputData inputData = new GameSearchInputData(searchText);
-        GameInfoDataAccessInterface gameInfoDAO = new GameInfoDataAccessObject("game_info.json");
+        GameInfoDataAccessInterface gameInfoDAO = new GameInfoDataAccessObject("test.json");
 
         GameSearchOutputBoundary gameSearchPresenter = new GameSearchOutputBoundary() {
             @Override
             public void prepareSuccessView(GameSearchOutputData outputData) {
                 boolean[] gameVisible = outputData.getGameVisible();
+                assertEquals(4, gameVisible.length);
                 assertTrue(gameVisible[0]);
                 assertTrue(gameVisible[1]);
                 assertTrue(gameVisible[2]);

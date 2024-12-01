@@ -10,29 +10,32 @@ public class GameLibraryInteractorTest {
 
     @Test
     public void test() {
-        GameInfoDataAccessInterface gameInfoDAO = new GameInfoDataAccessObject("game_info.json");
+        GameInfoDataAccessInterface gameInfoDAO = new GameInfoDataAccessObject("test.json");
 
         GameLibraryOutputBoundary gameLibraryPresenter = new GameLibraryOutputBoundary() {
             @Override
             public void prepareSuccessView(GameLibraryOutputData outputData) {
                 String[] gameTypes = outputData.getGameTypes();
-                assertEquals(4, gameTypes.length);
+                assertEquals(5, gameTypes.length);
                 assertEquals("Comparing Card Games", gameTypes[0]);
                 assertEquals("Gambling Games", gameTypes[1]);
                 assertEquals("Luck-Based Games", gameTypes[2]);
-                assertEquals("Strategy-Based Games", gameTypes[3]);
+                assertEquals("New Type", gameTypes[3]);
+                assertEquals("Strategy-Based Games", gameTypes[4]);
 
                 String[] gamesNames = outputData.getGameNames();
-                assertEquals(3, gamesNames.length);
+                assertEquals(4, gamesNames.length);
                 assertEquals("Blackjack", gamesNames[0]);
-                assertEquals("Placeholder 1", gamesNames[1]);
-                assertEquals("Placeholder 2", gamesNames[2]);
+                assertEquals("Placeholder Game", gamesNames[1]);
+                assertEquals("Test 1", gamesNames[2]);
+                assertEquals("Test 2", gamesNames[3]);
 
                 String[] games = outputData.getGames();
-                assertEquals(3, games.length);
+                assertEquals(4, games.length);
                 assertEquals("blackjack", games[0]);
-                assertEquals("placeholder1", games[1]);
-                assertEquals("placeholder2", games[2]);
+                assertEquals("placeholdergame", games[1]);
+                assertEquals("test1", games[2]);
+                assertEquals("test2", games[3]);
             }
 
             @Override

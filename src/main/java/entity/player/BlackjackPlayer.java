@@ -27,6 +27,31 @@ public class BlackjackPlayer extends AbstractPlayer {
         return blackjackPlayerRecord;
     }
 
+    /**
+     * Create a new Blackjack Player Record for this player.
+     * @return the new Blackjack Player Record.
+     */
+    public BlackjackPlayerRecord createBlackjackPlayerRecord() {
+        blackjackPlayerRecord = new BlackjackPlayerRecord();
+        return blackjackPlayerRecord;
+    }
+
+    /**
+     * Update the current hand value of the human player to the player's record.
+     * @param handVal the current hand value.
+     */
+    public void updateHandValRecord(int handVal) {
+        blackjackPlayerRecord.updateHandValueRecord(handVal);
+    }
+
+    /**
+     * Record whether won in this round.
+     * @param won whether the player won in this round.
+     */
+    public void recordRound(int won) {
+        blackjackPlayerRecord.recordRound(won);
+    }
+
     public void setBankroll(int bankroll) {
         this.bankroll = bankroll;
     }

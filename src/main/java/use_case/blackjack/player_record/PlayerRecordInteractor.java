@@ -21,30 +21,31 @@ public class PlayerRecordInteractor implements PlayerRecordInputBoundary {
 
     @Override
     public void executeCheck() {
-        final BlackjackPlayerRecord playerRecord = blackjackRoomDao.getBlackjackPlayerRecord();
+        final BlackjackPlayerRecord playerRecord = blackjackRoomDao.getRoom().getHumanPlayer()
+                .getBlackjackPlayerRecord();
         final List<Integer> handValRecord = playerRecord.getHandValueRecord();
         final int totalWins = playerRecord.getTotalWins();
         final int totalLosses = playerRecord.getTotalLosses();
         final int totalRounds = playerRecord.getTotalRounds();
-        final PlayerRecordOutputData outputData = new PlayerRecordOutputData(totalWins, totalLosses, totalRounds, handValRecord);
+        final PlayerRecordOutputData outputData = new PlayerRecordOutputData(totalWins, totalLosses,
+                totalRounds, handValRecord);
         playerRecordPresenter.preparePlayerRecordView(outputData);
 
     }
 
     @Override
     public void executeUpdate() {
-        blackjackRoomDao.updateHandValueRecord(blackjackRoomDao.getRoom().getPlayerHandValue(
-                BlackjackRoom.HUMAN_PLAYER));
-
+        blackjackRoomDao.getRoom().getHumanPlayer().updateHandValRecord(blackjackRoomDao.getRoom()
+                .getPlayerHandValue(BlackjackRoom.HUMAN_PLAYER));
     }
 
     @Override
     public void executeCreate() {
-        blackjackRoomDao.createBlackjackPlayerRecord();
+        blackjackRoomDao.getRoom().getHumanPlayer().createBlackjackPlayerRecord();
     }
 
     @Override
     public void executeRound(int won) {
-        blackjackRoomDao.recordRound(won);
+        blackjackRoomDao.getRoom().getHumanPlayer().recordRound(won);
     }
 }

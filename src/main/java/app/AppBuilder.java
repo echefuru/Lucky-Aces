@@ -293,10 +293,6 @@ public class AppBuilder {
         viewManagerModel.firePropertyChanged();
         gameLibraryViewModel.firePropertyChanged("build");
 
-        // TODO: Remove quick startup to BlackjackView
-        // viewManagerModel.setState(blackjackView.getViewName());
-        // viewManagerModel.firePropertyChanged();
-
         return application;
     }
 }

@@ -17,7 +17,6 @@ public class GameStartInteractor implements GameStartInputBoundary {
         final GameStartOutputData gameStartOutputData = new GameStartOutputData(selectedGame);
 
         if ("blackjack".equals(selectedGame)) {
-            // TODO: Set up Blackjack Room based on given config
             gameSetupPresenter.prepareSuccessView(gameStartOutputData);
         }
         else {

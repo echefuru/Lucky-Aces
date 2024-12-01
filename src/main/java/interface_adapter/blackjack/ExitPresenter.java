@@ -21,7 +21,6 @@ public class ExitPresenter implements ExitOutputBoundary {
         this.gameLibraryViewModel = gameLibraryViewModel;
     }
 
-    // TODO: Interactor reset the Room in DAO, this resets the blackjackViewModel, using the INIT STAGE.
     @Override
     public void switchToGameLibraryView() {
         final BlackjackState state = blackjackViewModel.getState();

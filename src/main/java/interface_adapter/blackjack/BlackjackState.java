@@ -1,6 +1,5 @@
 package interface_adapter.blackjack;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

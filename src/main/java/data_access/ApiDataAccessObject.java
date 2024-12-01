@@ -1,14 +1,16 @@
 package data_access;
 
 import java.io.IOException;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 
-import entity.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import entity.Card;
+import entity.Deck;
+import entity.Rank;
+import entity.Suit;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;

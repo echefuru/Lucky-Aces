@@ -1,10 +1,10 @@
 package use_case.blackjack.play;
 
+import java.util.List;
+
 import use_case.ApiDataAccessInterface;
 import use_case.BlackjackRoomDataAccessInterface;
 import use_case.blackjack.BlackjackOutputData;
-
-import java.util.List;
 
 /**
  * The Play Interactor for Blackjack.

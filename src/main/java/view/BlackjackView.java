@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
@@ -103,13 +102,6 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         playController.execute();
-                    }
-                }
-        );
-
-        play.addActionListener(
-                new ActionListener() {
-                    public void actionPerformed(ActionEvent evt) {
                         playerRecordController.executeCreate();
                     }
                 }
@@ -119,13 +111,6 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         hitController.execute();
-                    }
-                }
-        );
-
-        hit.addActionListener(
-                new ActionListener() {
-                    public void actionPerformed(ActionEvent evt) {
                         playerRecordController.executeUpdate();
                     }
                 }
@@ -135,6 +120,7 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         holdController.execute();
+                        playerRecordController.executeUpdate();
                     }
                 }
         );
@@ -143,13 +129,6 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         againController.execute();
-                    }
-                }
-        );
-
-        playAgain.addActionListener(
-                new ActionListener() {
-                    public void actionPerformed(ActionEvent evt) {
                         playerRecordController.executeUpdate();
                     }
                 }
@@ -175,9 +154,8 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
         playerRecord.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
-                        final BlackjackState state = blackjackViewModel.getState();
                         playerRecordController.executeCheck();
-                        final String message = state.getPlayerRecordMessage();
+                        final String message = blackjackViewModel.getState().getPlayerRecordMessage();
 
                         // Show the message (player record) in a pop-up window.
                         JOptionPane.showMessageDialog(null, message, "Player statistics",
@@ -209,13 +187,13 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
             case "win":
                 clearCardUi();
                 paintEndUi(state.getPlayerCards(), state.getDealerCards(), state.getWins(), state.getLosses(),
-                        state.getStage());
+                        state.getPlayerBankroll(), state.getStage());
                 playerRecordController.executeRound(1);
                 break;
             case "draw":
                 clearCardUi();
                 paintEndUi(state.getPlayerCards(), state.getDealerCards(), state.getWins(), state.getLosses(),
-                        state.getStage());
+                        state.getPlayerBankroll(), state.getStage());
                 playerRecordController.executeRound(2);
                 break;
             case "loss":
@@ -226,6 +204,7 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
                 break;
             case "bust":
                 paintBustUi(state.getPlayerCards(), state.getLosses());
+                playerRecordController.executeRound(0);
                 break;
             case "again":
                 clearCardUi();

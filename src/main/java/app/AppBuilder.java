@@ -21,6 +21,8 @@ import interface_adapter.blackjack.HoldController;
 import interface_adapter.blackjack.HoldPresenter;
 import interface_adapter.blackjack.PlayController;
 import interface_adapter.blackjack.PlayPresenter;
+import interface_adapter.blackjack.PlayerRecordController;
+import interface_adapter.blackjack.PlayerRecordPresenter;
 import interface_adapter.game_library_select.GameFilterController;
 import interface_adapter.game_library_select.GameFilterPresenter;
 import interface_adapter.game_library_select.GameLibraryController;

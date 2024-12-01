@@ -30,6 +30,10 @@ public class BlackjackRoom extends AbstractRoom {
         this.players[DEALER].setBankroll(BlackjackPlayer.INFINITY);
     }
 
+    public BlackjackPlayer getHumanPlayer() {
+        return this.players[HUMAN_PLAYER];
+    }
+
     /**
      * Return the hand value of the given player according to Blackjack rules.
      * @param player the player who holds the hand

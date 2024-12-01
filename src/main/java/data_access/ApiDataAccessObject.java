@@ -16,8 +16,6 @@ import okhttp3.Request;
 import okhttp3.Response;
 import use_case.ApiDataAccessInterface;
 
-import entity.*;
-
 /**
  * DAO for Deck management, retrieved from external API.
  */

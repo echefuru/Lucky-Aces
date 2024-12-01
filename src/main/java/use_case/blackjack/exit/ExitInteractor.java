@@ -18,7 +18,7 @@ public class ExitInteractor implements ExitInputBoundary {
 
     @Override
     public void switchToGameLibraryView() {
-        blackjackRoomDao.resetRoom();
+        blackjackRoomDao.exitRoom();
         exitPresenter.switchToGameLibraryView();
     }
 }

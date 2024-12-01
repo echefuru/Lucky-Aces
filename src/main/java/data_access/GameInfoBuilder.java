@@ -1,4 +1,4 @@
-package data_type;
+package data_access;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

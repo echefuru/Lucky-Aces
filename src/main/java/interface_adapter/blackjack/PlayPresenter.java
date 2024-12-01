@@ -20,6 +20,8 @@ public class PlayPresenter implements PlayOutputBoundary {
         state.setPlayerCards(blackjackOutputData.getPlayerCards());
         state.setPlayerTotal(blackjackOutputData.getPlayerTotal());
         state.setDealerCards(blackjackOutputData.getDealerCards());
+        state.setPlayerBankroll(blackjackOutputData.getPlayerBankroll());
+        state.setCurrentBet(blackjackOutputData.getCurrentBet());
         state.setStage("play");
         this.blackjackViewModel.setState(state);
         blackjackViewModel.firePropertyChanged();

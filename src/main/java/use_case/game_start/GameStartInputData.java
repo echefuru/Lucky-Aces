@@ -1,15 +1,15 @@
 package use_case.game_start;
 
-import org.json.JSONObject;
+import java.util.Map;
 
 /**
  * The input data for the Start Game Use Case.
  */
 public class GameStartInputData {
     private final String selectedGame;
-    private final JSONObject config;
+    private final Map<String, Integer> config;
 
-    public GameStartInputData(String selectedGame, JSONObject config) {
+    public GameStartInputData(String selectedGame, Map<String, Integer> config) {
         this.selectedGame = selectedGame;
         this.config = config;
     }
@@ -18,7 +18,7 @@ public class GameStartInputData {
         return selectedGame;
     }
 
-    public JSONObject getConfig() {
+    public Map<String, Integer> getConfig() {
         return config;
     }
 }

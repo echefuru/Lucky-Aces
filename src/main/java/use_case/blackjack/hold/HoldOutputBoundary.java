@@ -24,4 +24,10 @@ public interface HoldOutputBoundary {
      * @param blackjackOutputData is the output data for the use case passed from Interactor.
      */
     void prepareLossView(BlackjackOutputData blackjackOutputData);
+
+    /**
+     * Updates the BlackjackViewModel to reflect the Game Over stage of the game.
+     * @param blackjackOutputData is the output data for the use case passed from Interactor.
+     */
+    void prepareGameOverView(BlackjackOutputData blackjackOutputData);
 }

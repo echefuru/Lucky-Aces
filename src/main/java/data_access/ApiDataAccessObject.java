@@ -56,23 +56,6 @@ public class ApiDataAccessObject implements ApiDataAccessInterface {
         return new Deck(responseBody.getString("deck_id"), responseBody.getInt(REMAINING_FLAG));
     }
 
-//    @Override
-//    public Card draw(Deck deck) {
-//        final OkHttpClient client = new OkHttpClient().newBuilder().build();
-//        // Note: The API requires the deck_id in the path.
-//        final Request request = new Request.Builder()
-//                .url(String.format("%s/deck/%s/draw", API_URL, deck.getDeckId()))
-//                .build();
-//
-//        final JSONObject responseBody = getResponseBody(client, request);
-//
-//        // Logic of happy path; return the generated Card and update Deck remaining cards.
-//        deck.setRemaining(responseBody.getInt(REMAINING_FLAG));
-//        final JSONObject jsonCard = responseBody.getJSONArray("cards").getJSONObject(0);
-//        return new Card(Rank.fromString(jsonCard.getString("value")),
-//                Suit.valueOf(jsonCard.getString("suit")));
-//    }
-
     @Override
     public List<Card> draw(Deck deck, int numCards) {
         final OkHttpClient client = new OkHttpClient().newBuilder().build();
@@ -138,27 +121,4 @@ public class ApiDataAccessObject implements ApiDataAccessInterface {
 
         return responseBody;
     }
-
-    // TODO: Get rid of this main; was used for dev testing of this class.
-//    public static void main(String[] args) {
-//        ApiDataAccessInterface dao = new ApiDataAccessObject();
-//
-//        Deck deck = dao.createDeck();
-//        Card card = dao.draw(deck, 1).get(0);
-//        System.out.println(card.getRank() + ", " + card.getSuit() + ", " + card);
-//        System.out.println("Drew 1 card, " + deck.getRemaining() + " remaining.");
-//
-//        List<Card> cards = dao.draw(deck, 51);
-//        for (Card c : cards) {
-//            System.out.println(c.getRank() + ", " + c.getSuit() + ", " + c);
-//        }
-//        System.out.println("Drew 51 cards, " + deck.getRemaining() + " remaining.");
-//
-//        dao.shuffle(deck);
-//        System.out.println("Shuffling deck, back to " + deck.getRemaining() + " remaining.");
-//
-//        System.out.println("Drawing 1 card again.");
-//        Card card1 = dao.draw(deck, 1).get(0);
-//        System.out.println(card1.getRank() + ", " + card1.getSuit());
-//    }
 }

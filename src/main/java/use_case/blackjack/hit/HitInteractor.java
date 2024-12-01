@@ -1,10 +1,10 @@
 package use_case.blackjack.hit;
 
+import java.util.List;
+
 import use_case.ApiDataAccessInterface;
 import use_case.BlackjackRoomDataAccessInterface;
 import use_case.blackjack.BlackjackOutputData;
-
-import java.util.List;
 
 /**
  * The Hit Interactor for Blackjack.

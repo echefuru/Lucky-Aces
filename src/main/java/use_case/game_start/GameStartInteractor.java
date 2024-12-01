@@ -31,7 +31,9 @@ public class GameStartInteractor implements GameStartInputBoundary {
         final GameStartOutputData gameStartOutputData = new GameStartOutputData(selectedGame, initialBankroll);
 
         if ("blackjack".equals(selectedGame)) {
-            gameSetupPresenter.prepareSuccessView(gameStartOutputData);
+            blackjackRoomDataAccessObject.createRoom(apiDataAccessObject.createDeck(2),
+                    initialBankroll, minBet);
+            gameStartPresenter.prepareSuccessView(gameStartOutputData);
         }
         else {
             gameStartPresenter.prepareFailView("Can't find selected game in program");

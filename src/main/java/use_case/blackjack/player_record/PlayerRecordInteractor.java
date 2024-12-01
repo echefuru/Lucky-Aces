@@ -3,6 +3,7 @@ package use_case.blackjack.player_record;
 import java.util.List;
 
 import entity.BlackjackPlayerRecord;
+import entity.room.BlackjackRoom;
 import use_case.BlackjackRoomDataAccessInterface;
 
 /**
@@ -32,7 +33,8 @@ public class PlayerRecordInteractor implements PlayerRecordInputBoundary {
 
     @Override
     public void executeUpdate() {
-        blackjackRoomDao.updateHandValueRecord(blackjackRoomDao.getRoom().getPlayerTotal());
+        blackjackRoomDao.updateHandValueRecord(blackjackRoomDao.getRoom().getPlayerHandValue(
+                BlackjackRoom.HUMAN_PLAYER));
 
     }
 

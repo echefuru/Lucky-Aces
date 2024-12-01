@@ -2,6 +2,7 @@ package entity.player;
 
 import java.util.List;
 
+import entity.BlackjackPlayerRecord;
 import entity.Card;
 import entity.Rank;
 
@@ -16,9 +17,14 @@ public class BlackjackPlayer extends AbstractPlayer {
 
     private int bankroll;
     private int currentBet;
+    private BlackjackPlayerRecord blackjackPlayerRecord;
 
     public BlackjackPlayer(int bankroll) {
         this.bankroll = bankroll;
+    }
+
+    public BlackjackPlayerRecord getBlackjackPlayerRecord() {
+        return blackjackPlayerRecord;
     }
 
     public void setBankroll(int bankroll) {

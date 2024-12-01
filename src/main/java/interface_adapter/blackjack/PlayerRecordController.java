@@ -20,7 +20,7 @@ public class PlayerRecordController {
     }
 
     /**
-     * Execute Update for the Player Record Use Case in Blackjack (no display).
+     * Execute Update (record player hand value) for the Player Record Use Case in Blackjack (no display).
      */
     public void executeUpdate() {
         playerRecordInteractor.executeUpdate();

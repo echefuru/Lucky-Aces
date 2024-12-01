@@ -7,6 +7,10 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import entity.Card;
+import entity.Deck;
+import entity.Rank;
+import entity.Suit;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -53,23 +57,6 @@ public class ApiDataAccessObject implements ApiDataAccessInterface {
         // Logic of happy path; return the generated Deck.
         return new Deck(responseBody.getString("deck_id"), responseBody.getInt(REMAINING_FLAG));
     }
-
-//    @Override
-//    public Card draw(Deck deck) {
-//        final OkHttpClient client = new OkHttpClient().newBuilder().build();
-//        // Note: The API requires the deck_id in the path.
-//        final Request request = new Request.Builder()
-//                .url(String.format("%s/deck/%s/draw", API_URL, deck.getDeckId()))
-//                .build();
-//
-//        final JSONObject responseBody = getResponseBody(client, request);
-//
-//        // Logic of happy path; return the generated Card and update Deck remaining cards.
-//        deck.setRemaining(responseBody.getInt(REMAINING_FLAG));
-//        final JSONObject jsonCard = responseBody.getJSONArray("cards").getJSONObject(0);
-//        return new Card(Rank.fromString(jsonCard.getString("value")),
-//                Suit.valueOf(jsonCard.getString("suit")));
-//    }
 
     @Override
     public List<Card> draw(Deck deck, int numCards) {

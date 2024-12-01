@@ -19,22 +19,8 @@ public class BlackjackState {
     private int totalRounds;
     private int wins;
     private int losses;
-
-    public void setPlayerHandValRecord(List<Integer> playerHandValRecord) {
-        this.playerHandValRecord = playerHandValRecord;
-    }
-
-    public void setTotalRounds(int totalRounds) {
-        this.totalRounds = totalRounds;
-    }
-
-    public void setWins(int wins) {
-        this.wins = wins;
-    }
-
-    public void setLosses(int losses) {
-        this.losses = losses;
-    }
+    private int playerBankroll;
+    private int currentBet;
 
     /**
      * Increment losses by one.
@@ -90,6 +76,14 @@ public class BlackjackState {
         return losses;
     }
 
+    public int getPlayerBankroll() {
+        return playerBankroll;
+    }
+
+    public int getCurrentBet() {
+        return currentBet;
+    }
+
     public void setPlayerTotal(int playerTotal) {
         this.playerTotal = playerTotal;
     }
@@ -109,7 +103,7 @@ public class BlackjackState {
     public void setStage(String string) {
         this.stage = string;
     }
-
+  
     /**
      * Resets the object's fields, except stage which must be set back to "init" explicitly.
      */
@@ -122,4 +116,29 @@ public class BlackjackState {
         wins = 0;
         losses = 0;
     }
+
+    public void setWins(int wins) {
+        this.wins = wins;
+    }
+
+    public void setLosses(int losses) {
+        this.losses = losses;
+    }
+
+    public void setPlayerBankroll(int playerBankroll) {
+        this.playerBankroll = playerBankroll;
+    }
+
+    public void setCurrentBet(int currentBet) {
+        this.currentBet = currentBet;
+    }
+  
+      public void setPlayerHandValRecord(List<Integer> playerHandValRecord) {
+        this.playerHandValRecord = playerHandValRecord;
+    }
+
+    public void setTotalRounds(int totalRounds) {
+        this.totalRounds = totalRounds;
+    }
+
 }

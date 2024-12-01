@@ -18,7 +18,7 @@ public class AgainInteractor implements AgainInputBoundary {
 
     @Override
     public void execute() {
-        blackjackRoomDao.resetRoom();
+        blackjackRoomDao.newRound();
         againPresenter.execute();
     }
 }

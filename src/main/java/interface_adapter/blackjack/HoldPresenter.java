@@ -19,7 +19,8 @@ public class HoldPresenter implements HoldOutputBoundary {
         final BlackjackState state = blackjackViewModel.getState();
         state.setPlayerCards(blackjackOutputData.getPlayerCards());
         state.setDealerCards(blackjackOutputData.getDealerCards());
-        state.incrementWins();
+        state.setWins(blackjackOutputData.getWins());
+        state.setPlayerBankroll(blackjackOutputData.getPlayerBankroll());
         state.setStage("win");
         this.blackjackViewModel.setState(state);
         blackjackViewModel.firePropertyChanged();
@@ -30,6 +31,7 @@ public class HoldPresenter implements HoldOutputBoundary {
         final BlackjackState state = blackjackViewModel.getState();
         state.setPlayerCards(blackjackOutputData.getPlayerCards());
         state.setDealerCards(blackjackOutputData.getDealerCards());
+        state.setPlayerBankroll(blackjackOutputData.getPlayerBankroll());
         state.setStage("draw");
         this.blackjackViewModel.setState(state);
         blackjackViewModel.firePropertyChanged();
@@ -40,8 +42,19 @@ public class HoldPresenter implements HoldOutputBoundary {
         final BlackjackState state = blackjackViewModel.getState();
         state.setPlayerCards(blackjackOutputData.getPlayerCards());
         state.setDealerCards(blackjackOutputData.getDealerCards());
-        state.incrementLosses();
+        state.setLosses(blackjackOutputData.getLosses());
         state.setStage("loss");
+        this.blackjackViewModel.setState(state);
+        blackjackViewModel.firePropertyChanged();
+    }
+
+    @Override
+    public void prepareGameOverView(BlackjackOutputData blackjackOutputData) {
+        final BlackjackState state = blackjackViewModel.getState();
+        state.setPlayerCards(blackjackOutputData.getPlayerCards());
+        state.setDealerCards(blackjackOutputData.getDealerCards());
+        state.setLosses(blackjackOutputData.getLosses());
+        state.setStage("gameOver");
         this.blackjackViewModel.setState(state);
         blackjackViewModel.firePropertyChanged();
     }

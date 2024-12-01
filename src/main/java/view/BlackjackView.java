@@ -1,15 +1,29 @@
 package view;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 
-import javax.swing.*;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
-import interface_adapter.blackjack.*;
+import interface_adapter.blackjack.AgainController;
+import interface_adapter.blackjack.BlackjackState;
+import interface_adapter.blackjack.BlackjackViewModel;
+import interface_adapter.blackjack.ExitController;
+import interface_adapter.blackjack.HitController;
+import interface_adapter.blackjack.HoldController;
+import interface_adapter.blackjack.PlayController;
 import interface_adapter.blackjack.PlayerRecordController;
 
 /**
@@ -144,7 +158,16 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
         exit.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
-                        exitController.switchToGameLibraryView();
+                        final int response = JOptionPane.showConfirmDialog(
+                                null,
+                                "Are you sure you want to exit?",
+                                "Confirm Exit",
+                                JOptionPane.YES_NO_OPTION,
+                                JOptionPane.QUESTION_MESSAGE
+                        );
+                        if (response == JOptionPane.YES_OPTION) {
+                            exitController.switchToGameLibraryView();
+                        }
                     }
                 }
         );
@@ -174,11 +197,13 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
                 break;
             case "play":
                 clearCardUi();
-                paintPlayUi(state.getPlayerCards(), state.getPlayerTotal(), state.getDealerCards());
+                paintPlayUi(state.getPlayerCards(), state.getPlayerTotal(), state.getDealerCards(),
+                        state.getWins(), state.getPlayerBankroll(), state.getCurrentBet());
                 break;
             case "21":
                 clearCardUi();
-                paintPlayUi(state.getPlayerCards(), state.getPlayerTotal(), state.getDealerCards());
+                paintPlayUi(state.getPlayerCards(), state.getPlayerTotal(), state.getDealerCards(),
+                        state.getWins(), state.getPlayerBankroll(), state.getCurrentBet());
                 holdController.execute();
                 break;
             case "win":
@@ -196,7 +221,7 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
             case "loss":
                 clearCardUi();
                 paintEndUi(state.getPlayerCards(), state.getDealerCards(), state.getWins(), state.getLosses(),
-                        state.getStage());
+                           state.getPlayerBankroll(), state.getStage());
                 playerRecordController.executeRound(0);
                 break;
             case "bust":
@@ -205,6 +230,13 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
             case "again":
                 clearCardUi();
                 playController.execute();
+                break;
+            case "gameOver":
+                clearCardUi();
+                paintEndUi(state.getPlayerCards(), state.getDealerCards(), state.getWins(), state.getLosses(),
+                        state.getPlayerBankroll(), state.getStage());
+                showGameOverDialogue("You don't have enough money to keep playing!\n"
+                        + "You will be returned to the Game Library menu.");
                 break;
             default:
                 throw new RuntimeException("Stage mismatched: " + state.getStage());
@@ -248,7 +280,7 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
         statusLabel.setForeground(Color.BLACK);
         statusLabel.setText("Press PLAY to start the round");
 
-        playerLabel.setText("PLAYER | Wins: 0");
+        playerLabel.setText("PLAYER | Wins: 0 | Bankroll: " + blackjackViewModel.getState().getPlayerBankroll());
 
         buttons.removeAll();
         buttons.revalidate();
@@ -257,7 +289,13 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
         buttons.add(exit);
     }
 
-    private void paintPlayUi(List<String> playerCards, int playerTotal, List<String> dealerCards) {
+    private void showGameOverDialogue(String message) {
+        JOptionPane.showMessageDialog(null, message, "Game Over", JOptionPane.INFORMATION_MESSAGE);
+        exitController.switchToGameLibraryView();
+    }
+
+    private void paintPlayUi(List<String> playerCards, int playerTotal, List<String> dealerCards,
+                             int wins, int bankroll, int currentBet) {
         // Paint dealer card.
         dealerPanel.add(cardBack);
         final JLabel dealerCard = new JLabel(ViewConstants.STRING_IMAGEICON_MAP.get(dealerCards.get(0)));
@@ -266,7 +304,10 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
 
         // Show player total.
         statusLabel.setForeground(Color.BLACK);
-        statusLabel.setText("You have " + playerTotal);
+        statusLabel.setText("Current bet: " + currentBet + " | You have " + playerTotal);
+
+        // Update player bankroll.
+        playerLabel.setText("PLAYER | Wins: " + wins + " | Bankroll: " + bankroll);
 
         // Paint player cards.
         for (String card : playerCards) {
@@ -286,7 +327,8 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
         }
     }
 
-    private void paintEndUi(List<String> playerCards, List<String> dealerCards, int wins, int losses, String stage) {
+    private void paintEndUi(List<String> playerCards, List<String> dealerCards,
+                            int wins, int losses, int bankroll, String stage) {
         // Paint dealer cards.
         for (String card : dealerCards) {
             final JLabel dealerCard = new JLabel(ViewConstants.STRING_IMAGEICON_MAP.get(card));
@@ -300,7 +342,7 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
             statusLabel.setText("YOU WIN!");
 
             // Increment player wins.
-            playerLabel.setText("PLAYER | Wins: " + wins);
+            playerLabel.setText("PLAYER | Wins: " + wins + " | Bankroll: " + bankroll);
         }
         else if ("draw".equals(stage)) {
             statusLabel.setForeground(Color.ORANGE);

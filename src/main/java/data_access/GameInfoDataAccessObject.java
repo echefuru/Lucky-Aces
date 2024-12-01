@@ -11,8 +11,6 @@ import java.util.Map;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import data_type.GameInfo;
-import data_type.GameInfoBuilder;
 import use_case.GameInfoDataAccessInterface;
 
 /**

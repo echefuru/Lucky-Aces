@@ -1,7 +1,8 @@
 package interface_adapter.game_setup;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.game_view.BlackjackViewModel;
+import interface_adapter.blackjack.BlackjackState;
+import interface_adapter.blackjack.BlackjackViewModel;
 import use_case.game_start.GameStartOutputBoundary;
 import use_case.game_start.GameStartOutputData;
 
@@ -21,9 +22,15 @@ public class GameStartPresenter implements GameStartOutputBoundary {
     @Override
     public void prepareSuccessView(GameStartOutputData gameStartOutputData) {
         final String selectedGame = gameStartOutputData.getSelectedGame();
+        final int playerBankroll = gameStartOutputData.getPlayerBankroll();
 
         if ("blackjack".equals(selectedGame)) {
-            // TODO: Finish link to the Blackjack View
+            // Start the Blackjack view in a fresh state
+            final BlackjackState blackjackState = new BlackjackState();
+            blackjackState.setPlayerBankroll(playerBankroll);
+            blackjackViewModel.setState(blackjackState);
+            blackjackViewModel.firePropertyChanged();
+
             viewManagerModel.setState(blackjackViewModel.getViewName());
             viewManagerModel.firePropertyChanged();
         }

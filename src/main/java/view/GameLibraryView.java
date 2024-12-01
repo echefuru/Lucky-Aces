@@ -126,7 +126,6 @@ public class GameLibraryView extends JPanel implements ActionListener, PropertyC
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("state")) {
-            // TODO: Update this.
             errorField.setText(gameLibraryViewModel.getState().getSelectGameError());
         }
         else if (evt.getPropertyName().equals("gameSelect")) {
@@ -181,8 +180,6 @@ public class GameLibraryView extends JPanel implements ActionListener, PropertyC
             gameButton.setAlignmentX(Component.CENTER_ALIGNMENT);
             gameSelection.add(gameButton);
             games[i] = gameButton;
-
-            // TODO: These actions are next steps in program.
 
             gameButton.addActionListener(
                     evt -> {

@@ -7,8 +7,10 @@ import interface_adapter.ViewModel;
  */
 public class BlackjackViewModel extends ViewModel<BlackjackState> {
 
+    private static final String VIEW_NAME = "blackjack_view";
+
     public BlackjackViewModel() {
-        super("blackjack_view");
+        super(VIEW_NAME);
         setState(new BlackjackState());
     }
 }

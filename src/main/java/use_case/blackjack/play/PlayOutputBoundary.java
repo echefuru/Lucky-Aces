@@ -19,5 +19,4 @@ public interface PlayOutputBoundary {
      */
     void prepare21View(BlackjackOutputData blackjackOutputData);
 
-
 }

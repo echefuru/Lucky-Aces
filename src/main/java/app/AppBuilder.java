@@ -10,7 +10,17 @@ import data_access.ApiDataAccessObject;
 import data_access.BlackjackRoomDataAccessObject;
 import data_access.GameInfoDataAccessObject;
 import interface_adapter.ViewManagerModel;
-import interface_adapter.blackjack.*;
+import interface_adapter.blackjack.AgainController;
+import interface_adapter.blackjack.AgainPresenter;
+import interface_adapter.blackjack.BlackjackViewModel;
+import interface_adapter.blackjack.ExitController;
+import interface_adapter.blackjack.ExitPresenter;
+import interface_adapter.blackjack.HitController;
+import interface_adapter.blackjack.HitPresenter;
+import interface_adapter.blackjack.HoldController;
+import interface_adapter.blackjack.HoldPresenter;
+import interface_adapter.blackjack.PlayController;
+import interface_adapter.blackjack.PlayPresenter;
 import interface_adapter.game_library_select.GameFilterController;
 import interface_adapter.game_library_select.GameFilterPresenter;
 import interface_adapter.game_library_select.GameLibraryController;
@@ -58,9 +68,9 @@ import use_case.game_set_config.GameSetConfigOutputBoundary;
 import use_case.game_start.GameStartInputBoundary;
 import use_case.game_start.GameStartInteractor;
 import use_case.game_start.GameStartOutputBoundary;
+import view.BlackjackView;
 import view.GameLibraryView;
 import view.GameSetupView;
-import view.BlackjackView;
 import view.ViewManager;
 
 /**
@@ -199,7 +209,8 @@ public class AppBuilder {
      */
     public AppBuilder addGameStartUseCase() {
         final GameStartOutputBoundary gameSetupPresenter = new GameStartPresenter(viewManagerModel, blackjackViewModel);
-        final GameStartInputBoundary gameSetupInteractor = new GameStartInteractor(gameSetupPresenter);
+        final GameStartInputBoundary gameSetupInteractor = new GameStartInteractor(gameSetupPresenter,
+                blackjackRoomDataAccessObject, apiDataAccessObject);
         final GameStartController gameStartController = new GameStartController(gameSetupInteractor);
 
         gameSetupView.setGameStartController(gameStartController);

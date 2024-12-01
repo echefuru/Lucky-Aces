@@ -1,7 +1,6 @@
 package interface_adapter.blackjack;
 
 import use_case.blackjack.BlackjackOutputData;
-import use_case.blackjack.hit.HitOutputBoundary;
 import use_case.blackjack.hold.HoldOutputBoundary;
 
 /**
@@ -20,7 +19,7 @@ public class HoldPresenter implements HoldOutputBoundary {
         final BlackjackState state = blackjackViewModel.getState();
         state.setPlayerCards(blackjackOutputData.getPlayerCards());
         state.setDealerCards(blackjackOutputData.getDealerCards());
-        state.incrementWins();
+        state.setWins(blackjackOutputData.getWins());
         state.setStage("win");
         this.blackjackViewModel.setState(state);
         blackjackViewModel.firePropertyChanged();
@@ -41,7 +40,7 @@ public class HoldPresenter implements HoldOutputBoundary {
         final BlackjackState state = blackjackViewModel.getState();
         state.setPlayerCards(blackjackOutputData.getPlayerCards());
         state.setDealerCards(blackjackOutputData.getDealerCards());
-        state.incrementLosses();
+        state.setLosses(blackjackOutputData.getLosses());
         state.setStage("loss");
         this.blackjackViewModel.setState(state);
         blackjackViewModel.firePropertyChanged();

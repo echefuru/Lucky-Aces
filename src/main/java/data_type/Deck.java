@@ -1,4 +1,4 @@
-package entity;
+package data_type;
 
 /**
  * A Deck of Cards.

@@ -41,7 +41,7 @@ public class HitPresenter implements HitOutputBoundary {
         final BlackjackState state = blackjackViewModel.getState();
         state.setPlayerCards(blackjackOutputData.getPlayerCards());
         state.setDealerCards(blackjackOutputData.getDealerCards());
-        state.incrementLosses();
+        state.setLosses(blackjackOutputData.getLosses());
         state.setStage("bust");
         this.blackjackViewModel.setState(state);
         blackjackViewModel.firePropertyChanged();

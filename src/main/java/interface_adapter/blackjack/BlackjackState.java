@@ -1,6 +1,5 @@
 package interface_adapter.blackjack;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,6 +11,8 @@ public class BlackjackState {
     private int playerTotal;
     private List<String> dealerCards;
     private String stage = "init";
+    // TODO: Win/loss stats should not be tracked in state since they are application business rules
+    // TODO: Moved to Room entity
     private int wins;
     private int losses;
 
@@ -67,28 +68,4 @@ public class BlackjackState {
         this.losses = losses;
     }
 
-    /**
-     * Increments player wins by 1.
-     */
-    public void incrementWins() {
-        this.wins += 1;
-    }
-
-    /**
-     * Increments dealer wins by 1.
-     */
-    public void incrementLosses() {
-        this.losses += 1;
-    }
-
-    /**
-     * Resets the object's fields, except stage which must be set back to "init" explicitly.
-     */
-    public void reset() {
-        playerCards = null;
-        playerTotal = 0;
-        dealerCards = null;
-        wins = 0;
-        losses = 0;
-    }
 }

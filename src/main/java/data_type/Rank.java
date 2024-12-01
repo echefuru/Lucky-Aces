@@ -1,4 +1,4 @@
-package entity;
+package data_type;
 
 /**
  * Enumeration of Card ranks.

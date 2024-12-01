@@ -1,42 +1,21 @@
 package entity.room;
 
-import entity.Card;
-import entity.Deck;
-
-import java.util.ArrayList;
 import java.util.List;
+
+import data_type.Card;
+import data_type.Deck;
 
 /**
  * The abstract representation of a game room in our program.
  */
 abstract class AbstractRoom {
-
     private Deck deck;
-    private List<Card> playerCards = new ArrayList<Card>();
-    private List<Card> dealerCards = new ArrayList<Card>();
+    private int wins;
+    private int losses;
+    private int draws;
 
-    public void playerDraw(List<Card> cards) {
-        playerCards.addAll(cards);
-    }
-
-    public void dealerDraw(List<Card> cards) {
-        dealerCards.addAll(cards);
-    }
-
-    public List<String> playerStrings() {
-        final List<String> playerStrings = new ArrayList<String>(playerCards.size());
-        for (Card card : playerCards) {
-            playerStrings.add(card.toString());
-        }
-        return playerStrings;
-    }
-
-    public List<String> dealerStrings() {
-        final List<String> dealerStrings = new ArrayList<String>(dealerCards.size());
-        for (Card card : dealerCards) {
-            dealerStrings.add(card.toString());
-        }
-        return dealerStrings;
+    AbstractRoom(Deck deck) {
+        this.deck = deck;
     }
 
     public Deck getDeck() {
@@ -47,31 +26,33 @@ abstract class AbstractRoom {
         this.deck = deck;
     }
 
-    public List<Card> getPlayerCards() {
-        return playerCards;
+    public abstract void playerDrawCards(int player, List<Card> cards);
+
+    public void incrementWins() {
+        wins++;
     }
 
-    public void setPlayerCards(List<Card> playerCards) {
-        this.playerCards = playerCards;
+    public void incrementLosses() {
+        losses++;
     }
 
-    public List<Card> getDealerCards() {
-        return dealerCards;
+    public void incrementDraws() {
+        draws++;
     }
 
-    public void setDealerCards(List<Card> dealerCards) {
-        this.dealerCards = dealerCards;
+    public int getWins() {
+        return wins;
     }
 
-    /**
-     * The total value of the player's cards.
-     * @return total value of player's cards.
-     */
-    abstract int getPlayerTotal();
+    public int getLosses() {
+        return losses;
+    }
 
-    /**
-     * The total value of the dealer's cards.
-     * @return total value of dealer's cards.
-     */
-    abstract int getDealerTotal();
+    public int getDraws() {
+        return draws;
+    }
+
+    public abstract List<String> getPlayerCardStrings(int player);
+
+    public abstract void newRound();
 }

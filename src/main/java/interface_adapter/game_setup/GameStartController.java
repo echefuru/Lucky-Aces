@@ -1,5 +1,8 @@
 package interface_adapter.game_setup;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.json.JSONObject;
 
 import use_case.game_start.GameStartInputBoundary;
@@ -21,7 +24,11 @@ public class GameStartController {
      * @param config the configuration used to start the game
      */
     public void execute(String selectedGame, JSONObject config) {
-        final GameStartInputData gameStartInputData = new GameStartInputData(selectedGame, config);
+        final Map<String, Integer> gameConfig = new HashMap<>();
+        for (String key : config.keySet()) {
+            gameConfig.put(key, config.getJSONObject(key).getInt("curr_value"));
+        }
+        final GameStartInputData gameStartInputData = new GameStartInputData(selectedGame, gameConfig);
         gameStartUseCaseInteractor.execute(gameStartInputData);
     }
 }

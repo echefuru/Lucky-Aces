@@ -1,10 +1,11 @@
 package use_case.blackjack.hit;
 
+import java.util.List;
+
+import entity.room.BlackjackRoom;
 import use_case.ApiDataAccessInterface;
 import use_case.BlackjackRoomDataAccessInterface;
 import use_case.blackjack.BlackjackOutputData;
-
-import java.util.List;
 
 /**
  * The Hit Interactor for Blackjack.
@@ -28,12 +29,13 @@ public class HitInteractor implements HitInputBoundary {
     @Override
     public void execute() {
         // Player draws card.
-        blackjackRoomDao.getRoom().playerDraw(apiDao.draw(blackjackRoomDao.getRoom().getDeck(), 1));
+        blackjackRoomDao.getRoom().playerDrawCards(BlackjackRoom.HUMAN_PLAYER,
+                apiDao.draw(blackjackRoomDao.getRoom().getDeck(), 1));
 
         // Cards to Strings for output.
-        final List<String> playerStrings = blackjackRoomDao.getRoom().playerStrings();
-        final List<String> dealerStrings = blackjackRoomDao.getRoom().dealerStrings();
-        final int playerTotal = blackjackRoomDao.getRoom().getPlayerTotal();
+        final List<String> playerStrings = blackjackRoomDao.getRoom().getPlayerCardStrings(BlackjackRoom.HUMAN_PLAYER);
+        final List<String> dealerStrings = blackjackRoomDao.getRoom().getPlayerCardStrings(BlackjackRoom.DEALER);
+        final int playerTotal = blackjackRoomDao.getRoom().getPlayerHandValue(BlackjackRoom.HUMAN_PLAYER);
         final BlackjackOutputData blackjackOutputData = new BlackjackOutputData(playerStrings, playerTotal,
                 dealerStrings);
 
@@ -47,6 +49,8 @@ public class HitInteractor implements HitInputBoundary {
         }
         else {
             // If player has more than 21, they bust.
+            blackjackRoomDao.getRoom().incrementLosses();
+            blackjackOutputData.setLosses(blackjackRoomDao.getRoom().getLosses());
             hitPresenter.prepareBustView(blackjackOutputData);
         }
     }

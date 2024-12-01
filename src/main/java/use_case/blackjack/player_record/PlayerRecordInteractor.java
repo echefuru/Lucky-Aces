@@ -14,7 +14,8 @@ public class PlayerRecordInteractor implements PlayerRecordInputBoundary {
     private final BlackjackRoomDataAccessInterface blackjackRoomDao;
     private final PlayerRecordOutputBoundary playerRecordPresenter;
 
-    public PlayerRecordInteractor(BlackjackRoomDataAccessInterface blackjackRoomDao, PlayerRecordOutputBoundary playerRecordPresenter) {
+    public PlayerRecordInteractor(BlackjackRoomDataAccessInterface blackjackRoomDao,
+                                  PlayerRecordOutputBoundary playerRecordPresenter) {
         this.blackjackRoomDao = blackjackRoomDao;
         this.playerRecordPresenter = playerRecordPresenter;
     }

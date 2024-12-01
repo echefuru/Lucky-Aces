@@ -29,11 +29,9 @@ public class BlackjackPlayer extends AbstractPlayer {
 
     /**
      * Create a new Blackjack Player Record for this player.
-     * @return the new Blackjack Player Record.
      */
-    public BlackjackPlayerRecord createBlackjackPlayerRecord() {
+    public void createBlackjackPlayerRecord() {
         blackjackPlayerRecord = new BlackjackPlayerRecord();
-        return blackjackPlayerRecord;
     }
 
     /**

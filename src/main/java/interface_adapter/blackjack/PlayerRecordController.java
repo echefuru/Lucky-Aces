@@ -13,7 +13,8 @@ public class PlayerRecordController {
     }
 
     /**
-     * Execute Check for the Player Record Use Case which displays the player record (as a pop-up window) in the Blackjack View.
+     * Execute Check for the Player Record Use Case which displays the player record (as a pop-up window)
+     * in the Blackjack View.
      */
     public void executeCheck() {
         playerRecordInteractor.executeCheck();

@@ -10,7 +10,19 @@ import data_access.ApiDataAccessObject;
 import data_access.BlackjackRoomDataAccessObject;
 import data_access.GameInfoDataAccessObject;
 import interface_adapter.ViewManagerModel;
-import interface_adapter.blackjack.*;
+import interface_adapter.blackjack.AgainController;
+import interface_adapter.blackjack.AgainPresenter;
+import interface_adapter.blackjack.BlackjackViewModel;
+import interface_adapter.blackjack.ExitController;
+import interface_adapter.blackjack.ExitPresenter;
+import interface_adapter.blackjack.HitController;
+import interface_adapter.blackjack.HitPresenter;
+import interface_adapter.blackjack.HoldController;
+import interface_adapter.blackjack.HoldPresenter;
+import interface_adapter.blackjack.PlayController;
+import interface_adapter.blackjack.PlayPresenter;
+import interface_adapter.blackjack.PlayerRecordController;
+import interface_adapter.blackjack.PlayerRecordPresenter;
 import interface_adapter.game_library_select.GameFilterController;
 import interface_adapter.game_library_select.GameFilterPresenter;
 import interface_adapter.game_library_select.GameLibraryController;
@@ -82,8 +94,6 @@ public class AppBuilder {
     private final CardLayout mainLayout = new CardLayout();
     // thought question: is the hard dependency below a problem?
     private final ViewManagerModel viewManagerModel = new ViewManagerModel();
-    private final ViewManager viewManager = new ViewManager(mainPanel, mainLayout, viewManagerModel);
-
     // thought question: is the hard dependency below a problem?
     private final GameInfoDataAccessObject gameInfoDataAccessObject = new GameInfoDataAccessObject("game_info.json");
     private final ApiDataAccessObject apiDataAccessObject = new ApiDataAccessObject();

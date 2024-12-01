@@ -26,12 +26,14 @@ public class GameStartInteractor implements GameStartInputBoundary {
         final String selectedGame = gameStartInputData.getSelectedGame();
         final Map<String, Integer> config = gameStartInputData.getConfig();
 
-        final GameStartOutputData gameStartOutputData = new GameStartOutputData(selectedGame);
+        final int initialBankroll = config.get("bankroll");
+        final int minBet = config.get("min_bet");
+        final GameStartOutputData gameStartOutputData = new GameStartOutputData(selectedGame, initialBankroll);
 
         if ("blackjack".equals(selectedGame)) {
             // Create a new Blackjack room, using 2 decks of cards.
             blackjackRoomDataAccessObject.createRoom(apiDataAccessObject.createDeck(2),
-                    config.get("bankroll"), config.get("min_bet"));
+                    initialBankroll, minBet);
             gameStartPresenter.prepareSuccessView(gameStartOutputData);
         }
         else {

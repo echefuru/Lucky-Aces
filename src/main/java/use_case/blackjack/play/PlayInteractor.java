@@ -29,8 +29,12 @@ public class PlayInteractor implements PlayInputBoundary {
 
     @Override
     public void execute() {
-        // Reset the room to the state of a new round
+        // Reset the room to the state of a new round.
         blackjackRoomDao.getRoom().newRound();
+
+        // Update the player's bankroll (assuming always minimum bet)
+        final int currentBet = blackjackRoomDao.getRoom().getMinimumBet();
+        blackjackRoomDao.getRoom().playerPlaceBet(BlackjackRoom.HUMAN_PLAYER, currentBet);
 
         // Draw the initial 2 player and 1 dealer cards.
         blackjackRoomDao.getRoom().playerDrawCards(BlackjackRoom.HUMAN_PLAYER,
@@ -42,8 +46,11 @@ public class PlayInteractor implements PlayInputBoundary {
         final List<String> playerStrings = blackjackRoomDao.getRoom().getPlayerCardStrings(BlackjackRoom.HUMAN_PLAYER);
         final List<String> dealerStrings = blackjackRoomDao.getRoom().getPlayerCardStrings(BlackjackRoom.DEALER);
         final int playerTotal = blackjackRoomDao.getRoom().getPlayerHandValue(BlackjackRoom.HUMAN_PLAYER);
+        final int playerBankroll = blackjackRoomDao.getRoom().getPlayerBankroll(BlackjackRoom.HUMAN_PLAYER);
         final BlackjackOutputData blackjackOutputData = new BlackjackOutputData(playerStrings, playerTotal,
                 dealerStrings);
+        blackjackOutputData.setPlayerBankroll(playerBankroll);
+        blackjackOutputData.setCurrentBet(currentBet);
 
         // Stage set based on immediate 21 or not.
         if (playerTotal == TWENTY_ONE) {

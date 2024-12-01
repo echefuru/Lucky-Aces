@@ -15,6 +15,7 @@ public class BlackjackPlayer extends AbstractPlayer {
     private static final int ACE_ADJUSTMENT = 10;
 
     private int bankroll;
+    private int currentBet;
 
     public BlackjackPlayer(int bankroll) {
         this.bankroll = bankroll;
@@ -24,15 +25,33 @@ public class BlackjackPlayer extends AbstractPlayer {
         this.bankroll = bankroll;
     }
 
+    /**
+     * Update the player's bankroll and current bet of the player after placing a bet.
+     * @param bet the amount of bet placed
+     */
+    public void placeBet(int bet) {
+        this.currentBet = bet;
+        this.bankroll -= bet;
+    }
+
+    /**
+     * Update the player's bankroll and current bet after winning a game.
+     * @param multiplier the multiplier applied to the win
+     */
+    public void win(int multiplier) {
+        this.bankroll += currentBet * multiplier;
+        this.currentBet = 0;
+    }
+
     public int getBankroll() {
         return bankroll;
     }
 
     /**
-     * Increments the bankroll by amount.
-     * @param amount an integer holding the amount of increment the bankroll by
+     * Change the bankroll by amount.
+     * @param amount an integer holding the amount of change the bankroll by
      */
-    public void incrementBankroll(int amount) {
+    public void changeBankroll(int amount) {
         bankroll += amount;
     }
 

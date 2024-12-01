@@ -15,6 +15,9 @@ public class HoldInteractor implements HoldInputBoundary {
     private static final int TWENTY_ONE = 21;
     private static final int DEALER_THRESHOLD = 17;
 
+    private static final int WIN_MULTIPLIER = 2;
+    private static final int DRAW_MULTIPLIER = 1;
+
     private final ApiDataAccessInterface apiDao;
     private final BlackjackRoomDataAccessInterface blackjackRoomDao;
     private final HoldOutputBoundary holdPresenter;
@@ -46,11 +49,17 @@ public class HoldInteractor implements HoldInputBoundary {
         if (dealerTotal > TWENTY_ONE || dealerTotal < playerTotal) {
             // If dealer busts or has less than player, you win.
             blackjackRoomDao.getRoom().incrementWins();
+            blackjackRoomDao.getRoom().playerWin(BlackjackRoom.HUMAN_PLAYER, WIN_MULTIPLIER);
             blackjackOutputData.setWins(blackjackRoomDao.getRoom().getWins());
+            blackjackOutputData.setPlayerBankroll(blackjackRoomDao.getRoom()
+                    .getPlayerBankroll(BlackjackRoom.HUMAN_PLAYER));
             holdPresenter.prepareWinView(blackjackOutputData);
         }
         else if (dealerTotal == playerTotal) {
             blackjackRoomDao.getRoom().incrementDraws();
+            blackjackRoomDao.getRoom().playerWin(BlackjackRoom.HUMAN_PLAYER, DRAW_MULTIPLIER);
+            blackjackOutputData.setPlayerBankroll(blackjackRoomDao.getRoom()
+                    .getPlayerBankroll(BlackjackRoom.HUMAN_PLAYER));
             holdPresenter.prepareDrawView(blackjackOutputData);
         }
         else {

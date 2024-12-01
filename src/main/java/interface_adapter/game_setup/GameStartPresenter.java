@@ -22,9 +22,13 @@ public class GameStartPresenter implements GameStartOutputBoundary {
     @Override
     public void prepareSuccessView(GameStartOutputData gameStartOutputData) {
         final String selectedGame = gameStartOutputData.getSelectedGame();
+        final int playerBankroll = gameStartOutputData.getPlayerBankroll();
 
         if ("blackjack".equals(selectedGame)) {
-            blackjackViewModel.setState(new BlackjackState());
+            // Start the Blackjack view in a fresh state
+            final BlackjackState blackjackState = new BlackjackState();
+            blackjackState.setPlayerBankroll(playerBankroll);
+            blackjackViewModel.setState(blackjackState);
             blackjackViewModel.firePropertyChanged();
 
             viewManagerModel.setState(blackjackViewModel.getViewName());

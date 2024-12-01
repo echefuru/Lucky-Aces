@@ -20,6 +20,7 @@ public class HoldPresenter implements HoldOutputBoundary {
         state.setPlayerCards(blackjackOutputData.getPlayerCards());
         state.setDealerCards(blackjackOutputData.getDealerCards());
         state.setWins(blackjackOutputData.getWins());
+        state.setPlayerBankroll(blackjackOutputData.getPlayerBankroll());
         state.setStage("win");
         this.blackjackViewModel.setState(state);
         blackjackViewModel.firePropertyChanged();
@@ -30,6 +31,7 @@ public class HoldPresenter implements HoldOutputBoundary {
         final BlackjackState state = blackjackViewModel.getState();
         state.setPlayerCards(blackjackOutputData.getPlayerCards());
         state.setDealerCards(blackjackOutputData.getDealerCards());
+        state.setPlayerBankroll(blackjackOutputData.getPlayerBankroll());
         state.setStage("draw");
         this.blackjackViewModel.setState(state);
         blackjackViewModel.firePropertyChanged();

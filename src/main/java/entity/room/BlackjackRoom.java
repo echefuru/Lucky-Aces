@@ -39,6 +39,37 @@ public class BlackjackRoom extends AbstractRoom {
         return players[player].getHandValue();
     }
 
+    /**
+     * Retuen the bankroll of the given player.
+     * @param player the player being checked
+     * @return the bankroll of the player
+     */
+    public int getPlayerBankroll(int player) {
+        return players[player].getBankroll();
+    }
+
+    public int getMinimumBet() {
+        return minimumBet;
+    }
+
+    /**
+     * Update the bankroll of the player after placing a bet.
+     * @param player the player to place the bet
+     * @param bet the bet to be placed by the player
+     */
+    public void playerPlaceBet(int player, int bet) {
+        players[player].placeBet(bet);
+    }
+
+    /**
+     * Update the bankroll of the player after winning.
+     * @param player the player to gain the winnings
+     * @param multiplier the multiplier applied to the player's bet
+     */
+    public void playerWin(int player, int multiplier) {
+        players[player].win(multiplier);
+    }
+
     @Override
     public void playerDrawCards(int player, List<Card> cards) {
         players[player].getCards().addAll(cards);

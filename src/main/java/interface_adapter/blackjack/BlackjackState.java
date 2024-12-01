@@ -15,6 +15,8 @@ public class BlackjackState {
     // TODO: Moved to Room entity
     private int wins;
     private int losses;
+    private int playerBankroll;
+    private int currentBet;
 
     public List<String> getPlayerCards() {
         return playerCards;
@@ -38,6 +40,14 @@ public class BlackjackState {
 
     public int getLosses() {
         return losses;
+    }
+
+    public int getPlayerBankroll() {
+        return playerBankroll;
+    }
+
+    public int getCurrentBet() {
+        return currentBet;
     }
 
     public void setPlayerTotal(int playerTotal) {
@@ -66,6 +76,14 @@ public class BlackjackState {
 
     public void setLosses(int losses) {
         this.losses = losses;
+    }
+
+    public void setPlayerBankroll(int playerBankroll) {
+        this.playerBankroll = playerBankroll;
+    }
+
+    public void setCurrentBet(int currentBet) {
+        this.currentBet = currentBet;
     }
 
 }

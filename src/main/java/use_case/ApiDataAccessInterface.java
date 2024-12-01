@@ -26,14 +26,6 @@ public interface ApiDataAccessInterface {
      */
     Deck createDeck(int numDecks);
 
-//    /**
-//     * A method that returns a Card from the Deck.
-//     * @param deck is the Deck from where the Card will be drawn.
-//     * @return a Card from deck.
-//     * @throws IOException if there is an error in attempting to call API.
-//     */
-//    Card draw(Deck deck);
-
     /**
      * A method that returns several Cards from the Deck.
      * @param deck is the Deck from where the Cards will be drawn.

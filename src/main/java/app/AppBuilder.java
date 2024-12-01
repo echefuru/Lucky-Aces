@@ -58,9 +58,9 @@ import use_case.game_set_config.GameSetConfigOutputBoundary;
 import use_case.game_start.GameStartInputBoundary;
 import use_case.game_start.GameStartInteractor;
 import use_case.game_start.GameStartOutputBoundary;
+import view.BlackjackView;
 import view.GameLibraryView;
 import view.GameSetupView;
-import view.BlackjackView;
 import view.ViewManager;
 
 /**

@@ -1,6 +1,6 @@
 package use_case;
 
-import data_type.Deck;
+import entity.Deck;
 import entity.room.BlackjackRoom;
 
 /**

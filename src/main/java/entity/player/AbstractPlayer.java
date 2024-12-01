@@ -3,7 +3,7 @@ package entity.player;
 import java.util.ArrayList;
 import java.util.List;
 
-import data_type.Card;
+import entity.Card;
 
 /**
  * The abstract representation of a Player in the game.

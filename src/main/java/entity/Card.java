@@ -1,4 +1,4 @@
-package data_type;
+package entity;
 
 /**
  * A Card, with a Rank and Suit.

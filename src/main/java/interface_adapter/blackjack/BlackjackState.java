@@ -11,8 +11,6 @@ public class BlackjackState {
     private int playerTotal;
     private List<String> dealerCards;
     private String stage = "init";
-    // TODO: Win/loss stats should not be tracked in state since they are application business rules
-    // TODO: Moved to Room entity
     private int wins;
     private int losses;
     private int playerBankroll;

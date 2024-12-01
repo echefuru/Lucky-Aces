@@ -2,8 +2,8 @@ package entity.room;
 
 import java.util.List;
 
-import data_type.Card;
-import data_type.Deck;
+import entity.Card;
+import entity.Deck;
 import entity.player.BlackjackPlayer;
 
 /**

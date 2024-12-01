@@ -33,7 +33,6 @@ public class GameLibraryPresenter implements GameLibraryOutputBoundary {
         viewManagerModel.firePropertyChanged();
     }
 
-    // TODO: This will just crash program if games file is empty, but that's not a checked exception so it's ok?
     @Override
     public void prepareFailView(String errorMessage) {
         final GameLibraryState gameLibraryState = gameLibraryViewModel.getState();

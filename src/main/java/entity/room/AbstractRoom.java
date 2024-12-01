@@ -2,8 +2,8 @@ package entity.room;
 
 import java.util.List;
 
-import data_type.Card;
-import data_type.Deck;
+import entity.Card;
+import entity.Deck;
 
 /**
  * The abstract representation of a game room in our program.

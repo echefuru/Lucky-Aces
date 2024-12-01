@@ -1,6 +1,6 @@
 package data_access;
 
-import data_type.Deck;
+import entity.Deck;
 import entity.room.BlackjackRoom;
 import use_case.BlackjackRoomDataAccessInterface;
 

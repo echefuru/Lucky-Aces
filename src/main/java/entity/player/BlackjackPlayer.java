@@ -2,8 +2,8 @@ package entity.player;
 
 import java.util.List;
 
-import data_type.Card;
-import data_type.Rank;
+import entity.Card;
+import entity.Rank;
 
 /**
  * The representation of a player in the game Blackjack.

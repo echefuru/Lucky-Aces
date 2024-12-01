@@ -7,10 +7,10 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import data_type.Card;
-import data_type.Deck;
-import data_type.Rank;
-import data_type.Suit;
+import entity.Card;
+import entity.Deck;
+import entity.Rank;
+import entity.Suit;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;

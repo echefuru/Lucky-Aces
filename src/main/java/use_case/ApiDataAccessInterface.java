@@ -1,10 +1,9 @@
 package use_case;
 
-import java.io.IOException;
 import java.util.List;
 
-import data_type.Card;
-import data_type.Deck;
+import entity.Card;
+import entity.Deck;
 
 /**
  * An interface that defines the methods that the ApiDataAccess class must implement.

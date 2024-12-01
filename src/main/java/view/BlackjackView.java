@@ -9,6 +9,8 @@ import java.util.List;
 import javax.swing.*;
 
 import interface_adapter.blackjack.*;
+import interface_adapter.blackjack.PlayerRecordController;
+
 /**
  * The View for all the Blackjack Use Cases.
  */
@@ -34,6 +36,7 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
     private final JButton hold = new JButton("HOLD");
     private final JButton playAgain = new JButton("PLAY");
     private final JButton exit = new JButton("EXIT");
+    private final JButton playerRecord = new JButton("CHECK RECORD");
 
     private final JLabel cardBack = new JLabel(ViewConstants.STRING_IMAGEICON_MAP.get("BACK"));
 
@@ -42,6 +45,7 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
     private HoldController holdController;
     private AgainController againController;
     private ExitController exitController;
+    private PlayerRecordController playerRecordController;
 
     public BlackjackView(BlackjackViewModel blackjackViewModel) {
         // Inject the viewModel
@@ -116,6 +120,19 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         exitController.switchToGameLibraryView();
+                    }
+                }
+        );
+
+        playerRecord.addActionListener(
+                evt -> {
+                    if (evt.getSource().equals(playerRecord)) {
+                        final BlackjackState state = blackjackViewModel.getState();
+                        playerRecordController.execute();
+                        final String message = state.getPlayerRecordMessage();
+
+                        // Show the message (player record) in a pop-up window.
+                        JOptionPane.showMessageDialog(null, message, "Player statistics", JOptionPane.INFORMATION_MESSAGE);
                     }
                 }
         );

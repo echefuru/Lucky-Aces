@@ -46,7 +46,7 @@ public class BlackjackPlayerRecord {
      * Record the number of rounds and if won this round.
      * @param won if won this round
      */
-    public void recordGame(boolean won) {
+    public void recordRound(boolean won) {
         this.totalRounds++;
         if (won) {
             this.totalWins++;

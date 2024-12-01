@@ -13,6 +13,7 @@ import java.util.List;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import interface_adapter.blackjack.AgainController;
@@ -129,7 +130,16 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
         exit.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
-                        exitController.switchToGameLibraryView();
+                        final int response = JOptionPane.showConfirmDialog(
+                                null,
+                                "Are you sure you want to exit?",
+                                "Confirm Exit",
+                                JOptionPane.YES_NO_OPTION,
+                                JOptionPane.QUESTION_MESSAGE
+                        );
+                        if (response == JOptionPane.YES_OPTION) {
+                            exitController.switchToGameLibraryView();
+                        }
                     }
                 }
         );

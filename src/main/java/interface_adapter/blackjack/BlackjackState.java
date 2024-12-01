@@ -133,7 +133,7 @@ public class BlackjackState {
         this.currentBet = currentBet;
     }
   
-      public void setPlayerHandValRecord(List<Integer> playerHandValRecord) {
+    public void setPlayerHandValRecord(List<Integer> playerHandValRecord) {
         this.playerHandValRecord = playerHandValRecord;
     }
 

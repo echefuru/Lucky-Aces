@@ -154,9 +154,8 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
         playerRecord.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
-                        final BlackjackState state = blackjackViewModel.getState();
                         playerRecordController.executeCheck();
-                        final String message = state.getPlayerRecordMessage();
+                        final String message = blackjackViewModel.getState().getPlayerRecordMessage();
 
                         // Show the message (player record) in a pop-up window.
                         JOptionPane.showMessageDialog(null, message, "Player statistics",
@@ -205,6 +204,7 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
                 break;
             case "bust":
                 paintBustUi(state.getPlayerCards(), state.getLosses());
+                playerRecordController.executeRound(0);
                 break;
             case "again":
                 clearCardUi();

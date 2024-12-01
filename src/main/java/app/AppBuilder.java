@@ -94,6 +94,8 @@ public class AppBuilder {
     private final CardLayout mainLayout = new CardLayout();
     // thought question: is the hard dependency below a problem?
     private final ViewManagerModel viewManagerModel = new ViewManagerModel();
+    private final ViewManager viewManager = new ViewManager(mainPanel, mainLayout, viewManagerModel);
+
     // thought question: is the hard dependency below a problem?
     private final GameInfoDataAccessObject gameInfoDataAccessObject = new GameInfoDataAccessObject("game_info.json");
     private final ApiDataAccessObject apiDataAccessObject = new ApiDataAccessObject();

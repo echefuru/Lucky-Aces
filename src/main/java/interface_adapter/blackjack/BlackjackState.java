@@ -86,16 +86,8 @@ public class BlackjackState {
         return wins;
     }
 
-    public int getTotalRounds() {
-        return totalRounds;
-    }
-
-    public List<Integer> getPlayerHandValRecord() {
-        return playerHandValRecord;
-    }
-
     public int getLosses() {
-        return totalRounds - wins;
+        return losses;
     }
 
     public void setPlayerTotal(int playerTotal) {

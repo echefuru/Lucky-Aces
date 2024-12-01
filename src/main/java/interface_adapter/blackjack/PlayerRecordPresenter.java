@@ -20,6 +20,7 @@ public class PlayerRecordPresenter implements PlayerRecordOutputBoundary {
         state.setPlayerHandValRecord(playerRecordOutputData.getHandValueRecord());
         state.setTotalRounds(playerRecordOutputData.getTotalRounds());
         state.setWins(playerRecordOutputData.getTotalWins());
+        state.setLosses(playerRecordOutputData.getTotalLosses());
         this.blackjackViewModel.setState(state);
         blackjackViewModel.firePropertyChanged();
     }

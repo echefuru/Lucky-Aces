@@ -7,11 +7,13 @@ import java.util.List;
  */
 public class PlayerRecordOutputData {
     private int totalWins;
+    private int totalLosses;
     private int totalRounds;
     private List<Integer> handValueRecord;
 
-    public PlayerRecordOutputData(int totalWins, int totalRounds, List<Integer> handValueRecord) {
+    public PlayerRecordOutputData(int totalWins, int totalLosses, int totalRounds, List<Integer> handValueRecord) {
         this.totalWins = totalWins;
+        this.totalLosses = totalLosses;
         this.totalRounds = totalRounds;
         this.handValueRecord = handValueRecord;
     }
@@ -26,5 +28,9 @@ public class PlayerRecordOutputData {
 
     public List<Integer> getHandValueRecord() {
         return handValueRecord;
+    }
+
+    public int getTotalLosses() {
+        return totalLosses;
     }
 }

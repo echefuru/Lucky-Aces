@@ -1,11 +1,9 @@
 package data_access;
 
 import java.io.IOException;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 
-import entity.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -13,6 +11,8 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import use_case.ApiDataAccessInterface;
+
+import entity.*;
 
 /**
  * DAO for Deck management, retrieved from external API.
@@ -137,26 +137,4 @@ public class ApiDataAccessObject implements ApiDataAccessInterface {
         return responseBody;
     }
 
-    // TODO: Get rid of this main; was used for dev testing of this class.
-//    public static void main(String[] args) {
-//        ApiDataAccessInterface dao = new ApiDataAccessObject();
-//
-//        Deck deck = dao.createDeck();
-//        Card card = dao.draw(deck, 1).get(0);
-//        System.out.println(card.getRank() + ", " + card.getSuit() + ", " + card);
-//        System.out.println("Drew 1 card, " + deck.getRemaining() + " remaining.");
-//
-//        List<Card> cards = dao.draw(deck, 51);
-//        for (Card c : cards) {
-//            System.out.println(c.getRank() + ", " + c.getSuit() + ", " + c);
-//        }
-//        System.out.println("Drew 51 cards, " + deck.getRemaining() + " remaining.");
-//
-//        dao.shuffle(deck);
-//        System.out.println("Shuffling deck, back to " + deck.getRemaining() + " remaining.");
-//
-//        System.out.println("Drawing 1 card again.");
-//        Card card1 = dao.draw(deck, 1).get(0);
-//        System.out.println(card1.getRank() + ", " + card1.getSuit());
-//    }
 }

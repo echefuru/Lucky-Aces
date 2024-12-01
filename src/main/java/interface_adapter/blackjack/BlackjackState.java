@@ -18,6 +18,7 @@ public class BlackjackState {
     private List<Integer> playerHandValRecord;
     private int totalRounds;
     private int wins;
+    private int losses;
 
     public void setPlayerHandValRecord(List<Integer> playerHandValRecord) {
         this.playerHandValRecord = playerHandValRecord;
@@ -31,21 +32,37 @@ public class BlackjackState {
         this.wins = wins;
     }
 
+    public void setLosses(int losses) {
+        this.losses = losses;
+    }
+
+    /**
+     * Increment losses by one.
+     */
+    public void incrementLosses() {
+        losses++;
+    }
+
+    /**
+     * Increment wins by one.
+     */
+    public void incrementWins() {
+        wins++;
+    }
+
     /**
      * Return the HTML message of the player records.
      * @return a String message of HTML format for the player's record.
      */
     public String getPlayerRecordMessage() {
-        final String win = "# of Wins: " + this.wins;
-        final String rounds = "# of Total Rounds: " + this.totalRounds;
-        final String playerHandValRec = "All of your hand values:" + this.playerHandValRecord.toString();
 
         final String message = "<html>"
                 + "<h2 style='color:blue;'>Player Statistics</h2>"
-                + HTML_OPEN_PARAGRAPH + "<strong># of Wins:</strong> " + win + HTML_CLOSE_PARAGRAPH
-                + HTML_OPEN_PARAGRAPH + "<strong># of Rounds:</strong> " + rounds + HTML_CLOSE_PARAGRAPH
-                + HTML_OPEN_PARAGRAPH + "<strong>All of your hand values:</strong> " + playerHandValRec.toString()
-                + HTML_CLOSE_PARAGRAPH + "</html>";
+                + HTML_OPEN_PARAGRAPH + "<strong># of Wins:</strong> " + this.wins + HTML_CLOSE_PARAGRAPH
+                + HTML_OPEN_PARAGRAPH + "<strong># of Losses:</strong> " + this.losses + HTML_CLOSE_PARAGRAPH
+                + HTML_OPEN_PARAGRAPH + "<strong># of Rounds:</strong> " + this.totalRounds + HTML_CLOSE_PARAGRAPH
+                + HTML_OPEN_PARAGRAPH + "<strong>All of your hand values:</strong> " + this.playerHandValRecord
+                .toString() + HTML_CLOSE_PARAGRAPH + "</html>";
         return message;
     }
 
@@ -108,8 +125,9 @@ public class BlackjackState {
         playerCards = null;
         playerTotal = 0;
         dealerCards = null;
-        playerHandValRecord = null;
+        playerHandValRecord = List.of();
         totalRounds = 0;
         wins = 0;
+        losses = 0;
     }
 }

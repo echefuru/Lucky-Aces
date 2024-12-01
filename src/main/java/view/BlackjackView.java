@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
+
 import javax.swing.*;
 
 import interface_adapter.blackjack.*;
@@ -92,10 +93,26 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
                 }
         );
 
+        play.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        playerRecordController.executeCreate();
+                    }
+                }
+        );
+
         hit.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         hitController.execute();
+                    }
+                }
+        );
+
+        hit.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        playerRecordController.executeUpdate();
                     }
                 }
         );
@@ -116,6 +133,14 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
                 }
         );
 
+        playAgain.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        playerRecordController.executeUpdate();
+                    }
+                }
+        );
+
         exit.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
@@ -125,14 +150,15 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
         );
 
         playerRecord.addActionListener(
-                evt -> {
-                    if (evt.getSource().equals(playerRecord)) {
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
                         final BlackjackState state = blackjackViewModel.getState();
-                        playerRecordController.execute();
+                        playerRecordController.executeCheck();
                         final String message = state.getPlayerRecordMessage();
 
                         // Show the message (player record) in a pop-up window.
-                        JOptionPane.showMessageDialog(null, message, "Player statistics", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(null, message, "Player statistics",
+                                JOptionPane.INFORMATION_MESSAGE);
                     }
                 }
         );
@@ -156,8 +182,19 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
                 holdController.execute();
                 break;
             case "win":
+                playerRecordController.executeRound(1);
+                clearCardUi();
+                paintEndUi(state.getPlayerCards(), state.getDealerCards(), state.getWins(), state.getLosses(),
+                        state.getStage());
+                break;
             case "draw":
+                playerRecordController.executeRound(2);
+                clearCardUi();
+                paintEndUi(state.getPlayerCards(), state.getDealerCards(), state.getWins(), state.getLosses(),
+                        state.getStage());
+                break;
             case "loss":
+                playerRecordController.executeRound(0);
                 clearCardUi();
                 paintEndUi(state.getPlayerCards(), state.getDealerCards(), state.getWins(), state.getLosses(),
                         state.getStage());
@@ -194,6 +231,10 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
         this.exitController = exitController;
     }
 
+    public void setPlayerRecordController(PlayerRecordController playerRecordController) {
+        this.playerRecordController = playerRecordController;
+    }
+
     public String getViewName() {
         return viewName;
     }
@@ -214,6 +255,7 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
         buttons.repaint();
         buttons.add(play);
         buttons.add(exit);
+        buttons.add(playerRecord);
     }
 
     private void paintPlayUi(List<String> playerCards, int playerTotal, List<String> dealerCards) {
@@ -241,6 +283,7 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
             buttons.add(hit);
             buttons.add(hold);
             buttons.add(exit);
+            buttons.add(playerRecord);
         }
     }
 
@@ -284,6 +327,7 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
         buttons.repaint();
         buttons.add(playAgain);
         buttons.add(exit);
+        buttons.add(playerRecord);
     }
 
     private void paintBustUi(List<String> playerCards, int losses) {
@@ -305,6 +349,7 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
         buttons.repaint();
         buttons.add(playAgain);
         buttons.add(exit);
+        buttons.add(playerRecord);
     }
 
     private void clearCardUi() {

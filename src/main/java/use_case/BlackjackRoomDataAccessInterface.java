@@ -41,7 +41,7 @@ public interface BlackjackRoomDataAccessInterface {
      * Update BlackjackPlayerRecord: its totalWins, totalRounds.
      * @param won if won this round.
      */
-    void recordRound(boolean won);
+    void recordRound(int won);
 
     /**
      * Update BlackjackPlayerRecord's handValueRecord.

@@ -38,7 +38,7 @@ public class BlackjackRoomDataAccessObject implements BlackjackRoomDataAccessInt
     }
 
     @Override
-    public void recordRound(boolean won) {
+    public void recordRound(int won) {
         blackjackPlayerRecord.recordRound(won);
     }
 

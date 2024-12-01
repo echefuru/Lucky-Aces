@@ -40,6 +40,9 @@ import use_case.blackjack.hold.HoldOutputBoundary;
 import use_case.blackjack.play.PlayInputBoundary;
 import use_case.blackjack.play.PlayInteractor;
 import use_case.blackjack.play.PlayOutputBoundary;
+import use_case.blackjack.player_record.PlayerRecordInputBoundary;
+import use_case.blackjack.player_record.PlayerRecordInteractor;
+import use_case.blackjack.player_record.PlayerRecordOutputBoundary;
 import use_case.game_filter.GameFilterInputBoundary;
 import use_case.game_filter.GameFilterInteractor;
 import use_case.game_filter.GameFilterOutputBoundary;
@@ -264,6 +267,14 @@ public class AppBuilder {
         final ExitController exitController = new ExitController(exitInteractor);
 
         blackjackView.setExitController(exitController);
+
+        // Player Record Use Case
+        final PlayerRecordOutputBoundary playerRecordPresenter = new PlayerRecordPresenter(blackjackViewModel);
+        final PlayerRecordInputBoundary playerRecordInteractor = new PlayerRecordInteractor(
+                blackjackRoomDataAccessObject, playerRecordPresenter);
+        final PlayerRecordController playerRecordController = new PlayerRecordController(playerRecordInteractor);
+
+        blackjackView.setPlayerRecordController(playerRecordController);
 
         return this;
     }

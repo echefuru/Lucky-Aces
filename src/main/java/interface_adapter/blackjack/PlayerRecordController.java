@@ -13,9 +13,31 @@ public class PlayerRecordController {
     }
 
     /**
-     * Execute the Player Record Use Case which displays the player record (as a pop-up window) in the Blackjack View.
+     * Execute Check for the Player Record Use Case which displays the player record (as a pop-up window) in the Blackjack View.
      */
-    public void execute() {
-        playerRecordInteractor.execute();
+    public void executeCheck() {
+        playerRecordInteractor.executeCheck();
+    }
+
+    /**
+     * Execute Update for the Player Record Use Case in Blackjack (no display).
+     */
+    public void executeUpdate() {
+        playerRecordInteractor.executeUpdate();
+    }
+
+    /**
+     * Execute Create for the Player Record Use Case in Blackjack.
+     */
+    public void executeCreate() {
+        playerRecordInteractor.executeCreate();
+    }
+
+    /**
+     * Execute Record (win) Round for the Player Record Use Case in Blackjack.
+     * @param won if the player won this round
+     */
+    public void executeRound(Integer won) {
+        playerRecordInteractor.executeRound(won);
     }
 }

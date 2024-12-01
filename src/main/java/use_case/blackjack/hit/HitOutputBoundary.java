@@ -24,4 +24,10 @@ public interface HitOutputBoundary {
      * @param blackjackOutputData is the output data for the use case passed from Interactor.
      */
     void prepareBustView(BlackjackOutputData blackjackOutputData);
+
+    /**
+     * Updates the BlackjackViewModel to refelct the Game Over stage of the game.
+     * @param blackjackOutputData is the output data for the use case passed from Interactor.
+     */
+    void prepareGameOverView(BlackjackOutputData blackjackOutputData);
 }

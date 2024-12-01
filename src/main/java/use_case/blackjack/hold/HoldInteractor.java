@@ -65,7 +65,15 @@ public class HoldInteractor implements HoldInputBoundary {
         else {
             blackjackRoomDao.getRoom().incrementLosses();
             blackjackOutputData.setLosses(blackjackRoomDao.getRoom().getLosses());
-            holdPresenter.prepareLossView(blackjackOutputData);
+
+            // If the player's bankroll is less than the minimum bet, the player cannot continue playing.
+            if (blackjackRoomDao.getRoom().getPlayerBankroll(BlackjackRoom.HUMAN_PLAYER)
+                    < blackjackRoomDao.getRoom().getMinimumBet()) {
+                holdPresenter.prepareGameOverView(blackjackOutputData);
+            }
+            else {
+                holdPresenter.prepareLossView(blackjackOutputData);
+            }
         }
     }
 }

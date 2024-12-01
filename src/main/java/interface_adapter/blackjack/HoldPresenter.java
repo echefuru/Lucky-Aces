@@ -47,4 +47,15 @@ public class HoldPresenter implements HoldOutputBoundary {
         this.blackjackViewModel.setState(state);
         blackjackViewModel.firePropertyChanged();
     }
+
+    @Override
+    public void prepareGameOverView(BlackjackOutputData blackjackOutputData) {
+        final BlackjackState state = blackjackViewModel.getState();
+        state.setPlayerCards(blackjackOutputData.getPlayerCards());
+        state.setDealerCards(blackjackOutputData.getDealerCards());
+        state.setLosses(blackjackOutputData.getLosses());
+        state.setStage("gameOver");
+        this.blackjackViewModel.setState(state);
+        blackjackViewModel.firePropertyChanged();
+    }
 }

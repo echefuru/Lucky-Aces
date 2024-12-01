@@ -13,6 +13,7 @@ import java.util.List;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import interface_adapter.blackjack.AgainController;
@@ -168,6 +169,13 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
                 clearCardUi();
                 playController.execute();
                 break;
+            case "gameOver":
+                clearCardUi();
+                paintEndUi(state.getPlayerCards(), state.getDealerCards(), state.getWins(), state.getLosses(),
+                        state.getPlayerBankroll(), state.getStage());
+                showGameOverDialogue("You don't have enough money to keep playing!\n"
+                        + "You will be returned to the Game Library menu.");
+                break;
             default:
                 throw new RuntimeException("Stage mismatched: " + state.getStage());
         }
@@ -213,6 +221,11 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
         buttons.repaint();
         buttons.add(play);
         buttons.add(exit);
+    }
+
+    private void showGameOverDialogue(String message) {
+        JOptionPane.showMessageDialog(null, message, "Game Over", JOptionPane.INFORMATION_MESSAGE);
+        exitController.switchToGameLibraryView();
     }
 
     private void paintPlayUi(List<String> playerCards, int playerTotal, List<String> dealerCards,

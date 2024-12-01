@@ -51,7 +51,15 @@ public class HitInteractor implements HitInputBoundary {
             // If player has more than 21, they bust.
             blackjackRoomDao.getRoom().incrementLosses();
             blackjackOutputData.setLosses(blackjackRoomDao.getRoom().getLosses());
-            hitPresenter.prepareBustView(blackjackOutputData);
+
+            // If the player's bankroll is less than the minimum bet, the player cannot continue playing.
+            if (blackjackRoomDao.getRoom().getPlayerBankroll(BlackjackRoom.HUMAN_PLAYER)
+                    < blackjackRoomDao.getRoom().getMinimumBet()) {
+                hitPresenter.prepareGameOverView(blackjackOutputData);
+            }
+            else {
+                hitPresenter.prepareBustView(blackjackOutputData);
+            }
         }
     }
 }

@@ -58,9 +58,8 @@ public class BlackjackState {
                 + HTML_OPEN_PARAGRAPH + "<strong># of Wins:</strong> " + this.wins + HTML_CLOSE_PARAGRAPH
                 + HTML_OPEN_PARAGRAPH + "<strong># of Losses:</strong> " + this.losses + HTML_CLOSE_PARAGRAPH
                 + HTML_OPEN_PARAGRAPH + "<strong># of Rounds:</strong> " + this.totalRounds + HTML_CLOSE_PARAGRAPH
-                + HTML_OPEN_PARAGRAPH + "<strong>All of your hand values:</strong> "
-                + HTML_OPEN_PARAGRAPH + playerHandValDisplay
-                + HTML_CLOSE_PARAGRAPH + "</html>";
+                + HTML_OPEN_PARAGRAPH + "<strong>All of your hand values:</strong> " + HTML_CLOSE_PARAGRAPH
+                + HTML_OPEN_PARAGRAPH + playerHandValDisplay + HTML_CLOSE_PARAGRAPH + "</html>";
         return message;
     }
 

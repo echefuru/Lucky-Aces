@@ -7,6 +7,7 @@ public interface PlayerRecordOutputBoundary {
 
     /**
      * Display the player records.
+     * @param playerRecordOutputData the output data.
      */
     void preparePlayerRecordView(PlayerRecordOutputData playerRecordOutputData);
 }

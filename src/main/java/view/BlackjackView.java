@@ -346,8 +346,8 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
         buttons.revalidate();
         buttons.repaint();
         buttons.add(playAgain);
-        buttons.add(exit);
         buttons.add(playerRecord);
+        buttons.add(exit);
     }
 
     private void paintBustUi(List<String> playerCards, int losses) {
@@ -368,8 +368,8 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
         buttons.revalidate();
         buttons.repaint();
         buttons.add(playAgain);
-        buttons.add(exit);
         buttons.add(playerRecord);
+        buttons.add(exit);
     }
 
     private void clearCardUi() {

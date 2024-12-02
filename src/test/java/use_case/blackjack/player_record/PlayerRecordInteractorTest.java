@@ -4,9 +4,6 @@ import data_access.ApiDataAccessObject;
 import data_access.BlackjackRoomDataAccessObject;
 import entity.*;
 import entity.player.BlackjackPlayer;
-import interface_adapter.blackjack.BlackjackViewModel;
-import interface_adapter.blackjack.PlayerRecordPresenter;
-import org.junit.Ignore;
 import org.junit.Test;
 import use_case.ApiDataAccessInterface;
 import use_case.BlackjackRoomDataAccessInterface;
@@ -32,7 +29,6 @@ public class PlayerRecordInteractorTest {
         PlayerRecordOutputBoundary playerRecordPresenter = new PlayerRecordOutputBoundary() {
             @Override
             public void preparePlayerRecordView(PlayerRecordOutputData playerRecordOutputData) {
-                return;
             }
         };
 
@@ -75,7 +71,6 @@ public class PlayerRecordInteractorTest {
 
             @Override
             public void shuffle(Deck deck) {
-                return;
             }
         };
 
@@ -151,7 +146,6 @@ public class PlayerRecordInteractorTest {
 
             @Override
             public void shuffle(Deck deck) {
-                return;
             }
         };
 
@@ -164,7 +158,6 @@ public class PlayerRecordInteractorTest {
         PlayerRecordOutputBoundary playerRecordPresenter = new PlayerRecordOutputBoundary() {
             @Override
             public void preparePlayerRecordView(PlayerRecordOutputData playerRecordOutputData) {
-                return;
             }
         };
 
@@ -204,7 +197,6 @@ public class PlayerRecordInteractorTest {
 
             @Override
             public void shuffle(Deck deck) {
-                return;
             }
         };
 
@@ -217,7 +209,6 @@ public class PlayerRecordInteractorTest {
         PlayerRecordOutputBoundary playerRecordPresenter = new PlayerRecordOutputBoundary() {
             @Override
             public void preparePlayerRecordView(PlayerRecordOutputData playerRecordOutputData) {
-                return;
             }
         };
 

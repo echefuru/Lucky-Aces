@@ -19,17 +19,21 @@ This group project was created for CSC207: Software Design at the University of 
 - __[Contributions](#Contributions)__
 * * *
 ## Features
-The user of the program can:
-- Look at the game library;
-- Search for a game using the game name;
-- Filter available games based on the game type and the number of players;
-- Select a game;
-- Read the description and the rules of the game;
-- Set the config of the game;
-- Play the game;
-- In the game: 
-  - Check your records
-- Exit the game and return to game library
+The user of the program can:<br>
+- Look at the game library;<br>
+- Search for a game using the game name;<br>
+- Filter available games based on the game type and the number of desired players (unavailable option now);<br>
+- Select a game;<br>
+- ![image](https://github.com/user-attachments/assets/33c36e97-c9af-487c-a07c-46ad60cb392f) <br>
+- Read the description and the rules of the game;<br>
+- ![image](https://github.com/user-attachments/assets/171faf76-a18f-43ca-bc15-cb37c4311886) <br>
+- Set the config of the game;<br>
+- ![image](https://github.com/user-attachments/assets/1e644174-85db-4eff-9d43-02c78e493810) <br>
+- Play the game;<br>
+![image](https://github.com/user-attachments/assets/e81a0d7c-69b2-4f39-ab34-18773b3b954b) <br>
+- In the game: Check your records<br>
+  - ![image](https://github.com/user-attachments/assets/d33cb865-b46f-4573-869a-f630e555cd91) <br>
+- Exit the game and return to the game library <br>
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 * * *

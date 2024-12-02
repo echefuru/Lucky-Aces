@@ -48,10 +48,6 @@ abstract class AbstractRoom {
         return losses;
     }
 
-    public int getDraws() {
-        return draws;
-    }
-
     public abstract List<String> getPlayerCardStrings(int player);
 
     public abstract void newRound();

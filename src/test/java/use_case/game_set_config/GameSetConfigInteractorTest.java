@@ -1,8 +1,6 @@
 package use_case.game_set_config;
 
-import interface_adapter.game_setup.GameSetConfigPresenter;
 import org.json.JSONObject;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;

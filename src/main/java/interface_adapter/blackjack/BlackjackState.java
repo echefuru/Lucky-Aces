@@ -10,6 +10,8 @@ public class BlackjackState {
     private static final String HTML_OPEN_PARAGRAPH = "<p>";
     private static final String HTML_CLOSE_PARAGRAPH = "</p>";
 
+    private static final int PLAYER_HAND_VAL_LIMIT = 15;
+
     private List<String> playerCards;
     private int playerTotal;
     private List<String> dealerCards;
@@ -41,14 +43,23 @@ public class BlackjackState {
      * @return a String message of HTML format for the player's record.
      */
     public String getPlayerRecordMessage() {
+        final String playerHandValDisplay;
+        final int numRecords = playerHandValRecord.size();
+        if (numRecords <= PLAYER_HAND_VAL_LIMIT) {
+            playerHandValDisplay = playerHandValRecord.toString();
+        }
+        else {
+            playerHandValDisplay = "[..., " + playerHandValRecord.subList(
+                    numRecords - PLAYER_HAND_VAL_LIMIT, numRecords).toString().substring(1);
+        }
 
         final String message = "<html>"
                 + "<h2 style='color:blue;'>Player Statistics</h2>"
                 + HTML_OPEN_PARAGRAPH + "<strong># of Wins:</strong> " + this.wins + HTML_CLOSE_PARAGRAPH
                 + HTML_OPEN_PARAGRAPH + "<strong># of Losses:</strong> " + this.losses + HTML_CLOSE_PARAGRAPH
                 + HTML_OPEN_PARAGRAPH + "<strong># of Rounds:</strong> " + this.totalRounds + HTML_CLOSE_PARAGRAPH
-                + HTML_OPEN_PARAGRAPH + "<strong>All of your hand values:</strong> " + this.playerHandValRecord
-                .toString() + HTML_CLOSE_PARAGRAPH + "</html>";
+                + HTML_OPEN_PARAGRAPH + "<strong>All of your hand values:</strong> " + HTML_CLOSE_PARAGRAPH
+                + HTML_OPEN_PARAGRAPH + playerHandValDisplay + HTML_CLOSE_PARAGRAPH + "</html>";
         return message;
     }
 

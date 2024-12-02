@@ -49,6 +49,13 @@ public class BlackjackPlayerRecord {
     }
 
     /**
+     * Resets the hand value records to be ready for a new round.
+     */
+    public void resetHandValueRecord() {
+        this.handValueRecord.clear();
+    }
+
+    /**
      * Record the number of rounds and if won this round.
      * @param won if won this round, 0 for lose, 1 for win, 2 for draw
      */

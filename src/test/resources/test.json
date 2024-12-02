@@ -2,13 +2,15 @@
   {
     "game": "blackjack",
     "name": "Blackjack",
-    "description": "Also named \"21\". The goal of the game is to have cards that add up to points lower than or equal to 21, but higher than the dealer.",
-    "rules": "<html>Blackjack is a popular card game typically played between players and a dealer.<br>The goal is to have a hand value closer to 21 than the dealer's hand without exceeding 21.<h2>Card Values</h2><ul><li>Number cards (2-10): Face value.</li><li>Face cards (Jack, Queen, King): Worth 10 points.</li><li>Ace: Can be worth 1 or 11 points, whichever benefits the hand more.</li></ul><h2>Gameplay</h2><ol><li><strong>Initial Deal</strong>: Each player and the dealer receive two cards. Players’ cards are face up; the dealer has one card face up and one face down.</li><br><li><strong>Player Options</strong>:<ul><li><strong>Hit</strong>: Take another card.</li><li><strong>Stand</strong>: Keep your current hand.</li></ul></li><br><li><strong>Dealer's Turn</strong>: The dealer reveals their face-down card and must hit until their hand totals 17 or more.</li><br><li><strong>Winning</strong>:<ul><li>If the player's hand exceeds 21, the player busts and lose.</li><li>If the dealer busts and the player doesn’t, the player wins.</li><li>If the player's hand is closer to 21 than the dealer’s is without busting, the player wins.</li><li>If the player's hand is exactly 21, the player gets a \"Blackjack\", and the player wins.</li></ul></li></ol></html>",
+    "description": "Blackjack description",
+    "rules": "Blackjack rules",
     "max_players": 5,
     "min_players": 1,
     "is_available": true,
     "type": ["Luck-Based Games", "Comparing Card Games"],
-    "default_config": {}
+    "default_config": {
+      "some_config": "some_value"
+    }
   },
   {
     "game": "test1",

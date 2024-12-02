@@ -102,7 +102,6 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         playController.execute();
-                        playerRecordController.executeCreate();
                     }
                 }
         );
@@ -111,7 +110,6 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         hitController.execute();
-                        playerRecordController.executeUpdate();
                     }
                 }
         );
@@ -120,7 +118,6 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         holdController.execute();
-                        playerRecordController.executeUpdate();
                     }
                 }
         );
@@ -129,7 +126,6 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         againController.execute();
-                        playerRecordController.executeUpdate();
                     }
                 }
         );
@@ -172,17 +168,20 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
             case "init":
                 clearCardUi();
                 initUi();
+                playerRecordController.executeCreate();
                 break;
             case "play":
                 clearCardUi();
                 paintPlayUi(state.getPlayerCards(), state.getPlayerTotal(), state.getDealerCards(),
                         state.getWins(), state.getPlayerBankroll(), state.getCurrentBet());
+                playerRecordController.executeUpdate();
                 break;
             case "21":
                 clearCardUi();
                 paintPlayUi(state.getPlayerCards(), state.getPlayerTotal(), state.getDealerCards(),
                         state.getWins(), state.getPlayerBankroll(), state.getCurrentBet());
                 holdController.execute();
+                playerRecordController.executeUpdate();
                 break;
             case "win":
                 clearCardUi();
@@ -204,6 +203,7 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
                 break;
             case "bust":
                 paintBustUi(state.getPlayerCards(), state.getLosses());
+                playerRecordController.executeUpdate();
                 playerRecordController.executeRound(0);
                 break;
             case "again":
@@ -259,7 +259,7 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
         statusLabel.setForeground(Color.BLACK);
         statusLabel.setText("Press PLAY to start the round");
 
-        playerLabel.setText("PLAYER | Wins: 0 | Bankroll: " + blackjackViewModel.getState().getPlayerBankroll());
+        updatePlayerLabel(0, blackjackViewModel.getState().getPlayerBankroll());
 
         buttons.removeAll();
         buttons.revalidate();
@@ -286,7 +286,7 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
         statusLabel.setText("Current bet: " + currentBet + " | You have " + playerTotal);
 
         // Update player bankroll.
-        playerLabel.setText("PLAYER | Wins: " + wins + " | Bankroll: " + bankroll);
+        updatePlayerLabel(wins, bankroll);
 
         // Paint player cards.
         for (String card : playerCards) {
@@ -320,12 +320,15 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
             statusLabel.setForeground(Color.GREEN);
             statusLabel.setText("YOU WIN!");
 
-            // Increment player wins.
-            playerLabel.setText("PLAYER | Wins: " + wins + " | Bankroll: " + bankroll);
+            // Increment player wins and update player bankroll.
+            updatePlayerLabel(wins, bankroll);
         }
         else if ("draw".equals(stage)) {
             statusLabel.setForeground(Color.ORANGE);
             statusLabel.setText("DRAW");
+
+            // Update player bankroll.
+            updatePlayerLabel(wins, bankroll);
         }
         else {
             statusLabel.setForeground(Color.RED);
@@ -348,6 +351,10 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
         buttons.add(playAgain);
         buttons.add(playerRecord);
         buttons.add(exit);
+    }
+
+    private void updatePlayerLabel(int wins, int bankroll) {
+        playerLabel.setText("PLAYER | Wins: " + wins + " | Bankroll: " + bankroll);
     }
 
     private void paintBustUi(List<String> playerCards, int losses) {

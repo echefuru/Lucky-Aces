@@ -32,7 +32,8 @@ public class GameSelectInteractor implements GameSelectInputBoundary {
             gameSelectPresenter.prepareSuccessView(gameSelectOutputData);
         }
         else {
-            gameSelectPresenter.prepareFailView("Game not available yet, please stay tuned!");
+            gameSelectPresenter.prepareFailView(gameInfoDataAccessObject.getName(selectedGame)
+                    + " is not available yet, please stay tuned!");
         }
     }
 }

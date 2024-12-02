@@ -22,7 +22,14 @@ public class GameSetConfigPresenter implements GameSetConfigOutputBoundary {
 
     @Override
     public void prepareFailView(String errorMessage) {
-        // It shouldn't be possible for this Use Case to fail
-        System.out.println(errorMessage);
+        final GameSetupState state = gameSetupViewModel.getState();
+        state.setConfigError(errorMessage);
+        gameSetupViewModel.setState(state);
+        gameSetupViewModel.firePropertyChanged("configError");
+    }
+
+    @Override
+    public void showConfigView(GameSetConfigOutputData gameSetConfigOutputData) {
+        gameSetupViewModel.firePropertyChanged("config");
     }
 }

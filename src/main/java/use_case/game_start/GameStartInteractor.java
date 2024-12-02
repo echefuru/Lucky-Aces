@@ -36,7 +36,7 @@ public class GameStartInteractor implements GameStartInputBoundary {
             gameStartPresenter.prepareSuccessView(gameStartOutputData);
         }
         else {
-            gameStartPresenter.prepareFailView("Can't find selected game in program");
+            gameStartPresenter.prepareFailView(selectedGame + " doesn't exist in program");
         }
     }
 }

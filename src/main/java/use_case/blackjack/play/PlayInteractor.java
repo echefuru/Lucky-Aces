@@ -29,6 +29,7 @@ public class PlayInteractor implements PlayInputBoundary {
     @Override
     public void execute() {
         // Reset the room to the state of a new round.
+        apiDao.shuffle(blackjackRoomDao.getRoom().getDeck());
         blackjackRoomDao.getRoom().newRound();
 
         // Update the player's bankroll (assuming always minimum bet)

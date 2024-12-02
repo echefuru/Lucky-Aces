@@ -116,7 +116,7 @@ public class ApiDataAccessObject implements ApiDataAccessInterface {
         }
 
         if (!responseBody.getBoolean("success")) {
-            throw new RuntimeException(responseBody.getString("API error."));
+            throw new RuntimeException(responseBody.getString("error"));
         }
 
         return responseBody;

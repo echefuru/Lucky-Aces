@@ -16,4 +16,10 @@ public interface GameSetConfigOutputBoundary {
      * @param errorMessage the error message to be displayed
      */
     void prepareFailView(String errorMessage);
+
+    /**
+     * Prepares the config panel.
+     * @param gameSetConfigOutputData the output data for this use case
+     */
+    void showConfigView(GameSetConfigOutputData gameSetConfigOutputData);
 }

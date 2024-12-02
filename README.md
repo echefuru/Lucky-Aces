@@ -67,7 +67,8 @@ The user of the program can:<br>
 
 * * *
 ## Usage
-
+### See the video as an example
+https://github.com/user-attachments/assets/1c40cab0-ef6c-465e-82bc-ba6f96d06dcc
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 * * *

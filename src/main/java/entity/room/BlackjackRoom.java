@@ -34,6 +34,10 @@ public class BlackjackRoom extends AbstractRoom {
         return this.players[HUMAN_PLAYER];
     }
 
+    public BlackjackPlayer getDealer() {
+        return this.players[DEALER];
+    }
+
     /**
      * Return the hand value of the given player according to Blackjack rules.
      * @param player the player who holds the hand

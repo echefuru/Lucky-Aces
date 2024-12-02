@@ -3,7 +3,6 @@ package use_case.blackjack.play;
 import java.util.List;
 
 import entity.room.BlackjackRoom;
-
 import use_case.ApiDataAccessInterface;
 import use_case.BlackjackRoomDataAccessInterface;
 import use_case.blackjack.BlackjackOutputData;
@@ -13,7 +12,6 @@ import use_case.blackjack.BlackjackOutputData;
  */
 public class PlayInteractor implements PlayInputBoundary {
 
-    private static final int NUM_DECKS = 2;
     private static final int TWENTY_ONE = 21;
 
     private final ApiDataAccessInterface apiDao;

@@ -12,9 +12,9 @@ public interface BlackjackRoomDataAccessInterface {
      * Create a new BlackjackRoom.
      * @param deck the deck for the room to be instantiated with.
      * @param bankroll the initial bankroll of each player
-     * @param minimum_bet the minimum bet of each round
+     * @param minimumBet the minimum bet of each round
      */
-    void createRoom(Deck deck, int bankroll, int minimum_bet);
+    void createRoom(Deck deck, int bankroll, int minimumBet);
 
     /**
      * Return the BlackjackRoom in context.
@@ -23,7 +23,7 @@ public interface BlackjackRoomDataAccessInterface {
     BlackjackRoom getRoom();
 
     /**
-     * Reset the BlackjackRoom in context to the state of a new round.
+     * New Round for a Blackjack Game.
      */
     void newRound();
 
@@ -31,4 +31,5 @@ public interface BlackjackRoomDataAccessInterface {
      * Exit and remove the room from the memory.
      */
     void exitRoom();
+
 }

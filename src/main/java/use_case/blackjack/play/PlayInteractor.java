@@ -12,7 +12,6 @@ import use_case.blackjack.BlackjackOutputData;
  */
 public class PlayInteractor implements PlayInputBoundary {
 
-    private static final int NUM_DECKS = 2;
     private static final int TWENTY_ONE = 21;
 
     private final ApiDataAccessInterface apiDao;

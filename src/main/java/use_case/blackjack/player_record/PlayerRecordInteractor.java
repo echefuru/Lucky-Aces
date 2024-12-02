@@ -49,4 +49,9 @@ public class PlayerRecordInteractor implements PlayerRecordInputBoundary {
     public void executeRound(int won) {
         blackjackRoomDao.getRoom().getHumanPlayer().recordRound(won);
     }
+
+    @Override
+    public void executeResetHandValRecord() {
+        blackjackRoomDao.getRoom().getHumanPlayer().resetHandValRecord();
+    }
 }

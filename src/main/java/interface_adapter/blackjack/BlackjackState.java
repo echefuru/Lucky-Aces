@@ -103,19 +103,6 @@ public class BlackjackState {
     public void setStage(String string) {
         this.stage = string;
     }
-  
-    /**
-     * Resets the object's fields, except stage which must be set back to "init" explicitly.
-     */
-    public void reset() {
-        playerCards = null;
-        playerTotal = 0;
-        dealerCards = null;
-        playerHandValRecord = List.of();
-        totalRounds = 0;
-        wins = 0;
-        losses = 0;
-    }
 
     public void setWins(int wins) {
         this.wins = wins;

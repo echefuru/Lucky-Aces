@@ -11,6 +11,7 @@ public class GameSetupState {
     private String gameDescription;
     private String gameRules;
     private JSONObject gameConfig;
+    private String configError;
 
     public void setSelectedGame(String selectedGame) {
         this.selectedGame = selectedGame;
@@ -32,6 +33,10 @@ public class GameSetupState {
         this.gameConfig = gameConfig;
     }
 
+    public void setConfigError(String configError) {
+        this.configError = configError;
+    }
+
     public String getSelectedGame() {
         return selectedGame;
     }
@@ -50,6 +55,10 @@ public class GameSetupState {
 
     public JSONObject getGameConfig() {
         return gameConfig;
+    }
+
+    public String getConfigError() {
+        return configError;
     }
 
 }

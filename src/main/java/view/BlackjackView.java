@@ -223,7 +223,7 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
         statusLabel.setForeground(Color.BLACK);
         statusLabel.setText("Press PLAY to start the round");
 
-        playerLabel.setText("PLAYER | Wins: 0 | Bankroll: " + blackjackViewModel.getState().getPlayerBankroll());
+        updatePlayerLabel(0, blackjackViewModel.getState().getPlayerBankroll());
 
         buttons.removeAll();
         buttons.revalidate();
@@ -250,7 +250,7 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
         statusLabel.setText("Current bet: " + currentBet + " | You have " + playerTotal);
 
         // Update player bankroll.
-        playerLabel.setText("PLAYER | Wins: " + wins + " | Bankroll: " + bankroll);
+        updatePlayerLabel(wins, bankroll);
 
         // Paint player cards.
         for (String card : playerCards) {
@@ -283,12 +283,15 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
             statusLabel.setForeground(Color.GREEN);
             statusLabel.setText("YOU WIN!");
 
-            // Increment player wins.
-            playerLabel.setText("PLAYER | Wins: " + wins + " | Bankroll: " + bankroll);
+            // Increment player wins and update player bankroll.
+            updatePlayerLabel(wins, bankroll);
         }
         else if ("draw".equals(stage)) {
             statusLabel.setForeground(Color.ORANGE);
             statusLabel.setText("DRAW");
+
+            // Update player bankroll.
+            updatePlayerLabel(wins, bankroll);
         }
         else {
             statusLabel.setForeground(Color.RED);
@@ -310,6 +313,10 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
         buttons.repaint();
         buttons.add(playAgain);
         buttons.add(exit);
+    }
+
+    private void updatePlayerLabel(int wins, int bankroll) {
+        playerLabel.setText("PLAYER | Wins: " + wins + " | Bankroll: " + bankroll);
     }
 
     private void paintBustUi(List<String> playerCards, int losses) {

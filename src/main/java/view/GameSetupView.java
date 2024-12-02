@@ -68,7 +68,7 @@ public class GameSetupView extends JPanel implements PropertyChangeListener {
         gameRules.setAlignmentX(Component.CENTER_ALIGNMENT);
         options.add(gameRules);
 
-        config = new JButton("Config");
+        config = new JButton("Change Config");
         config.setAlignmentX(Component.CENTER_ALIGNMENT);
         options.add(config);
 
@@ -112,8 +112,7 @@ public class GameSetupView extends JPanel implements PropertyChangeListener {
                         final JSONObject gameConfig = state.getGameConfig();
 
                         // Show the config screen through a pop-up window.
-                        showConfigPanel(gameConfig);
-                        gameSetConfigController.execute(gameConfig);
+                        gameSetConfigController.showConfigPanel(gameConfig);
                     }
                 }
         );
@@ -162,13 +161,19 @@ public class GameSetupView extends JPanel implements PropertyChangeListener {
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 
         if (result == JOptionPane.OK_OPTION) {
+            final Map<String, Integer> sliderValues = new HashMap<>(sliders.size());
+
             for (String param : gameConfig.keySet()) {
-                final JSONObject paramObj = gameConfig.getJSONObject(param);
-                paramObj.put("curr_value", sliders.get(param).getValue());
+                sliderValues.put(param, sliders.get(param).getValue());
             }
 
-            gameSetConfigController.execute(gameConfig);
+            gameSetConfigController.execute(gameConfig, sliderValues);
         }
+    }
+
+    private void showConfigErrorPanel(String errorMessage) {
+        JOptionPane.showMessageDialog(null, errorMessage, gameName.getText() + "Config",
+                JOptionPane.PLAIN_MESSAGE);
     }
 
     private void addContents(JPanel options, JPanel actions) {
@@ -190,10 +195,16 @@ public class GameSetupView extends JPanel implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        if (evt.getPropertyName().equals("state")) {
-            final GameSetupState state = (GameSetupState) evt.getNewValue();
+        final GameSetupState state = (GameSetupState) evt.getNewValue();
+        if (evt.getPropertyName().equals("init")) {
             gameName.setText(state.getGameName());
             gameDescription.setText("<html>" + state.getGameDescription() + "</html>");
+        }
+        else if (evt.getPropertyName().equals("config")) {
+            showConfigPanel(state.getGameConfig());
+        }
+        else if (evt.getPropertyName().equals("configError")) {
+            showConfigErrorPanel(state.getConfigError());
         }
     }
 

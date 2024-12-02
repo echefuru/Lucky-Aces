@@ -38,7 +38,7 @@ public class GameStartPresenter implements GameStartOutputBoundary {
 
     @Override
     public void prepareFailView(String errorMessage) {
-        // It shouldn't be possible for this use case to fail
+        // It shouldn't be possible for this use case to fail during normal usage of the program
         System.out.println(errorMessage);
     }
 }

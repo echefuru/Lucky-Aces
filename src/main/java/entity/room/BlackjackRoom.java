@@ -34,6 +34,10 @@ public class BlackjackRoom extends AbstractRoom {
         return this.players[HUMAN_PLAYER];
     }
 
+    public void setHumanPlayer(BlackjackPlayer humanPlayer) {
+        this.players[HUMAN_PLAYER] = humanPlayer;
+    }
+
     public BlackjackPlayer getDealer() {
         return this.players[DEALER];
     }

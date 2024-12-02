@@ -125,7 +125,6 @@ public class BlackjackView extends JPanel implements PropertyChangeListener {
         playAgain.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
-                        playerRecordController.executeResetHandValRecord();
                         againController.execute();
                     }
                 }

@@ -25,9 +25,4 @@ public interface PlayerRecordInputBoundary {
      * @param won if the player wins in this round.
      */
     void executeRound(int won);
-
-    /**
-     * Execute reset for the Player Record Use Case in Blackjack.
-     */
-    void executeResetHandValRecord();
 }

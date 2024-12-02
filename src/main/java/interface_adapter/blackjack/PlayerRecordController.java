@@ -41,11 +41,4 @@ public class PlayerRecordController {
     public void executeRound(Integer won) {
         playerRecordInteractor.executeRound(won);
     }
-
-    /**
-     * Execute Reset Hand Value for the Player Record Use Case in Blackjack.
-     */
-    public void executeResetHandValRecord() {
-        playerRecordInteractor.executeResetHandValRecord();
-    }
 }

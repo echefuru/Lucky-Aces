@@ -43,13 +43,6 @@ public class BlackjackPlayer extends AbstractPlayer {
     }
 
     /**
-     * Reset the current hand value for the human player to be ready for a new round.
-     */
-    public void resetHandValRecord() {
-        blackjackPlayerRecord.resetHandValueRecord();
-    }
-
-    /**
      * Record whether won in this round.
      * @param won whether the player won in this round.
      */

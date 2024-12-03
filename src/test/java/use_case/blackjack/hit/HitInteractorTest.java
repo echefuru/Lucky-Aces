@@ -250,4 +250,117 @@ public class HitInteractorTest {
         HitInputBoundary interactor = new HitInteractor(apiMockDao, blackjackRoomDao, presenter);
         interactor.execute();
     }
+
+    @Test
+    void aceAsOneTest() {
+        ApiDataAccessInterface apiMockDao = new ApiDataAccessInterface() {
+            @Override
+            public Deck createDeck() {
+                return new Deck("test_id", 0);
+            }
+
+            @Override
+            public Deck createDeck(int numDecks) {
+                return new Deck("test_id", 0);
+            }
+
+            @Override
+            public List<Card> draw(Deck deck, int numCards) {
+                return new ArrayList<>(Arrays.asList(new Card(Rank.TWO, Suit.SPADES, "2S"),
+                        new Card(Rank.KING, Suit.HEARTS, "KH"),
+                        new Card(Rank.ACE, Suit.CLUBS, "AC")));
+            }
+
+            @Override
+            public void shuffle(Deck deck) {
+                return;
+            }
+        };
+        BlackjackRoomDataAccessInterface blackjackRoomDao = new BlackjackRoomDataAccessObject();
+
+        // For the success test, we need to add a BlackjackRoom to the data access object first.
+        blackjackRoomDao.createRoom(apiMockDao.createDeck(2), 100, 25);
+
+        HitOutputBoundary presenter = new HitOutputBoundary() {
+
+            @Override
+            public void preparePlayView(BlackjackOutputData blackjackOutputData) {
+                assertEquals(13, blackjackOutputData.getPlayerTotal());
+            }
+
+            @Override
+            public void prepare21View(BlackjackOutputData blackjackOutputData) {
+                fail("This should have gone to Play view.");
+            }
+
+            @Override
+            public void prepareBustView(BlackjackOutputData blackjackOutputData) {
+                fail("This should have gone to Play view.");
+            }
+
+            @Override
+            public void prepareGameOverView(BlackjackOutputData blackjackOutputData) {
+                fail("This should have gone to Play view.");
+            }
+        };
+
+        HitInputBoundary interactor = new HitInteractor(apiMockDao, blackjackRoomDao, presenter);
+        interactor.execute();
+    }
+
+    @Test
+    void aceAsElevenTest() {
+        ApiDataAccessInterface apiMockDao = new ApiDataAccessInterface() {
+            @Override
+            public Deck createDeck() {
+                return new Deck("test_id", 0);
+            }
+
+            @Override
+            public Deck createDeck(int numDecks) {
+                return new Deck("test_id", 0);
+            }
+
+            @Override
+            public List<Card> draw(Deck deck, int numCards) {
+                return new ArrayList<>(Arrays.asList(new Card(Rank.TWO, Suit.SPADES, "2S"),
+                        new Card(Rank.ACE, Suit.CLUBS, "AC")));
+            }
+
+            @Override
+            public void shuffle(Deck deck) {
+                return;
+            }
+        };
+        BlackjackRoomDataAccessInterface blackjackRoomDao = new BlackjackRoomDataAccessObject();
+
+        // For the success test, we need to add a BlackjackRoom to the data access object first.
+        blackjackRoomDao.createRoom(apiMockDao.createDeck(2), 100, 25);
+
+        HitOutputBoundary presenter = new HitOutputBoundary() {
+
+            @Override
+            public void preparePlayView(BlackjackOutputData blackjackOutputData) {
+                assertEquals(13, blackjackOutputData.getPlayerTotal());
+            }
+
+            @Override
+            public void prepare21View(BlackjackOutputData blackjackOutputData) {
+                fail("This should have gone to Play view.");
+            }
+
+            @Override
+            public void prepareBustView(BlackjackOutputData blackjackOutputData) {
+                fail("This should have gone to Play view.");
+            }
+
+            @Override
+            public void prepareGameOverView(BlackjackOutputData blackjackOutputData) {
+                fail("This should have gone to Play view.");
+            }
+        };
+
+        HitInputBoundary interactor = new HitInteractor(apiMockDao, blackjackRoomDao, presenter);
+        interactor.execute();
+    }
 }

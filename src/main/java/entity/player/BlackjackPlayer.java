@@ -77,14 +77,6 @@ public class BlackjackPlayer extends AbstractPlayer {
     }
 
     /**
-     * Change the bankroll by amount.
-     * @param amount an integer holding the amount of change the bankroll by
-     */
-    public void changeBankroll(int amount) {
-        bankroll += amount;
-    }
-
-    /**
      * Return the hand value of the player according to Blackjack rules:
      * - Number cards (2-10) are worth the value of their number.
      * - Face cards (J-K) are worth 10.
